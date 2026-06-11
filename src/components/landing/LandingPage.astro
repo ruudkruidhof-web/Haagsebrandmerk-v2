@@ -1,12 +1,13 @@
 ---
 import ScrollReveal from "../ScrollReveal.astro";
 import FaqAccordion from "../FaqAccordion.astro";
+import Testimonials from "../Testimonials.astro";
 import Icon from "../Icon.astro";
 import SunBurst from "../decor/SunBurst.astro";
 import Sparkle from "../decor/Sparkle.astro";
 import HandUnderline from "../decor/HandUnderline.astro";
 import WavyDivider from "../decor/WavyDivider.astro";
-import { t, contentTestimonials, PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
+import { t, PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
 import type { LandingContent } from "../../data/landings.ts";
 
 interface Props { content: LandingContent; }
@@ -95,10 +96,11 @@ const breadcrumbSchema = {
             <span class="relative z-10 inline-flex items-center gap-2">Bekijk mijn werk <Icon name="arrow-up-right" size={16} /></span>
           </a>
         </div>
-        <ul class="flex flex-wrap gap-2.5">
+        <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-7 gap-y-2.5 max-w-lg">
           {content.heroBullets.map((b) => (
-            <li class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 2px 2px 0 hsl(var(--retro-ink))">
-              <Icon name="check" size={13} class="shrink-0" style={`color: ${accent}`} /> {b}
+            <li class="inline-flex items-center gap-2.5 text-sm font-medium" style="color: hsl(var(--retro-ink) / 0.82)">
+              <span class="inline-flex items-center justify-center w-5 h-5 rounded-full shrink-0" style={`background: ${accent}`}><Icon name="check" size={12} strokeWidth={3} class="text-white" /></span>
+              {b}
             </li>
           ))}
         </ul>
@@ -106,12 +108,17 @@ const breadcrumbSchema = {
 
       <!-- creatieve hero-visual: omlijste ovale foto + sunburst + drijvende badges -->
       <ScrollReveal delay={120} class="lg:col-span-5 block">
-        <div class="relative w-full max-w-[400px] mx-auto lg:ml-auto">
-          <SunBurst class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[135%] h-[135%] retro-spin pointer-events-none opacity-70" color="hsl(var(--retro-mustard) / 0.85)" />
-          <div class="absolute -top-3 right-2 z-30 retro-stamp" style={`background: ${accent}; color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-cream)); transform: rotate(7deg)`}>{content.heroBullets[0]}</div>
-          <div class="relative" style={`padding: 13px; border-radius: 50%; background: hsl(var(--retro-mustard)); border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 8px 10px 0 ${accent}`}>
-            <img src="/images/ruud-kruidhof.jpeg" alt={`Ruud Kruidhof, webdesigner voor ${content.keyword}`} loading="eager"
-              class="w-full aspect-[4/5] object-cover" style="border-radius: 50%; border: 2px solid hsl(var(--retro-ink))" />
+        <div class="relative w-full max-w-[380px] mx-auto lg:ml-auto">
+          <!-- sunflare: gloed + stralen, gecentreerd achter de foto -->
+          <div class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[155%] h-[155%] pointer-events-none">
+            <div class="absolute inset-0 rounded-full" style="background: radial-gradient(circle at 50% 48%, hsl(var(--retro-mustard) / 0.6) 0%, hsl(var(--retro-mustard) / 0.18) 38%, transparent 66%)"></div>
+            <SunBurst class="absolute inset-0 w-full h-full retro-spin opacity-55" color="hsl(var(--retro-mustard) / 0.85)" />
+          </div>
+          <div class="absolute -top-3 -right-1 z-30 retro-stamp" style={`background: ${accent}; color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-cream)); transform: rotate(7deg)`}>{content.heroBullets[0]}</div>
+          <!-- omlijste ovale foto -->
+          <div class="relative z-10" style={`padding: 12px; border-radius: 50%; background: hsl(var(--retro-cream)); border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 7px 9px 0 ${accent}`}>
+            <img src="/images/ruud-hero.jpeg" alt={`Ruud Kruidhof, webdesigner voor ${content.keyword}`} loading="eager"
+              class="w-full aspect-[4/5] object-cover" style="border-radius: 50%; border: 2px solid hsl(var(--retro-ink)); object-position: center 28%" />
           </div>
           <div class="absolute -bottom-2 -left-3 z-30 retro-speech-bubble whitespace-nowrap" style="transform: rotate(-5deg)">koffie regel ik ☕</div>
         </div>
@@ -151,18 +158,16 @@ const breadcrumbSchema = {
   </div>
 </section>
 
-<!-- ════════════════ KLANTLOGO'S (klikbaar) ════════════════ -->
-<section class="py-12 md:py-14" style="background: hsl(var(--retro-cream))">
+<!-- ════════════════ KLANTLOGO'S (strak, klikbaar) ════════════════ -->
+<section class="py-12 md:py-16 border-y" style="background: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink) / 0.1)">
   <div class="container mx-auto px-6">
-    <p class="text-center text-xs uppercase tracking-[0.3em] font-bold mb-7" style="color: hsl(var(--retro-ink) / 0.5)">
+    <p class="text-center text-xs uppercase tracking-[0.3em] font-bold mb-9" style="color: hsl(var(--retro-ink) / 0.5)">
       Vertrouwd door <span style={`color: ${accent}`}>25+ ondernemers</span>
     </p>
-    <div class="flex flex-wrap items-center justify-center gap-4 md:gap-5">
+    <div class="flex flex-wrap items-center justify-center gap-x-10 sm:gap-x-14 gap-y-7">
       {logoCases.map((logo) => (
-        <a href={logo.path} aria-label={`Bekijk de case ${logo.name}`} title={logo.name}
-          class="group inline-flex items-center justify-center h-16 w-32 sm:w-36 rounded-2xl transition-transform duration-300 hover:-translate-y-1"
-          style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))">
-          <img src={logo.src} alt={logo.name} loading="lazy" class="max-h-9 max-w-[78%] w-auto object-contain transition-opacity group-hover:opacity-100" />
+        <a href={logo.path} aria-label={`Bekijk de case ${logo.name}`} title={logo.name} class="logo-link group block">
+          <img src={logo.src} alt={logo.name} loading="lazy" class="h-7 sm:h-8 w-auto object-contain" />
         </a>
       ))}
     </div>
@@ -317,38 +322,8 @@ const breadcrumbSchema = {
   </div>
 </section>
 
-<!-- ════════════════ REVIEWS (asymmetrisch) ════════════════ -->
-<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
-  <Sparkle class="absolute bottom-20 right-[10%] w-6 h-6 pointer-events-none" color={accent} />
-  <div class="container mx-auto px-6 relative z-10">
-    <ScrollReveal class="max-w-2xl mb-12 block">
-      <span class="retro-sticker mb-5">Wat klanten zeggen</span>
-      <h2 class="retro-display text-3xl md:text-5xl">{t.testimonials.title}</h2>
-    </ScrollReveal>
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      <div class="lg:row-span-2 retro-card p-8 md:p-10 flex flex-col justify-between" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink)); box-shadow: 8px 8px 0 hsl(var(--retro-rust))">
-        <div>
-          <div class="flex gap-0.5 mb-4">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={16} class="text-retro-mustard" />))}</div>
-          <p class="font-display text-xl md:text-2xl leading-snug mb-6" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].quote}</p>
-        </div>
-        <div class="flex items-center gap-3">
-          <img src={contentTestimonials[1].avatar} alt={contentTestimonials[1].name} loading="lazy" class="w-12 h-12 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-cream))" />
-          <div><p class="font-bold" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].name}</p><p class="text-xs" style="color: hsl(var(--retro-mustard))">{contentTestimonials[1].role}</p></div>
-        </div>
-      </div>
-      {[0, 2].map((idx) => (
-        <div class="retro-card p-7 flex flex-col lg:col-span-2" style={`background: hsl(var(--retro-cream)); box-shadow: 6px 6px 0 ${accent}`}>
-          <div class="flex gap-0.5 mb-3">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={14} class="text-retro-mustard" />))}</div>
-          <p class="leading-relaxed text-base mb-5" style="color: hsl(var(--retro-ink) / 0.85)">{contentTestimonials[idx].quote}</p>
-          <div class="flex items-center gap-3 mt-auto pt-4 border-t" style="border-color: hsl(var(--retro-ink) / 0.15)">
-            <img src={contentTestimonials[idx].avatar} alt={contentTestimonials[idx].name} loading="lazy" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-ink))" />
-            <div><p class="font-bold text-sm" style="color: hsl(var(--retro-ink))">{contentTestimonials[idx].name}</p><p class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{contentTestimonials[idx].role}</p></div>
-          </div>
-        </div>
-      ))}
-    </div>
-  </div>
-</section>
+<!-- ════════════════ REVIEWS (bento) ════════════════ -->
+<Testimonials accent={accent} />
 
 <!-- ════════════════ FAQ ════════════════ -->
 <section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
@@ -386,4 +361,10 @@ const breadcrumbSchema = {
 <style>
   .landing-card { transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s; }
   .landing-card:hover { transform: rotate(0deg) translateY(-6px) !important; }
+  .logo-link img {
+    filter: grayscale(1);
+    opacity: 0.55;
+    transition: filter .3s ease, opacity .3s ease, transform .3s ease;
+  }
+  .logo-link:hover img { filter: grayscale(0); opacity: 1; transform: translateY(-2px); }
 </style>

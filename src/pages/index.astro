@@ -2,6 +2,7 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import ScrollReveal from "../components/ScrollReveal.astro";
 import TrustStrip from "../components/TrustStrip.astro";
+import Testimonials from "../components/Testimonials.astro";
 import BrowserFrame from "../components/BrowserFrame.astro";
 import FaqAccordion from "../components/FaqAccordion.astro";
 import ScanSection from "../components/ScanSection.astro";
@@ -300,66 +301,8 @@ const testimonialLinks = ["reuringopdedelle.nl", "angelaceremonies.com", "digita
     </div>
   </section>
 
-  <!-- 8. Testimonials + stats -->
-  <section class="py-24 md:py-32 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.55)">
-    <Sparkle class="absolute top-20 right-[10%] w-6 h-6 pointer-events-none" color="hsl(var(--retro-rust))" />
-    <Sparkle class="absolute bottom-24 left-[8%] w-5 h-5 pointer-events-none" color="hsl(var(--retro-mustard))" />
-    <div class="container mx-auto px-6 lg:px-16 relative z-10">
-      <ScrollReveal class="text-center max-w-3xl mx-auto mb-14 block">
-        <span class="retro-sticker mb-6">Wat klanten zeggen</span>
-        <h2 class="retro-display text-4xl md:text-6xl lg:text-7xl">Vertrouwd door ondernemers met ambitie</h2>
-        <p class="mt-5 text-base md:text-lg leading-relaxed" style="color: hsl(var(--retro-ink) / 0.7)">Echte verhalen van ondernemers voor wie ik een website heb gebouwd. Eerlijke woorden, blijvend resultaat.</p>
-      </ScrollReveal>
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-        <div class="lg:row-span-2 retro-card retro-card-shadow-rust p-8 md:p-10 flex flex-col justify-between" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink))">
-          <div>
-            <div class="font-black text-7xl leading-none mb-4" style="color: hsl(var(--retro-mustard)); font-family: 'Fraunces', serif">"</div>
-            <p class="font-display text-xl md:text-2xl leading-snug mb-6" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].quote}</p>
-          </div>
-          <div>
-            <div class="flex gap-0.5 mb-4">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={16} class="text-retro-mustard" />))}</div>
-            <div class="flex items-center gap-3">
-              <img src={contentTestimonials[1].avatar} alt={contentTestimonials[1].name} loading="lazy" class="w-12 h-12 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-cream))" />
-              <div>
-                <p class="font-bold text-base" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].name}</p>
-                <a href="https://reuringopdedelle.nl" target="_blank" rel="noopener" class="text-xs hover:underline inline-flex items-center gap-1" style="color: hsl(var(--retro-mustard))">{testimonialLinks[0]} <Icon name="arrow-up-right" size={11} /></a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {[0, 2].map((idx, k) => (
-          <div class:list={["retro-card", k === 0 ? "retro-card-shadow-mustard" : "retro-card-shadow-terracotta", "p-7 flex flex-col lg:col-span-2"]} style="background: hsl(var(--retro-cream))">
-            <div class="font-black text-4xl leading-none mb-2" style="color: hsl(var(--retro-rust)); font-family: 'Fraunces', serif">"</div>
-            <p class="leading-relaxed text-base mb-5" style="color: hsl(var(--retro-ink) / 0.85)">{contentTestimonials[idx].quote}</p>
-            <div class="flex items-center gap-3 mt-auto pt-4 border-t" style="border-color: hsl(var(--retro-ink) / 0.15)">
-              <img src={contentTestimonials[idx].avatar} alt={contentTestimonials[idx].name} loading="lazy" class="w-11 h-11 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-ink))" />
-              <div class="flex-1">
-                <p class="font-bold text-sm" style="color: hsl(var(--retro-ink))">{contentTestimonials[idx].name}</p>
-                <a href={`https://${testimonialLinks[idx === 0 ? 1 : 2]}`} target="_blank" rel="noopener" class="text-xs hover:underline inline-flex items-center gap-1" style="color: hsl(var(--retro-rust))">{testimonialLinks[idx === 0 ? 1 : 2]} <Icon name="arrow-up-right" size={11} /></a>
-              </div>
-              <div class="flex gap-0.5">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={14} class="text-retro-mustard" />))}</div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-6xl mx-auto mt-8">
-        {stats.map((stat) => (
-          <div class="retro-card p-6 flex items-center gap-5" style="background: hsl(var(--retro-cream))">
-            <div class="w-12 h-12 rounded-full flex items-center justify-center shrink-0" style="background: hsl(var(--retro-mustard)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 2px 2px 0 hsl(var(--retro-ink))">
-              <Icon name="arrow-up-right" size={20} strokeWidth={2.5} />
-            </div>
-            <div class="flex-1">
-              <div class="flex items-baseline gap-1">
-                <span class="font-display font-black text-5xl leading-none" style="color: hsl(var(--retro-ink))">{stat.value}</span>
-                <span class="font-display font-black text-2xl" style="color: hsl(var(--retro-rust))">{stat.suffix}</span>
-              </div>
-              <p class="text-sm mt-1 font-medium" style="color: hsl(var(--retro-ink) / 0.7)">{stat.label}</p>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
+  <!-- 8. Testimonials (bento) -->
+  <Testimonials accent="hsl(var(--retro-rust))" />
 
   <!-- 9. FAQ -->
   <section class="py-24 md:py-32 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">

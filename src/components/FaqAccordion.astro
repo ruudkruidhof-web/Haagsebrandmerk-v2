@@ -4,14 +4,80 @@ interface Faq { q: string; a: string; }
 interface Props { faqs: Faq[]; class?: string; }
 const { faqs, class: className = "" } = Astro.props;
 ---
-<div class:list={["w-full space-y-3", className]}>
+<div class:list={["faq-list w-full space-y-3", className]}>
   {faqs.map((faq) => (
-    <details class="faq-retro-item px-6 py-1">
-      <summary class="flex items-center justify-between gap-4 py-4 text-left font-display font-semibold text-lg" style="color: hsl(var(--retro-ink))">
-        <span>{faq.q}</span>
-        <span class="faq-retro-chevron flex items-center justify-center"><Icon name="chevron-down" size={18} /></span>
-      </summary>
-      <div class="pb-5 leading-relaxed whitespace-pre-line" style="color: hsl(var(--retro-ink) / 0.75)">{faq.a}</div>
-    </details>
+    <div class="faq-item">
+      <button type="button" class="faq-q w-full flex items-center justify-between gap-4 text-left px-6 py-5" aria-expanded="false">
+        <span class="font-display font-semibold text-base md:text-lg" style="color: hsl(var(--retro-ink))">{faq.q}</span>
+        <span class="faq-chevron flex items-center justify-center shrink-0"><Icon name="chevron-down" size={18} /></span>
+      </button>
+      <div class="faq-a-wrap">
+        <div class="faq-a-inner">
+          <div class="px-6 pb-5 leading-relaxed whitespace-pre-line" style="color: hsl(var(--retro-ink) / 0.75)">{faq.a}</div>
+        </div>
+      </div>
+    </div>
   ))}
 </div>
+
+<style is:global>
+  .faq-item {
+    background: hsl(var(--retro-cream));
+    border: 1.5px solid hsl(var(--retro-ink));
+    border-radius: 1.25rem;
+    box-shadow: 5px 5px 0 hsl(var(--retro-ink));
+    overflow: hidden;
+    transition: box-shadow .3s ease;
+  }
+  .faq-item.open { box-shadow: 7px 7px 0 hsl(var(--retro-terracotta)); }
+  .faq-q { cursor: pointer; background: transparent; }
+  .faq-chevron {
+    width: 34px; height: 34px;
+    border-radius: 9999px;
+    background: hsl(var(--retro-butter));
+    color: hsl(var(--retro-ink));
+    border: 1.5px solid hsl(var(--retro-ink));
+    box-shadow: 2px 2px 0 hsl(var(--retro-ink));
+    transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .25s ease;
+  }
+  .faq-item.open .faq-chevron { transform: rotate(180deg); background: hsl(var(--retro-mustard)); }
+  .faq-a-wrap {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows .42s cubic-bezier(.4,0,.2,1);
+  }
+  .faq-item.open .faq-a-wrap { grid-template-rows: 1fr; }
+  .faq-a-inner { overflow: hidden; min-height: 0; }
+  .faq-a-inner > div { opacity: 0; transform: translateY(-4px); transition: opacity .3s ease .08s, transform .35s ease .08s; }
+  .faq-item.open .faq-a-inner > div { opacity: 1; transform: none; }
+  @media (prefers-reduced-motion: reduce) {
+    .faq-a-wrap, .faq-chevron, .faq-a-inner > div { transition: none; }
+  }
+</style>
+
+<script>
+  function initFaq() {
+    document.querySelectorAll<HTMLElement>(".faq-list").forEach((list) => {
+      if (list.dataset.bound) return;
+      list.dataset.bound = "true";
+      const items = Array.from(list.querySelectorAll<HTMLElement>(".faq-item"));
+      items.forEach((item) => {
+        const btn = item.querySelector<HTMLButtonElement>(".faq-q");
+        btn?.addEventListener("click", () => {
+          const isOpen = item.classList.contains("open");
+          // single-open accordion: sluit de rest
+          items.forEach((other) => {
+            if (other !== item) {
+              other.classList.remove("open");
+              other.querySelector(".faq-q")?.setAttribute("aria-expanded", "false");
+            }
+          });
+          item.classList.toggle("open", !isOpen);
+          btn.setAttribute("aria-expanded", String(!isOpen));
+        });
+      });
+    });
+  }
+  initFaq();
+  document.addEventListener("astro:after-swap", initFaq);
+</script>

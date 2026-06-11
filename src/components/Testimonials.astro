@@ -1,0 +1,78 @@
+---
+import Icon from "./Icon.astro";
+import ScrollReveal from "./ScrollReveal.astro";
+import { contentTestimonials } from "../data/content.ts";
+
+interface Props { accent?: string; }
+const { accent = "hsl(var(--retro-rust))" } = Astro.props;
+
+// sterkste quote als featured (Reuring), de andere twee compact ernaast
+const featured = contentTestimonials[1];
+const featuredLink = "reuringopdedelle.nl";
+const side = [
+  { ...contentTestimonials[0], link: "angelaceremonies.com" },
+  { ...contentTestimonials[2], link: "digitalehand.nl" },
+];
+const stats = [
+  { value: "25+", label: "Tevreden ondernemers" },
+  { value: "4 jaar", label: "Ervaring met webdesign" },
+  { value: "50%", label: "Klanten via doorverwijzing" },
+];
+---
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+  <div class="container mx-auto px-6 relative z-10">
+    <ScrollReveal class="text-center max-w-2xl mx-auto mb-12 block">
+      <span class="retro-sticker mb-5">Ervaringen</span>
+      <h2 class="retro-display text-3xl md:text-5xl lg:text-6xl">Wat ondernemers over Ruud zeggen</h2>
+    </ScrollReveal>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 max-w-6xl mx-auto">
+      <!-- Featured -->
+      <ScrollReveal class="lg:row-span-2 block">
+        <figure class="h-full flex flex-col justify-between p-8 md:p-9 rounded-[1.5rem]" style="background: hsl(var(--retro-ink)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 6px 6px 0 hsl(var(--retro-rust))">
+          <div>
+            <div class="inline-flex items-center justify-center w-10 h-10 rounded-full mb-5" style="background: hsl(var(--retro-mustard))"><Icon name="quote" size={18} class="text-retro-ink" /></div>
+            <div class="flex gap-0.5 mb-4">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={15} class="text-retro-mustard" />))}</div>
+            <blockquote class="font-display text-lg md:text-xl leading-relaxed" style="color: hsl(var(--retro-cream))">{featured.quote}</blockquote>
+          </div>
+          <figcaption class="flex items-center gap-3 mt-7 pt-6 border-t" style="border-color: hsl(var(--retro-cream) / 0.18)">
+            <img src={featured.avatar} alt={featured.name} loading="lazy" class="w-12 h-12 rounded-full object-cover shrink-0" style="border: 2px solid hsl(var(--retro-cream))" />
+            <div class="min-w-0">
+              <p class="font-bold leading-tight" style="color: hsl(var(--retro-cream))">{featured.name}</p>
+              <a href={`https://${featuredLink}`} target="_blank" rel="noopener" class="text-xs inline-flex items-center gap-1 hover:underline" style="color: hsl(var(--retro-mustard))">{featuredLink} <Icon name="arrow-up-right" size={11} /></a>
+            </div>
+          </figcaption>
+        </figure>
+      </ScrollReveal>
+
+      <!-- Twee compacte reviews -->
+      {side.map((s, i) => (
+        <ScrollReveal delay={(i + 1) * 70} class="lg:col-span-1 block">
+          <figure class="h-full flex flex-col p-6 rounded-[1.5rem]" style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 hsl(var(--retro-ink))">
+            <div class="flex gap-0.5 mb-3">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={13} class="text-retro-mustard" />))}</div>
+            <blockquote class="text-sm leading-relaxed flex-1 line-clamp-5" style="color: hsl(var(--retro-ink) / 0.85)">{s.quote}</blockquote>
+            <figcaption class="flex items-center gap-2.5 mt-5 pt-4 border-t" style="border-color: hsl(var(--retro-ink) / 0.12)">
+              <img src={s.avatar} alt={s.name} loading="lazy" class="w-9 h-9 rounded-full object-cover shrink-0" style="border: 1.5px solid hsl(var(--retro-ink))" />
+              <div class="min-w-0">
+                <p class="font-bold text-sm leading-tight" style="color: hsl(var(--retro-ink))">{s.name}</p>
+                <a href={`https://${s.link}`} target="_blank" rel="noopener" class="text-[11px] hover:underline" style={`color: ${accent}`}>{s.link}</a>
+              </div>
+            </figcaption>
+          </figure>
+        </ScrollReveal>
+      ))}
+
+      <!-- Stats-balk -->
+      <ScrollReveal delay={140} class="lg:col-span-2 block">
+        <div class="grid grid-cols-3 rounded-[1.5rem] overflow-hidden" style="background: hsl(var(--retro-butter) / 0.55); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 hsl(var(--retro-mustard))">
+          {stats.map((st, i) => (
+            <div class={`px-4 py-7 text-center ${i > 0 ? "border-l" : ""}`} style="border-color: hsl(var(--retro-ink) / 0.15)">
+              <div class="font-display font-black text-3xl md:text-4xl leading-none mb-1.5" style={`color: ${accent}`}>{st.value}</div>
+              <div class="text-xs md:text-sm font-medium leading-tight" style="color: hsl(var(--retro-ink) / 0.72)">{st.label}</div>
+            </div>
+          ))}
+        </div>
+      </ScrollReveal>
+    </div>
+  </div>
+</section>
