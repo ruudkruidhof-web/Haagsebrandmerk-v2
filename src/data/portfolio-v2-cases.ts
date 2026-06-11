@@ -115,7 +115,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       heroImage: "/images/portfolio/den-hollander-hero.png",
       mockups: [
         { src: "/images/portfolio/den-hollander-shot-1.png", caption: "Offerte-flow in vier stappen" },
-        { src: "/images/portfolio/den-hollander-shot-2.png", caption: "Werkgebied — wijken van Den Haag" },
+        { src: "/images/portfolio/den-hollander-shot-2.png", caption: "Werkgebied - wijken van Den Haag" },
       ],
       caseIntro:
         "De case Den Hollander Schilderwerken is een conceptcase: een Haags schildersbedrijf dat ik bedacht om één vraag uit te werken: hoe ziet een site eruit voor een vakman die karakteristieke en monumentale woningen schildert? Het soort werk waar elk kozijn z'n eigen geschiedenis heeft. De uitdaging die ik mezelf stelde: een site die net zo verzorgd voelt als het werk zelf, vertrouwen wekt bij huiseigenaren die hun pand serieus nemen, en zonder gedoe naar een gesprek leidt.",
@@ -142,7 +142,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       heroImage: "/images/portfolio/den-hollander-hero.png",
       mockups: [
         { src: "/images/portfolio/den-hollander-shot-1.png", caption: "Quote flow in four steps" },
-        { src: "/images/portfolio/den-hollander-shot-2.png", caption: "Service area — Hague neighbourhoods" },
+        { src: "/images/portfolio/den-hollander-shot-2.png", caption: "Service area - Hague neighbourhoods" },
       ],
       caseIntro:
         "The Den Hollander Schilderwerken case is a concept case: a Hague-based painting firm I invented to work out one question: what does a site look like for a craftsman who paints character properties and monuments? The kind of work where every window frame has its own history. The challenge I set myself: a site that feels as cared-for as the work itself, builds trust with homeowners who take their property seriously, and leads to a conversation without friction.",
@@ -172,7 +172,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "de-verse-gier.vercel.app",
       heroImage: "/images/portfolio/de-verse-gier-hero.png",
       mockups: [
-        { src: "/images/portfolio/de-verse-gier-shot-1.png", caption: "Wat we doen — sectie" },
+        { src: "/images/portfolio/de-verse-gier-shot-1.png", caption: "Wat we doen - sectie" },
         { src: "/images/portfolio/de-verse-gier-shot-2.png", caption: "Sfeerimpressie keuken & wijn" },
       ],
       caseIntro:
@@ -200,7 +200,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "de-verse-gier.vercel.app",
       heroImage: "/images/portfolio/de-verse-gier-hero.png",
       mockups: [
-        { src: "/images/portfolio/de-verse-gier-shot-1.png", caption: "What we do — section" },
+        { src: "/images/portfolio/de-verse-gier-shot-1.png", caption: "What we do - section" },
         { src: "/images/portfolio/de-verse-gier-shot-2.png", caption: "Kitchen & wine impression" },
       ],
       caseIntro:
@@ -292,7 +292,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "wild-en-wortel.vercel.app",
       heroImage: "/images/portfolio/wild-en-wortel-hero.png",
       mockups: [
-        { src: "/images/portfolio/wild-en-wortel-shot-1.png", caption: "Studio — sinds 2021" },
+        { src: "/images/portfolio/wild-en-wortel-shot-1.png", caption: "Studio - sinds 2021" },
         { src: "/images/portfolio/wild-en-wortel-shot-2.png", caption: "Vier richtingen op de kaart" },
       ],
       caseIntro:
@@ -320,7 +320,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "wild-en-wortel.vercel.app",
       heroImage: "/images/portfolio/wild-en-wortel-hero.png",
       mockups: [
-        { src: "/images/portfolio/wild-en-wortel-shot-1.png", caption: "Studio — since 2021" },
+        { src: "/images/portfolio/wild-en-wortel-shot-1.png", caption: "Studio - since 2021" },
         { src: "/images/portfolio/wild-en-wortel-shot-2.png", caption: "Four directions on the map" },
       ],
       caseIntro:
@@ -351,8 +351,8 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "onceuponaroom.vercel.app",
       heroImage: "/images/portfolio/once-upon-a-room-hero.png",
       mockups: [
-        { src: "/images/portfolio/once-upon-a-room-shot-1.png", caption: "Intro — een storybook studio" },
-        { src: "/images/portfolio/once-upon-a-room-shot-2.png", caption: "Room One — The Carousel Room" },
+        { src: "/images/portfolio/once-upon-a-room-shot-1.png", caption: "Intro - een storybook studio" },
+        { src: "/images/portfolio/once-upon-a-room-shot-2.png", caption: "Room One - The Carousel Room" },
       ],
       caseIntro:
         "De case Once Upon a Room is de studio van Lisa, die magische, verhalende kinderkamers ontwerpt. Ze had een website nodig die net zo betovert als haar kamers: een plek die haar werk laat spreken, vertrouwen wekt bij ouders en aanvragen oplevert. De vraag: vertaal het sprookjesconcept, met de magie van Disney als inspiratie, naar een online ervaring die je vasthoudt en rustig naar contact leidt.",
@@ -379,8 +379,8 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "onceuponaroom.vercel.app",
       heroImage: "/images/portfolio/once-upon-a-room-hero.png",
       mockups: [
-        { src: "/images/portfolio/once-upon-a-room-shot-1.png", caption: "Intro — a storybook studio" },
-        { src: "/images/portfolio/once-upon-a-room-shot-2.png", caption: "Room One — The Carousel Room" },
+        { src: "/images/portfolio/once-upon-a-room-shot-1.png", caption: "Intro - a storybook studio" },
+        { src: "/images/portfolio/once-upon-a-room-shot-2.png", caption: "Room One - The Carousel Room" },
       ],
       caseIntro:
         "The Once Upon a Room case is Lisa's studio, designing magical, narrative children's rooms. She needed a site that enchants the way her rooms do: a place that lets her work speak, builds trust with parents and brings in requests. The brief: translate the fairy-tale concept, with the magic of Disney as inspiration, into an online experience that holds you and gently leads to contact.",
@@ -411,7 +411,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "angelaceremonies.com",
       heroImage: "/images/angela-ceremonies.png",
       mockups: [
-        { src: "/images/portfolio/angela-shot-1.png", caption: "Over Angela — liefdevol, persoonlijk, verbindend" },
+        { src: "/images/portfolio/angela-shot-1.png", caption: "Over Angela - liefdevol, persoonlijk, verbindend" },
         { src: "/images/portfolio/angela-shot-2.png", caption: "Welkom aanstaande bruidspaar" },
       ],
       caseIntro:
@@ -438,8 +438,8 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "angelaceremonies.com",
       heroImage: "/images/angela-ceremonies.png",
       mockups: [
-        { src: "/images/portfolio/angela-shot-1.png", caption: "About Angela — loving, personal, connecting" },
-        { src: "/images/portfolio/angela-shot-2.png", caption: "Welcome — for the couple to be" },
+        { src: "/images/portfolio/angela-shot-1.png", caption: "About Angela - loving, personal, connecting" },
+        { src: "/images/portfolio/angela-shot-2.png", caption: "Welcome - for the couple to be" },
       ],
       caseIntro:
         "The Angela Ceremonies case is a Rotterdam-based wedding officiant with over 490 ceremonies to her name. Her strength is in the personal: she truly gets to know couples and turns their story into a ceremony that moves. Her old site was tidy and functional, but the warmth she brings to every couple wasn't tangible online. The brief: a site that feels as personal as her work, builds trust with couples before they call and gives her coaching for starting officiants its own place.",
@@ -468,7 +468,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "reuringopdedelle.nl",
       heroImage: "/images/reuring-op-de-delle.png",
       mockups: [
-        { src: "/images/portfolio/reuring-shot-1.png", caption: "Voor bezoekers — een dag op het platteland" },
+        { src: "/images/portfolio/reuring-shot-1.png", caption: "Voor bezoekers - een dag op het platteland" },
         { src: "/images/portfolio/reuring-shot-2.png", caption: "Programma & kaart van de route" },
       ],
       caseIntro:
@@ -495,7 +495,7 @@ export const portfolioV2Cases: Record<string, { nl: CaseV2Content; en: CaseV2Con
       liveDomain: "reuringopdedelle.nl",
       heroImage: "/images/reuring-op-de-delle.png",
       mockups: [
-        { src: "/images/portfolio/reuring-shot-1.png", caption: "For visitors — a day in the countryside" },
+        { src: "/images/portfolio/reuring-shot-1.png", caption: "For visitors - a day in the countryside" },
         { src: "/images/portfolio/reuring-shot-2.png", caption: "Programme & route map" },
       ],
       caseIntro:

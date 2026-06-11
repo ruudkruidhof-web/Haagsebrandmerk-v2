@@ -24,7 +24,7 @@ const slug = project.id;
 const isEditorial = slug in editorialCaseContent;
 const v2 = portfolioV2Cases[slug]?.nl;
 const editorial = editorialCaseContent[slug]?.nl;
-const seoTitle = `${project.title} — Portfolio | Haagse Brandmerk`;
+const seoTitle = `${project.title} - Portfolio | Haagse Brandmerk`;
 ---
 <BaseLayout title={seoTitle} description={project.description}>
   {isEditorial && editorial ? (

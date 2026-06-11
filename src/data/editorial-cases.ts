@@ -40,7 +40,7 @@ export interface EditorialContent {
 export const editorialCaseContent: Record<string, { nl: EditorialContent; en: EditorialContent }> = {
   "angela-ceremonies": {
     nl: {
-      eyebrow: "CASE STUDY / 01 — 2025",
+      eyebrow: "CASE STUDY / 01 - 2025",
       client: "Angela Bhagole-Mangre",
       industry: "Trouwambtenaar",
       year: "Rotterdam",
@@ -55,10 +55,10 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
         { label: "Het resultaat", text: "Eerste reacties via het contactformulier binnen een week na livegang." },
       ],
       pages: [
-        { src: "/images/angela-ceremonies.png", label: "Homepage — de eerste indruk", device: "laptop" },
-        { src: "/images/angela-ceremonies.png", label: "Trouwen — dienstenpagina", device: "desktop" },
-        { src: "/images/angela-ceremonies.png", label: "Over Angela — het verhaal", device: "desktop" },
-        { src: "/images/angela-ceremonies.png", label: "Mobile — onderweg goed", device: "phone" },
+        { src: "/images/angela-ceremonies.png", label: "Homepage - de eerste indruk", device: "laptop" },
+        { src: "/images/angela-ceremonies.png", label: "Trouwen - dienstenpagina", device: "desktop" },
+        { src: "/images/angela-ceremonies.png", label: "Over Angela - het verhaal", device: "desktop" },
+        { src: "/images/angela-ceremonies.png", label: "Mobile - onderweg goed", device: "phone" },
       ],
       decisions: [
         {
@@ -102,7 +102,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
       finalImage: "/images/angela-ceremonies.png",
     },
     en: {
-      eyebrow: "CASE STUDY / 01 — 2025",
+      eyebrow: "CASE STUDY / 01 - 2025",
       client: "Angela Bhagole-Mangre",
       industry: "Wedding Officiant",
       year: "Rotterdam",
@@ -117,10 +117,10 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
         { label: "The result", text: "First contact form replies within a week after going live." },
       ],
       pages: [
-        { src: "/images/angela-ceremonies.png", label: "Homepage — the first impression", device: "laptop" },
-        { src: "/images/angela-ceremonies.png", label: "Weddings — services page", device: "desktop" },
-        { src: "/images/angela-ceremonies.png", label: "About Angela — the story", device: "desktop" },
-        { src: "/images/angela-ceremonies.png", label: "Mobile — good on the go", device: "phone" },
+        { src: "/images/angela-ceremonies.png", label: "Homepage - the first impression", device: "laptop" },
+        { src: "/images/angela-ceremonies.png", label: "Weddings - services page", device: "desktop" },
+        { src: "/images/angela-ceremonies.png", label: "About Angela - the story", device: "desktop" },
+        { src: "/images/angela-ceremonies.png", label: "Mobile - good on the go", device: "phone" },
       ],
       decisions: [
         {
@@ -167,7 +167,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
 
   "reuring-op-de-delle": {
     nl: {
-      eyebrow: "CASE STUDY / 02 — 2025",
+      eyebrow: "CASE STUDY / 02 - 2025",
       client: "Stichting Reuring",
       industry: "Cultureel Festival",
       year: "Dijkerhoek & Espelo",
@@ -228,7 +228,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
       finalImage: "/images/reuring-op-de-delle.png",
     },
     en: {
-      eyebrow: "CASE STUDY / 02 — 2025",
+      eyebrow: "CASE STUDY / 02 - 2025",
       client: "Stichting Reuring",
       industry: "Cultural Festival",
       year: "Dijkerhoek & Espelo",
@@ -292,7 +292,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
 
   "digitale-hand": {
     nl: {
-      eyebrow: "CASE STUDY / 03 — 2025",
+      eyebrow: "CASE STUDY / 03 - 2025",
       client: "Lisa Giasi",
       industry: "Technische hulp aan huis",
       year: "Den Haag",
@@ -328,7 +328,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
       finalImage: "/images/digitale-hand.png",
     },
     en: {
-      eyebrow: "CASE STUDY / 03 — 2025",
+      eyebrow: "CASE STUDY / 03 - 2025",
       client: "Lisa Giasi",
       industry: "Tech help at home",
       year: "The Hague",
@@ -367,7 +367,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
 
   "enjoy-the-breeze": {
     nl: {
-      eyebrow: "CASE STUDY / 04 — 2025",
+      eyebrow: "CASE STUDY / 04 - 2025",
       client: "Angela",
       industry: "Vakantieverhuur Curaçao",
       year: "Blue Bay Beach Resort",
@@ -403,7 +403,7 @@ export const editorialCaseContent: Record<string, { nl: EditorialContent; en: Ed
       finalImage: "/images/enjoy-the-breeze.png",
     },
     en: {
-      eyebrow: "CASE STUDY / 04 — 2025",
+      eyebrow: "CASE STUDY / 04 - 2025",
       client: "Angela",
       industry: "Curaçao holiday rental",
       year: "Blue Bay Beach Resort",

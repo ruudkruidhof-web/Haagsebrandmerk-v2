@@ -1,4 +1,4 @@
-// Landingspagina's — SEO + GEO + conversie geoptimaliseerd.
+// Landingspagina's - SEO + GEO + conversie geoptimaliseerd.
 // Elke pagina target één high-intent zoekwoord met een exact-match H1,
 // een direct antwoord (GEO), unieke benefits, lokale/persona-content en FAQ-schema.
 
@@ -7,6 +7,10 @@ export interface LandingFaq { q: string; a: string; }
 export interface LandingContent {
   slug: string;
   keyword: string;
+  /** accentkleur (retro CSS-var naam) voor variatie tussen pagina's */
+  accent: string;
+  /** woord in de H1 dat een hand-drawn onderstreping in accent krijgt */
+  heroHighlight: string;
   metaTitle: string;
   metaDesc: string;
   eyebrow: string;
@@ -41,13 +45,15 @@ export const landings: LandingContent[] = [
   {
     slug: "website-laten-maken-den-haag",
     keyword: "website laten maken Den Haag",
+    accent: "--retro-terracotta",
+    heroHighlight: "Den Haag",
     metaTitle: "Website laten maken in Den Haag (vanaf €995) | Haagse Brandmerk",
     metaDesc:
       "Website laten maken in Den Haag? Ik ben Ruud Kruidhof, freelance webdesigner uit Den Haag. Vaste prijs vanaf €995, binnen 2 weken live, persoonlijk contact en goed vindbaar in Google.",
     eyebrow: "Webdesigner uit Den Haag",
     h1: "Website laten maken in Den Haag",
     heroSub:
-      "Persoonlijk gemaakt door een Hagenees. Een website die laat zien wie je bent, vertrouwen wekt en je lokaal vindbaar maakt — tegen een vaste prijs, zonder verrassingen.",
+      "Persoonlijk gemaakt door een Hagenees. Een website die laat zien wie je bent, vertrouwen wekt en je lokaal vindbaar maakt - tegen een vaste prijs, zonder verrassingen.",
     directAnswer:
       "Een website laten maken in Den Haag kost bij Haagse Brandmerk vanaf €995 voor een opfrisbeurt en €2.295 voor een volledige website op maat. Je werkt rechtstreeks met Ruud Kruidhof, een freelance webdesigner uit Den Haag. De meeste sites staan binnen 2 tot 3 weken live, met een vaste prijs die vooraf vaststaat.",
     heroBullets: ["Vaste prijs vanaf €995", "Binnen 2–3 weken live", "100% tevredenheidsgarantie", "Lokaal: koffie in Den Haag"],
@@ -66,7 +72,7 @@ export const landings: LandingContent[] = [
     ],
     deepTitle: "Voor ondernemers in heel Den Haag en omstreken",
     deepIntro:
-      "Van een praktijk in het Statenkwartier tot een horecazaak in het Zeeheldenkwartier of een dienstverlener in Scheveningen — ik werk voor ondernemers door de hele regio Haaglanden.",
+      "Van een praktijk in het Statenkwartier tot een horecazaak in het Zeeheldenkwartier of een dienstverlener in Scheveningen - ik werk voor ondernemers door de hele regio Haaglanden.",
     deepItems: [
       { title: "Den Haag centrum & de wijken", body: "Statenkwartier, Bezuidenhout, Benoordenhout, Zeeheldenkwartier, Archipelbuurt en meer. Een site die past bij jouw buurt en publiek." },
       { title: "Scheveningen & kust", body: "Horeca, verhuur en toerisme die het hele jaar door vindbaar moeten zijn voor bezoekers van buiten." },
@@ -87,13 +93,15 @@ export const landings: LandingContent[] = [
   {
     slug: "website-laten-maken-zzp",
     keyword: "website laten maken ZZP",
+    accent: "--retro-olive",
+    heroHighlight: "ZZP'ers",
     metaTitle: "Website laten maken voor ZZP'ers (vanaf €995) | Haagse Brandmerk",
     metaDesc:
       "Als ZZP'er een professionele website laten maken? Vaste prijs vanaf €995, binnen 2 weken live, persoonlijk contact en gebouwd om klanten op te leveren. Eén aanspreekpunt: Ruud Kruidhof.",
     eyebrow: "Voor zelfstandigen",
     h1: "Website laten maken voor ZZP'ers",
     heroSub:
-      "Een professionele site die net zo serieus is als jij — zonder bureauprijzen en zonder gedoe. Persoonlijk gemaakt, betaalbaar en gericht op klanten die contact opnemen.",
+      "Een professionele site die net zo serieus is als jij - zonder bureauprijzen en zonder gedoe. Persoonlijk gemaakt, betaalbaar en gericht op klanten die contact opnemen.",
     directAnswer:
       "Een ZZP'er laat een professionele website maken vanaf €995. Bij Haagse Brandmerk werk je rechtstreeks met webdesigner Ruud Kruidhof, krijg je een vaste prijs vooraf en staat je site doorgaans binnen 2 weken live. De site is gebouwd om bezoekers om te zetten in aanvragen, met een heldere structuur en duidelijke contactknoppen.",
     heroBullets: ["Betaalbaar vanaf €995", "Binnen 2 weken live", "Geen abonnementsverplichting", "Eén vast aanspreekpunt"],
@@ -112,7 +120,7 @@ export const landings: LandingContent[] = [
     ],
     deepTitle: "Voor welke zelfstandigen ik bouw",
     deepIntro:
-      "Of je nu met je handen werkt, advies geeft of mensen ontvangt — een sterke site verlaagt de drempel om jou te kiezen.",
+      "Of je nu met je handen werkt, advies geeft of mensen ontvangt - een sterke site verlaagt de drempel om jou te kiezen.",
     deepItems: [
       { title: "Coaches, therapeuten & praktijken", body: "Een rustige, vertrouwde site die laat voelen dat mensen bij jou in goede handen zijn." },
       { title: "Vakmensen & dienstverleners", body: "Schilders, hoveniers, klusbedrijven: laat je werk zien en maak een offerte aanvragen makkelijk." },
@@ -133,13 +141,15 @@ export const landings: LandingContent[] = [
   {
     slug: "website-laten-maken-mkb",
     keyword: "website laten maken MKB",
+    accent: "--retro-plum",
+    heroHighlight: "MKB",
     metaTitle: "Website laten maken voor het MKB | Haagse Brandmerk",
     metaDesc:
       "Een professionele website voor je MKB-bedrijf laten maken? Op maat, goed vindbaar in Google en gebouwd om te groeien. Vaste prijzen, persoonlijk contact en doorlopende optimalisatie mogelijk.",
     eyebrow: "Voor het MKB",
     h1: "Website laten maken voor het MKB",
     heroSub:
-      "Een professionele website die meegroeit met je bedrijf. Goed vindbaar, overtuigend en gebouwd om bezoekers om te zetten in klanten — met de optie van doorlopende groei.",
+      "Een professionele website die meegroeit met je bedrijf. Goed vindbaar, overtuigend en gebouwd om bezoekers om te zetten in klanten - met de optie van doorlopende groei.",
     directAnswer:
       "Een MKB-bedrijf laat een website op maat maken vanaf €2.295, met de optie voor een doorlopend groeipakket vanaf €395 per maand. Bij Haagse Brandmerk krijg je een vaste prijs, een persoonlijk aanspreekpunt en een site die is gebouwd om te scoren in Google én bezoekers om te zetten in aanvragen en omzet.",
     heroBullets: ["Op maat & schaalbaar", "Sterke SEO-basis", "Analytics & rapportage", "Doorlopende groei mogelijk"],
@@ -179,17 +189,19 @@ export const landings: LandingContent[] = [
   {
     slug: "website-laten-maken-kosten",
     keyword: "wat kost een website laten maken",
+    accent: "--retro-mustard",
+    heroHighlight: "kost",
     metaTitle: "Wat kost een website laten maken in 2026? (Prijzen vanaf €995)",
     metaDesc:
       "Wat kost een website laten maken? Een professionele website kost in Nederland gemiddeld €995 tot €2.500. Bekijk de exacte prijzen, wat de prijs bepaalt en waar je op moet letten.",
     eyebrow: "Prijzen & kosten",
     h1: "Wat kost een website laten maken?",
     heroSub:
-      "Een eerlijk en compleet antwoord op de meestgestelde vraag — inclusief vaste prijzen, wat de kosten bepaalt en waar je op moet letten voordat je tekent.",
+      "Een eerlijk en compleet antwoord op de meestgestelde vraag - inclusief vaste prijzen, wat de kosten bepaalt en waar je op moet letten voordat je tekent.",
     directAnswer:
       "Een professionele website laten maken kost in Nederland doorgaans tussen €995 en €2.500 voor een MKB- of ZZP-site. Bij Haagse Brandmerk begint een opfrisbeurt bij €995, een volledige website op maat bij €2.295 en een doorlopend groeipakket bij €395 per maand. Alle prijzen zijn exclusief btw en staan vooraf vast, zonder nacalculatie.",
     heroBullets: ["Vaste prijzen, geen nacalculatie", "Opfrisbeurt vanaf €995", "Volledig op maat vanaf €2.295", "Webshop vanaf €995 extra"],
-    serviceName: "Website laten maken — prijzen",
+    serviceName: "Website laten maken - prijzen",
     serviceDescription:
       "Transparante, vaste prijzen voor het laten maken van een professionele website in Nederland, vanaf €995.",
     areaServed: ["Nederland", "Den Haag", "Zuid-Holland"],
@@ -206,9 +218,9 @@ export const landings: LandingContent[] = [
     deepIntro:
       "Bij Haagse Brandmerk werk ik met vaste pakketten, zodat je vooraf precies weet waar je aan toe bent. Geen verrassingen achteraf.",
     deepItems: [
-      { title: "Website Opfrisbeurt — €995", body: "Een visueel redesign van je bestaande site, sneller en met een SEO-check. Klaar binnen 2 weken." },
-      { title: "Volledige Redesign — €2.295", body: "Een nieuwe site op maat met sterke SEO, animaties en analytics. Tot 5 pagina's, klaar binnen 3 weken." },
-      { title: "Redesign + Groei — €395/mnd", body: "Een doorlopend partnerschap met A/B-testen, maandelijkse rapportage en onbeperkt pagina's." },
+      { title: "Website Opfrisbeurt: €995", body: "Een visueel redesign van je bestaande site, sneller en met een SEO-check. Klaar binnen 2 weken." },
+      { title: "Volledige Redesign: €2.295", body: "Een nieuwe site op maat met sterke SEO, animaties en analytics. Tot 5 pagina's, klaar binnen 3 weken." },
+      { title: "Redesign + Groei: €395/mnd", body: "Een doorlopend partnerschap met A/B-testen, maandelijkse rapportage en onbeperkt pagina's." },
     ],
     costTable: [
       { name: "Website Opfrisbeurt", price: "€995", note: "eenmalig, excl. btw", best: "Bestaande site die een upgrade nodig heeft" },
@@ -230,13 +242,15 @@ export const landings: LandingContent[] = [
   {
     slug: "website-vernieuwen",
     keyword: "website vernieuwen",
+    accent: "--retro-rust",
+    heroHighlight: "vernieuwen",
     metaTitle: "Website laten vernieuwen of redesignen (vanaf €995) | Haagse Brandmerk",
     metaDesc:
       "Je website laten vernieuwen? Ik geef je site een moderne uitstraling, snellere laadtijd en betere vindbaarheid. Vaste prijs vanaf €995, binnen 2 weken een frisse, werkende site.",
     eyebrow: "Redesign & vernieuwen",
     h1: "Je website laten vernieuwen",
     heroSub:
-      "Je site is gedateerd, traag of levert te weinig op. Ik geef 'm een frisse uitstraling, snellere laadtijd en sterkere vindbaarheid — met behoud van wat al goed werkt.",
+      "Je site is gedateerd, traag of levert te weinig op. Ik geef 'm een frisse uitstraling, snellere laadtijd en sterkere vindbaarheid - met behoud van wat al goed werkt.",
     directAnswer:
       "Een website laten vernieuwen kost bij Haagse Brandmerk vanaf €995 voor een visuele opfrisbeurt en €2.295 voor een volledige redesign op maat. Een opfrisbeurt is meestal binnen 2 weken klaar. Je krijgt een modernere uitstraling, een snellere en mobielvriendelijke site, en een verbeterde SEO-basis zodat je beter gevonden wordt.",
     heroBullets: ["Vanaf €995", "Binnen 2 weken fris", "Sneller & mobielvriendelijk", "Betere vindbaarheid"],

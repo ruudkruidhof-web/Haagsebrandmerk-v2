@@ -4,6 +4,8 @@ import FaqAccordion from "../FaqAccordion.astro";
 import Icon from "../Icon.astro";
 import SunBurst from "../decor/SunBurst.astro";
 import Sparkle from "../decor/Sparkle.astro";
+import HandUnderline from "../decor/HandUnderline.astro";
+import WavyDivider from "../decor/WavyDivider.astro";
 import { t, contentTestimonials, PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
 import type { LandingContent } from "../../data/landings.ts";
 
@@ -12,159 +14,183 @@ const { content } = Astro.props;
 const site = "https://haagsebrandmerk.nl";
 const url = `${site}/${content.slug}`;
 const lastUpdated = "juni 2026";
+const accent = `hsl(var(${content.accent}))`;
 
-const logos = [
-  "/images/logos/reuring.png", "/images/logos/angela-ceremonies.png", "/images/logos/de-verse-gier.png",
-  "/images/logos/once-upon-a-room.png", "/images/logos/den-hollander.png", "/images/logos/maisonette-1897.png",
+// H1 met accent-highlight (hand-drawn onderstreping op het kernwoord)
+const hi = content.heroHighlight;
+const hIdx = content.h1.indexOf(hi);
+const h1Pre = hIdx >= 0 ? content.h1.slice(0, hIdx) : content.h1;
+const h1Post = hIdx >= 0 ? content.h1.slice(hIdx + hi.length) : "";
+
+const logoCases = [
+  { src: "/images/logos/reuring.png", path: "/portfolio/reuring-op-de-delle", name: "Reuring op de Delle" },
+  { src: "/images/logos/angela-ceremonies.png", path: "/portfolio/angela-ceremonies", name: "Angela Ceremonies" },
+  { src: "/images/logos/de-verse-gier.png", path: "/portfolio/de-verse-gier", name: "De Verse Gier" },
+  { src: "/images/logos/once-upon-a-room.png", path: "/portfolio/once-upon-a-room", name: "Once Upon a Room" },
+  { src: "/images/logos/den-hollander.png", path: "/portfolio/den-hollander-schilderwerken", name: "Den Hollander Schilderwerken" },
+  { src: "/images/logos/maisonette-1897.png", path: "/portfolio/maisonette-1897", name: "Maisonette 1897" },
 ];
+const processIcons = ["coffee", "sparkles", "rocket", "shield"];
 
 // ── JSON-LD (SEO + GEO) ──
 const faqSchema = {
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  mainEntity: content.faqs.map((f) => ({
-    "@type": "Question",
-    name: f.q,
-    acceptedAnswer: { "@type": "Answer", text: f.a },
-  })),
+  "@context": "https://schema.org", "@type": "FAQPage",
+  mainEntity: content.faqs.map((f) => ({ "@type": "Question", name: f.q, acceptedAnswer: { "@type": "Answer", text: f.a } })),
 };
 const serviceSchema = {
-  "@context": "https://schema.org",
-  "@type": "Service",
-  serviceType: content.serviceName,
-  name: content.serviceName,
-  description: content.serviceDescription,
-  url,
+  "@context": "https://schema.org", "@type": "Service",
+  serviceType: content.serviceName, name: content.serviceName, description: content.serviceDescription, url,
   areaServed: content.areaServed.map((a) => ({ "@type": "Place", name: a })),
   provider: {
-    "@type": "LocalBusiness",
-    "@id": `${site}/#business`,
-    name: "Haagse Brandmerk",
-    image: `${site}/images/ruud-kruidhof.jpeg`,
-    url: site,
-    telephone: PHONE_NUMBER,
-    email: "ruud@haagsebrandmerk.nl",
+    "@type": "LocalBusiness", "@id": `${site}/#business`, name: "Haagse Brandmerk",
+    image: `${site}/images/ruud-kruidhof.jpeg`, url: site, telephone: PHONE_NUMBER, email: "ruud@haagsebrandmerk.nl",
     priceRange: "€995 - €4.503",
     address: { "@type": "PostalAddress", addressLocality: "Den Haag", addressRegion: "Zuid-Holland", addressCountry: "NL" },
-    founder: { "@type": "Person", name: "Ruud Kruidhof" },
-    areaServed: content.areaServed,
+    founder: { "@type": "Person", name: "Ruud Kruidhof" }, areaServed: content.areaServed,
   },
 };
 const breadcrumbSchema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
+  "@context": "https://schema.org", "@type": "BreadcrumbList",
   itemListElement: [
     { "@type": "ListItem", position: 1, name: "Home", item: site },
     { "@type": "ListItem", position: 2, name: content.h1, item: url },
   ],
 };
-const processIcons = ["coffee", "sparkles", "rocket", "shield"];
 ---
 <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(serviceSchema)} />
 <script type="application/ld+json" set:html={JSON.stringify(breadcrumbSchema)} />
 
-<!-- breadcrumb (zichtbaar, voor SEO + gebruiker) -->
-<nav aria-label="Kruimelpad" class="pt-24 md:pt-28 bg-[hsl(var(--retro-cream))]">
-  <div class="container mx-auto px-6 pt-4">
-    <ol class="flex items-center gap-2 text-xs text-muted-foreground">
-      <li><a href="/" class="hover:underline">Home</a></li>
-      <li aria-hidden="true">/</li>
-      <li class="text-foreground font-medium">{content.h1}</li>
-    </ol>
-  </div>
-</nav>
+<!-- ════════════════ HERO ════════════════ -->
+<section class="relative pt-28 md:pt-32 pb-0 overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+  <!-- accent wash + organic shapes -->
+  <div class="absolute -left-32 -top-10 w-[480px] h-[480px] retro-blob-radius retro-blob-idle-1 pointer-events-none" style={`background: ${accent}; opacity: .14`}></div>
+  <div class="absolute right-[-6rem] top-24 w-80 h-80 retro-blob-radius-2 retro-blob-idle-2 pointer-events-none" style="background: hsl(var(--retro-butter) / 0.5)"></div>
+  <Sparkle class="absolute top-28 left-[40%] w-6 h-6 retro-blob-idle-2 pointer-events-none" color={accent} />
+  <Sparkle class="absolute top-48 right-[44%] w-4 h-4 pointer-events-none" color="hsl(var(--retro-mustard))" />
 
-<!-- ═══ HERO ═══ -->
-<section class="relative pt-8 pb-20 overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
-  <div class="absolute -left-24 top-10 w-72 h-72 retro-blob-radius retro-blob-idle-1 pointer-events-none" style="background: hsl(var(--retro-butter))"></div>
-  <Sparkle class="absolute top-20 right-[14%] w-6 h-6 retro-blob-idle-2 pointer-events-none" color="hsl(var(--retro-mustard))" />
-  <div class="container mx-auto px-6 relative z-10">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+  <div class="container mx-auto px-6 relative z-10 pb-20">
+    <nav aria-label="Kruimelpad" class="mb-6">
+      <ol class="flex items-center gap-2 text-xs text-muted-foreground">
+        <li><a href="/" class="hover:underline">Home</a></li>
+        <li aria-hidden="true">›</li>
+        <li class="text-foreground font-medium">{content.h1}</li>
+      </ol>
+    </nav>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       <div class="lg:col-span-7">
-        <span class="retro-sticker mb-6">{content.eyebrow}</span>
-        <h1 class="retro-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[0.98] mb-6">{content.h1}</h1>
-        <p class="text-lg md:text-xl leading-relaxed max-w-xl mb-8" style="color: hsl(var(--retro-ink) / 0.8)">{content.heroSub}</p>
-        <div class="flex flex-wrap gap-4 mb-8">
-          <button data-contact-open class="retro-pill-btn">
+        <span class="retro-sticker mb-6" style={`background: ${accent}; color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink))`}>
+          <span class="w-1.5 h-1.5 rounded-full bg-white/90 animate-pulse"></span>{content.eyebrow}
+        </span>
+        <h1 class="retro-display text-[2.6rem] sm:text-6xl md:text-7xl lg:text-[5rem] leading-[0.95] mb-6" style="color: hsl(var(--retro-ink))">
+          {h1Pre}<span class="relative inline-block whitespace-nowrap" style={`color: ${accent}`}>{hi}<HandUnderline class="absolute left-0 -bottom-2 w-full h-3.5" color={accent} /></span>{h1Post}
+        </h1>
+        <p class="text-lg md:text-xl leading-relaxed max-w-xl mb-8" style="color: hsl(var(--retro-ink) / 0.78)">{content.heroSub}</p>
+        <div class="flex flex-wrap gap-4 mb-9">
+          <button data-contact-open class="retro-pill-btn" style={`box-shadow: 4px 4px 0 ${accent}`}>
             <span class="relative z-10 inline-flex items-center gap-2">Plan een gratis kennismaking <Icon name="arrow-right" size={16} /></span>
           </button>
-          <a href="/prijzen" class="retro-pill-btn-outline">
-            <span class="relative z-10 inline-flex items-center gap-2">Bekijk de prijzen <Icon name="arrow-up-right" size={16} /></span>
+          <a href="/portfolio" class="retro-pill-btn-outline">
+            <span class="relative z-10 inline-flex items-center gap-2">Bekijk mijn werk <Icon name="arrow-up-right" size={16} /></span>
           </a>
         </div>
-        <ul class="flex flex-wrap gap-x-6 gap-y-2">
+        <ul class="flex flex-wrap gap-2.5">
           {content.heroBullets.map((b) => (
-            <li class="inline-flex items-center gap-1.5 text-sm font-medium" style="color: hsl(var(--retro-ink) / 0.75)">
-              <Icon name="check" size={16} class="shrink-0" /> {b}
+            <li class="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 2px 2px 0 hsl(var(--retro-ink))">
+              <Icon name="check" size={13} class="shrink-0" style={`color: ${accent}`} /> {b}
             </li>
           ))}
         </ul>
       </div>
+
+      <!-- creatieve hero-visual: omlijste ovale foto + sunburst + drijvende badges -->
       <ScrollReveal delay={120} class="lg:col-span-5 block">
-        <div class="relative w-full max-w-[400px] mx-auto lg:ml-auto" style="transform: rotate(-3deg)">
-          <SunBurst class="absolute -inset-10 w-[125%] h-[125%] retro-spin pointer-events-none opacity-70" color="hsl(var(--retro-mustard) / 0.8)" />
-          <div class="absolute -inset-3 retro-blob-radius" style="background: hsl(var(--retro-mustard)); z-index: 0"></div>
-          <img src="/images/ruud-hero.jpeg" alt={`Ruud Kruidhof — ${content.keyword}`} loading="eager"
-            class="relative w-full retro-blob-radius object-cover aspect-[4/5]"
-            style="border: 3px solid hsl(var(--retro-ink)); box-shadow: 6px 6px 0 hsl(var(--retro-terracotta))" />
-          <div class="absolute -bottom-3 -left-3 z-10 retro-speech-bubble whitespace-nowrap" style="transform: rotate(-4deg)">koffie regel ik ☕</div>
+        <div class="relative w-full max-w-[400px] mx-auto lg:ml-auto">
+          <SunBurst class="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[135%] h-[135%] retro-spin pointer-events-none opacity-70" color="hsl(var(--retro-mustard) / 0.85)" />
+          <div class="absolute -top-3 right-2 z-30 retro-stamp" style={`background: ${accent}; color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-cream)); transform: rotate(7deg)`}>{content.heroBullets[0]}</div>
+          <div class="relative" style={`padding: 13px; border-radius: 50%; background: hsl(var(--retro-mustard)); border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 8px 10px 0 ${accent}`}>
+            <img src="/images/ruud-kruidhof.jpeg" alt={`Ruud Kruidhof, webdesigner voor ${content.keyword}`} loading="eager"
+              class="w-full aspect-[4/5] object-cover" style="border-radius: 50%; border: 2px solid hsl(var(--retro-ink))" />
+          </div>
+          <div class="absolute -bottom-2 -left-3 z-30 retro-speech-bubble whitespace-nowrap" style="transform: rotate(-5deg)">koffie regel ik ☕</div>
         </div>
       </ScrollReveal>
     </div>
   </div>
+
+  <!-- marquee onderaan hero -->
+  <div class="border-y-[1.5px] py-3 overflow-hidden relative z-10" style="border-color: hsl(var(--retro-ink)); background: hsl(var(--retro-ink))">
+    <div class="retro-marquee gap-10 px-10 text-sm font-semibold uppercase tracking-[0.22em]" style="color: hsl(var(--retro-cream))">
+      {Array.from({ length: 3 }).map(() => (
+        <div class="flex gap-10 shrink-0">
+          {["Vaste prijs", "★", "Binnen 2 weken live", "★", "Persoonlijk", "★", "Goed vindbaar", "★", "Geen gedoe", "★"].map((w) => (<span>{w}</span>))}
+        </div>
+      ))}
+    </div>
+  </div>
 </section>
 
-<!-- ═══ DIRECT ANSWER (GEO) + E-E-A-T ═══ -->
-<section class="py-12 md:py-16" style="background: hsl(var(--retro-butter) / 0.4)">
-  <div class="container mx-auto px-6">
-    <div class="max-w-3xl mx-auto retro-card p-7 md:p-9">
-      <div class="flex items-center gap-3 mb-4">
-        <img src="/images/ruud-avatar.png" alt="Ruud Kruidhof" loading="lazy" class="w-10 h-10 rounded-full object-cover" style="border: 1.5px solid hsl(var(--retro-ink))" />
-        <div class="text-sm">
-          <span class="font-semibold" style="color: hsl(var(--retro-ink))">Ruud Kruidhof</span>
-          <span style="color: hsl(var(--retro-ink) / 0.6)"> · Webdesigner, Den Haag · bijgewerkt {lastUpdated}</span>
+<!-- ════════════════ KORT ANTWOORD (GEO) ════════════════ -->
+<section class="py-16 md:py-20 relative overflow-hidden" style={`background: ${accent}`}>
+  <div class="container mx-auto px-6 relative z-10">
+    <div class="max-w-3xl mx-auto">
+      <p class="text-[11px] uppercase tracking-[0.3em] mb-4 font-bold" style="color: hsl(var(--retro-cream) / 0.85)">Het korte antwoord</p>
+      <div class="relative p-7 md:p-9 rounded-[1.5rem]" style="background: hsl(var(--retro-cream)); border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 9px 9px 0 hsl(var(--retro-ink)); transform: rotate(-0.6deg)">
+        <span class="absolute -top-5 -left-3 text-7xl leading-none" style="font-family: 'Fraunces', serif; color: hsl(var(--retro-ink)); opacity: .14">“</span>
+        <p class="text-lg md:text-xl leading-relaxed font-medium" style="color: hsl(var(--retro-ink) / 0.92)">{content.directAnswer}</p>
+        <div class="flex items-center gap-3 mt-6 pt-5 border-t" style="border-color: hsl(var(--retro-ink) / 0.15)">
+          <img src="/images/ruud-avatar.png" alt="Ruud Kruidhof" loading="lazy" class="w-11 h-11 rounded-full object-cover" style="border: 1.5px solid hsl(var(--retro-ink))" />
+          <div class="text-sm leading-tight">
+            <span class="font-bold block" style="color: hsl(var(--retro-ink))">Ruud Kruidhof</span>
+            <span style="color: hsl(var(--retro-ink) / 0.6)">Webdesigner, Den Haag · bijgewerkt {lastUpdated}</span>
+          </div>
         </div>
       </div>
-      <p class="text-lg leading-relaxed" style="color: hsl(var(--retro-ink) / 0.9)">{content.directAnswer}</p>
     </div>
   </div>
 </section>
 
-<!-- ═══ SOCIAL PROOF ═══ -->
-<section class="py-10 border-y" style="background: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink) / 0.12)">
+<!-- ════════════════ KLANTLOGO'S (klikbaar) ════════════════ -->
+<section class="py-12 md:py-14" style="background: hsl(var(--retro-cream))">
   <div class="container mx-auto px-6">
-    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
-      <div class="flex items-center gap-3">
-        <div class="flex gap-0.5">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={18} class="text-retro-mustard" />))}</div>
-        <span class="text-sm font-medium" style="color: hsl(var(--retro-ink) / 0.8)">Beoordeeld door 25+ ondernemers</span>
-      </div>
-      <div class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 opacity-80">
-        {logos.map((src) => (<img src={src} alt="Klantlogo" loading="lazy" class="max-h-9 w-auto object-contain" />))}
-      </div>
+    <p class="text-center text-xs uppercase tracking-[0.3em] font-bold mb-7" style="color: hsl(var(--retro-ink) / 0.5)">
+      Vertrouwd door <span style={`color: ${accent}`}>25+ ondernemers</span>
+    </p>
+    <div class="flex flex-wrap items-center justify-center gap-4 md:gap-5">
+      {logoCases.map((logo) => (
+        <a href={logo.path} aria-label={`Bekijk de case ${logo.name}`} title={logo.name}
+          class="group inline-flex items-center justify-center h-16 w-32 sm:w-36 rounded-2xl transition-transform duration-300 hover:-translate-y-1"
+          style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))">
+          <img src={logo.src} alt={logo.name} loading="lazy" class="max-h-9 max-w-[78%] w-auto object-contain transition-opacity group-hover:opacity-100" />
+        </a>
+      ))}
     </div>
   </div>
 </section>
 
-<!-- ═══ BENEFITS ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
-  <div class="container mx-auto px-6">
+<!-- ════════════════ VOORDELEN (speelse kaarten) ════════════════ -->
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
+  <Sparkle class="absolute top-16 right-[8%] w-6 h-6 pointer-events-none" color={accent} />
+  <div class="container mx-auto px-6 relative z-10">
     <ScrollReveal class="max-w-3xl mb-14 block">
-      <h2 class="retro-display text-3xl md:text-5xl mb-4">{content.benefitsTitle}</h2>
+      <h2 class="retro-display text-3xl md:text-5xl lg:text-6xl mb-4">{content.benefitsTitle}</h2>
       <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.72)">{content.benefitsIntro}</p>
     </ScrollReveal>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
       {content.benefits.map((b, i) => {
         const shadows = ["retro-card-shadow-terracotta", "retro-card-shadow-mustard", "retro-card-shadow-olive", "retro-card-shadow-rust"];
-        const badges = ["hsl(var(--retro-terracotta))", "hsl(var(--retro-mustard))", "hsl(var(--retro-olive))", "hsl(var(--retro-rust))"];
+        const blobs = ["hsl(var(--retro-terracotta) / 0.5)", "hsl(var(--retro-mustard) / 0.6)", "hsl(var(--retro-olive) / 0.4)", "hsl(var(--retro-rust) / 0.45)"];
+        const rot = [-2, 1.5, -1, 2][i % 4];
         return (
           <ScrollReveal delay={i * 80}>
-            <div class:list={["retro-card", shadows[i % 4], "p-6 h-full flex flex-col"]}>
-              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4" style={`background: ${badges[i % 4]}; color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))`}>
+            <div class="landing-card retro-card p-6 h-full flex flex-col relative overflow-hidden" style={`box-shadow: 6px 6px 0 ${accent}; transform: rotate(${rot}deg)`}>
+              <div class="absolute -top-8 -right-8 w-24 h-24 retro-blob-radius" style={`background: ${blobs[i % 4]}`}></div>
+              <div class="w-14 h-14 rounded-2xl flex items-center justify-center mb-4 relative z-10" style={`background: ${accent}; color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))`}>
                 <Icon name={b.icon} size={24} strokeWidth={2.25} />
               </div>
-              <h3 class="font-display font-bold text-lg mb-2" style="color: hsl(var(--retro-ink))">{b.title}</h3>
-              <p class="text-sm leading-relaxed flex-1" style="color: hsl(var(--retro-ink) / 0.72)">{b.body}</p>
+              <h3 class="font-display font-bold text-lg mb-2 relative z-10" style="color: hsl(var(--retro-ink))">{b.title}</h3>
+              <p class="text-sm leading-relaxed flex-1 relative z-10" style="color: hsl(var(--retro-ink) / 0.72)">{b.body}</p>
             </div>
           </ScrollReveal>
         );
@@ -173,96 +199,107 @@ const processIcons = ["coffee", "sparkles", "rocket", "shield"];
   </div>
 </section>
 
-<!-- ═══ DEEP / LOCAL / COST ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
-  <div class="container mx-auto px-6">
-    <ScrollReveal class="max-w-3xl mb-12 block">
-      <h2 class="retro-display text-3xl md:text-5xl mb-4">{content.deepTitle}</h2>
-      <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.72)">{content.deepIntro}</p>
-    </ScrollReveal>
-
-    {content.costTable ? (
+<!-- ════════════════ VERDIEPING (kosten = tabel, anders = editorial zigzag) ════════════════ -->
+{content.costTable ? (
+  <section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6 relative z-10">
+      <ScrollReveal class="max-w-3xl mb-12 block">
+        <span class="retro-sticker mb-5" style={`background: ${accent}; color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink))`}>Prijzen op een rij</span>
+        <h2 class="retro-display text-3xl md:text-5xl mb-4">{content.deepTitle}</h2>
+        <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.72)">{content.deepIntro}</p>
+      </ScrollReveal>
       <div class="max-w-4xl">
-        <div class="overflow-hidden rounded-2xl" style="border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 8px 8px 0 hsl(var(--retro-mustard))">
+        <div class="overflow-hidden rounded-2xl" style={`border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 10px 10px 0 ${accent}`}>
           <table class="w-full text-sm bg-[hsl(var(--retro-cream))]">
             <thead>
-              <tr style="border-bottom: 2px solid hsl(var(--retro-ink)); background: hsl(var(--retro-butter) / 0.5)">
-                <th class="text-left py-4 px-5 font-bold">Pakket</th>
-                <th class="text-left py-4 px-5 font-bold">Prijs</th>
-                <th class="text-left py-4 px-5 font-bold hidden sm:table-cell">Beste voor</th>
+              <tr style="border-bottom: 2px solid hsl(var(--retro-ink)); background: hsl(var(--retro-butter) / 0.55)">
+                <th class="text-left py-4 px-5 font-bold uppercase tracking-wide text-xs">Pakket</th>
+                <th class="text-left py-4 px-5 font-bold uppercase tracking-wide text-xs">Prijs</th>
+                <th class="text-left py-4 px-5 font-bold uppercase tracking-wide text-xs hidden sm:table-cell">Beste voor</th>
               </tr>
             </thead>
             <tbody>
               {content.costTable.map((row, i) => (
-                <tr style={`border-bottom: 1.5px solid hsl(var(--retro-ink) / 0.15); ${i % 2 ? "background: hsl(var(--retro-butter) / 0.15)" : ""}`}>
-                  <td class="py-4 px-5 font-semibold" style="color: hsl(var(--retro-ink))">{row.name}</td>
-                  <td class="py-4 px-5"><span class="font-display font-black text-lg">{row.price}</span> <span class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{row.note}</span></td>
+                <tr style={`border-bottom: 1.5px solid hsl(var(--retro-ink) / 0.14); ${i % 2 ? "background: hsl(var(--retro-butter) / 0.16)" : ""}`}>
+                  <td class="py-4 px-5 font-display font-bold" style="color: hsl(var(--retro-ink))">{row.name}</td>
+                  <td class="py-4 px-5 whitespace-nowrap"><span class="font-display font-black text-xl" style={`color: ${accent}`}>{row.price}</span><br /><span class="text-[11px]" style="color: hsl(var(--retro-ink) / 0.6)">{row.note}</span></td>
                   <td class="py-4 px-5 hidden sm:table-cell" style="color: hsl(var(--retro-ink) / 0.75)">{row.best}</td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mt-8">
-          {content.deepItems.map((item) => (
-            <div class="retro-soft-card p-5"><h3 class="font-display font-bold mb-1.5" style="color: hsl(var(--retro-ink))">{item.title}</h3><p class="text-sm" style="color: hsl(var(--retro-ink) / 0.72)">{item.body}</p></div>
-          ))}
-        </div>
+        <p class="text-center text-sm mt-6"><a href="/prijzen" class="font-semibold hover:underline inline-flex items-center gap-1" style={`color: ${accent}`}>Bekijk de volledige vergelijking <Icon name="arrow-right" size={14} /></a></p>
       </div>
-    ) : (
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    </div>
+  </section>
+) : (
+  <section class="py-20 md:py-28 relative overflow-hidden retro-grain" style={`background: ${accent}`}>
+    <SunBurst class="absolute -top-24 -right-24 w-[440px] h-[440px] opacity-20 retro-spin pointer-events-none" color="hsl(var(--retro-cream))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <ScrollReveal class="max-w-3xl mb-14 block">
+        <h2 class="retro-display text-3xl md:text-5xl lg:text-6xl mb-4" style="color: hsl(var(--retro-cream))">{content.deepTitle}</h2>
+        <p class="text-lg" style="color: hsl(var(--retro-cream) / 0.85)">{content.deepIntro}</p>
+      </ScrollReveal>
+      <div class="max-w-4xl mx-auto space-y-10 md:space-y-14">
         {content.deepItems.map((item, i) => (
-          <ScrollReveal delay={i * 80}>
-            <div class="retro-card p-6 h-full">
-              <h3 class="font-display font-bold text-lg mb-2" style="color: hsl(var(--retro-ink))">{item.title}</h3>
-              <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.72)">{item.body}</p>
+          <ScrollReveal delay={i * 90} class="block">
+            <div class:list={["flex flex-col gap-4 md:gap-8 items-start", i % 2 === 1 ? "md:flex-row-reverse md:text-right" : "md:flex-row"]}>
+              <div class="shrink-0">
+                <span class="font-black leading-none italic block" style="font-family: 'Fraunces', serif; font-size: clamp(3.5rem, 9vw, 6rem); color: hsl(var(--retro-cream)); -webkit-text-stroke: 1.5px hsl(var(--retro-ink))">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <div class={i % 2 === 1 ? "md:pr-2" : "md:pl-2"}>
+                <h3 class="font-display font-bold text-2xl md:text-3xl mb-2" style="color: hsl(var(--retro-cream))">{item.title}</h3>
+                <p class="text-base md:text-lg leading-relaxed max-w-xl" style="color: hsl(var(--retro-cream) / 0.88)">{item.body}</p>
+              </div>
             </div>
+            {i < content.deepItems.length - 1 && <WavyDivider class="w-40 h-4 mt-8 mx-auto md:mx-0 opacity-50" color="hsl(var(--retro-cream))" />}
           </ScrollReveal>
         ))}
       </div>
-    )}
-  </div>
-</section>
+    </div>
+  </section>
+)}
 
-<!-- ═══ PROCES ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
-  <div class="container mx-auto px-6">
-    <ScrollReveal class="text-center max-w-2xl mx-auto mb-14 block">
+<!-- ════════════════ PROCES (horizontaal lint) ════════════════ -->
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+  <div class="container mx-auto px-6 relative z-10">
+    <ScrollReveal class="text-center max-w-2xl mx-auto mb-16 block">
       <span class="retro-sticker mb-5">{t.howItWorks.tag}</span>
       <h2 class="retro-display text-3xl md:text-5xl">{t.howItWorks.title}</h2>
     </ScrollReveal>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
-      {t.howItWorks.items.map((item, i) => (
-        <ScrollReveal delay={i * 80}>
-          <div class="retro-card p-6 h-full flex flex-col" style={`background: ${i === 1 ? "hsl(var(--retro-terracotta))" : "hsl(var(--retro-cream))"}`}>
-            <div class="flex items-start justify-between mb-4">
-              <span class="font-black text-5xl leading-none italic" style={`color: ${i === 1 ? "hsl(var(--retro-cream))" : "hsl(var(--retro-rust))"}; font-family: 'Fraunces', serif`}>{item.step}</span>
-              <div class="w-10 h-10 rounded-full flex items-center justify-center" style={`background: ${i === 1 ? "hsl(var(--retro-cream))" : "hsl(var(--retro-ink))"}; color: ${i === 1 ? "hsl(var(--retro-ink))" : "hsl(var(--retro-cream))"}`}>
-                <Icon name={processIcons[i]} size={16} />
-              </div>
+    <div class="relative max-w-6xl mx-auto">
+      <div class="hidden lg:block absolute top-7 left-[12%] right-[12%] h-0.5" style="background: repeating-linear-gradient(90deg, hsl(var(--retro-ink)) 0 10px, transparent 10px 20px)"></div>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6 relative">
+        {t.howItWorks.items.map((item, i) => (
+          <ScrollReveal delay={i * 90} class="text-center lg:px-3 block">
+            <div class="w-14 h-14 rounded-full mx-auto flex items-center justify-center mb-5 relative z-10" style={`background: ${accent}; color: hsl(var(--retro-cream)); border: 2.5px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))`}>
+              <Icon name={processIcons[i]} size={22} />
             </div>
-            <h3 class="font-display font-bold text-lg mb-2" style={`color: ${i === 1 ? "hsl(var(--retro-cream))" : "hsl(var(--retro-ink))"}`}>{item.title}</h3>
-            <p class="text-sm leading-relaxed flex-1" style={`color: ${i === 1 ? "hsl(var(--retro-cream) / 0.85)" : "hsl(var(--retro-ink) / 0.7)"}`}>{item.description}</p>
-          </div>
-        </ScrollReveal>
-      ))}
+            <div class="text-xs font-bold uppercase tracking-[0.2em] mb-1.5" style={`color: ${accent}`}>Stap {item.step}</div>
+            <h3 class="font-display font-bold text-lg mb-2" style="color: hsl(var(--retro-ink))">{item.title}</h3>
+            <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.7)">{item.description}</p>
+          </ScrollReveal>
+        ))}
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ PRIJZEN TEASER ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
-  <div class="container mx-auto px-6">
+<!-- ════════════════ PRIJZEN-TEASER ════════════════ -->
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
+  <div class="container mx-auto px-6 relative z-10">
     <ScrollReveal class="text-center max-w-2xl mx-auto mb-14 block">
       <span class="retro-sticker mb-5">{t.packagesPreview.tag}</span>
       <h2 class="retro-display text-3xl md:text-5xl">{t.packagesPreview.title}</h2>
+      <p class="mt-4 text-lg" style="color: hsl(var(--retro-ink) / 0.7)">{t.packagesPreview.subtitle}</p>
     </ScrollReveal>
     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto items-center">
       {t.packagesPreview.packages.map((pkg, i) => {
         const isFeatured = i === 1;
-        const shadows = ["retro-card-shadow-mustard", "retro-card-shadow-rust", "retro-card-shadow-terracotta"];
+        const rotations = [-1.5, 0, 1.5];
         return (
-          <div class:list={["retro-card", shadows[i], "p-8 h-full flex flex-col relative", isFeatured ? "md:scale-105 z-10" : ""]} style={isFeatured ? "background: hsl(var(--retro-mustard)); border-width: 2.5px" : ""}>
+          <div class:list={["landing-card retro-card p-8 h-full flex flex-col relative", isFeatured ? "md:scale-105 z-10" : ""]} style={isFeatured ? "background: hsl(var(--retro-mustard)); border-width: 2.5px; box-shadow: 8px 8px 0 hsl(var(--retro-rust))" : `box-shadow: 6px 6px 0 ${accent}; transform: rotate(${rotations[i]}deg)`}>
             {isFeatured && (<span class="absolute -top-4 left-1/2 -translate-x-1/2 px-4 py-1 text-[11px] font-extrabold uppercase tracking-wider rounded-full whitespace-nowrap" style="background: hsl(var(--retro-rust)); color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))">★ {t.packagesPreview.mostChosen} ★</span>)}
             <h3 class="font-display font-bold text-xl" style="color: hsl(var(--retro-ink))">{pkg.name}</h3>
             <div class="flex items-baseline gap-2 mt-2 mb-3">
@@ -280,53 +317,62 @@ const processIcons = ["coffee", "sparkles", "rocket", "shield"];
   </div>
 </section>
 
-<!-- ═══ TESTIMONIALS ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
-  <div class="container mx-auto px-6">
-    <ScrollReveal class="text-center max-w-2xl mx-auto mb-12 block">
+<!-- ════════════════ REVIEWS (asymmetrisch) ════════════════ -->
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+  <Sparkle class="absolute bottom-20 right-[10%] w-6 h-6 pointer-events-none" color={accent} />
+  <div class="container mx-auto px-6 relative z-10">
+    <ScrollReveal class="max-w-2xl mb-12 block">
       <span class="retro-sticker mb-5">Wat klanten zeggen</span>
       <h2 class="retro-display text-3xl md:text-5xl">{t.testimonials.title}</h2>
     </ScrollReveal>
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
-      {contentTestimonials.map((tm, i) => {
-        const shadows = ["retro-card-shadow-mustard", "retro-card-shadow-rust", "retro-card-shadow-terracotta"];
-        return (
-          <ScrollReveal delay={i * 80}>
-            <div class:list={["retro-card", shadows[i], "p-7 h-full flex flex-col"]} style="background: hsl(var(--retro-cream))">
-              <div class="flex gap-0.5 mb-3">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={14} class="text-retro-mustard" />))}</div>
-              <p class="leading-relaxed text-sm mb-5 flex-1" style="color: hsl(var(--retro-ink) / 0.85)">{tm.quote}</p>
-              <div class="flex items-center gap-3 pt-4 border-t" style="border-color: hsl(var(--retro-ink) / 0.15)">
-                <img src={tm.avatar} alt={tm.name} loading="lazy" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-ink))" />
-                <div><p class="font-bold text-sm" style="color: hsl(var(--retro-ink))">{tm.name}</p><p class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{tm.role}</p></div>
-              </div>
-            </div>
-          </ScrollReveal>
-        );
-      })}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+      <div class="lg:row-span-2 retro-card p-8 md:p-10 flex flex-col justify-between" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink)); box-shadow: 8px 8px 0 hsl(var(--retro-rust))">
+        <div>
+          <div class="flex gap-0.5 mb-4">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={16} class="text-retro-mustard" />))}</div>
+          <p class="font-display text-xl md:text-2xl leading-snug mb-6" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].quote}</p>
+        </div>
+        <div class="flex items-center gap-3">
+          <img src={contentTestimonials[1].avatar} alt={contentTestimonials[1].name} loading="lazy" class="w-12 h-12 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-cream))" />
+          <div><p class="font-bold" style="color: hsl(var(--retro-cream))">{contentTestimonials[1].name}</p><p class="text-xs" style="color: hsl(var(--retro-mustard))">{contentTestimonials[1].role}</p></div>
+        </div>
+      </div>
+      {[0, 2].map((idx) => (
+        <div class="retro-card p-7 flex flex-col lg:col-span-2" style={`background: hsl(var(--retro-cream)); box-shadow: 6px 6px 0 ${accent}`}>
+          <div class="flex gap-0.5 mb-3">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={14} class="text-retro-mustard" />))}</div>
+          <p class="leading-relaxed text-base mb-5" style="color: hsl(var(--retro-ink) / 0.85)">{contentTestimonials[idx].quote}</p>
+          <div class="flex items-center gap-3 mt-auto pt-4 border-t" style="border-color: hsl(var(--retro-ink) / 0.15)">
+            <img src={contentTestimonials[idx].avatar} alt={contentTestimonials[idx].name} loading="lazy" class="w-10 h-10 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-ink))" />
+            <div><p class="font-bold text-sm" style="color: hsl(var(--retro-ink))">{contentTestimonials[idx].name}</p><p class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{contentTestimonials[idx].role}</p></div>
+          </div>
+        </div>
+      ))}
     </div>
   </div>
 </section>
 
-<!-- ═══ FAQ (schema) ═══ -->
-<section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
-  <div class="container mx-auto px-6">
+<!-- ════════════════ FAQ ════════════════ -->
+<section class="py-20 md:py-28 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
+  <div class="container mx-auto px-6 relative z-10">
     <div class="max-w-3xl mx-auto">
-      <ScrollReveal class="block"><h2 class="retro-display text-3xl md:text-5xl mb-10 text-center">{content.faqTitle}</h2></ScrollReveal>
+      <ScrollReveal class="text-center mb-10 block"><h2 class="retro-display text-3xl md:text-5xl">{content.faqTitle}</h2></ScrollReveal>
       <FaqAccordion faqs={content.faqs} />
-      <div class="mt-10 flex flex-wrap justify-center gap-4">
-        {content.related.map((r) => (<a href={r.href} class="text-sm font-semibold hover:underline inline-flex items-center gap-1" style="color: hsl(var(--retro-rust))">{r.label} <Icon name="arrow-right" size={14} /></a>))}
+      <div class="mt-10 flex flex-wrap justify-center gap-x-6 gap-y-3">
+        {content.related.map((r) => (<a href={r.href} class="text-sm font-semibold hover:underline inline-flex items-center gap-1" style={`color: ${accent}`}>{r.label} <Icon name="arrow-right" size={14} /></a>))}
       </div>
     </div>
   </div>
 </section>
 
-<!-- ═══ FINAL CTA ═══ -->
+<!-- ════════════════ FINAL CTA ════════════════ -->
 <section data-section-dark="true" class="py-24 md:py-32 relative overflow-hidden" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">
-  <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-15 retro-spin pointer-events-none" color="hsl(var(--retro-mustard))" />
+  <div class="absolute -top-28 -left-28 w-[440px] h-[440px] retro-blob-radius opacity-50 retro-spin" style={`background: ${accent}`}></div>
+  <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-12 retro-spin pointer-events-none" color="hsl(var(--retro-mustard))" />
+  <Sparkle class="absolute bottom-16 right-[16%] w-8 h-8 pointer-events-none" color="hsl(var(--retro-cream))" />
   <div class="container mx-auto px-6 text-center relative z-10">
     <ScrollReveal class="max-w-2xl mx-auto block">
-      <h2 class="retro-display text-3xl md:text-5xl mb-5">Klaar voor een website die werkt?</h2>
-      <p class="text-lg mb-10" style="color: hsl(var(--retro-cream) / 0.7)">Plan een gratis, vrijblijvende kennismaking. Een half uurtje, en meestal heb je er meteen iets aan.</p>
+      <WavyDivider class="mx-auto mb-7 w-40 h-4" color="hsl(var(--retro-mustard))" />
+      <h2 class="retro-display text-3xl md:text-5xl lg:text-6xl mb-5">Klaar voor een website die werkt?</h2>
+      <p class="text-lg mb-10" style="color: hsl(var(--retro-cream) / 0.72)">Plan een gratis, vrijblijvende kennismaking. Een half uurtje, en meestal heb je er meteen iets aan.</p>
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <button data-contact-open class="fill-hover inline-flex items-center gap-2 px-8 py-4 rounded-full font-semibold" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); box-shadow: 4px 4px 0 hsl(var(--retro-mustard)); --fill-color: hsl(var(--retro-mustard))">
           <span class="relative z-10 inline-flex items-center gap-2">Plan gratis kennismaking <Icon name="arrow-up-right" size={16} /></span>
@@ -336,3 +382,8 @@ const processIcons = ["coffee", "sparkles", "rocket", "shield"];
     </ScrollReveal>
   </div>
 </section>
+
+<style>
+  .landing-card { transition: transform 0.35s cubic-bezier(.2,.8,.2,1), box-shadow 0.35s; }
+  .landing-card:hover { transform: rotate(0deg) translateY(-6px) !important; }
+</style>
