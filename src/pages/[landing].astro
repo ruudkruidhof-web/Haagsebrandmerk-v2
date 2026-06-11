@@ -1,0 +1,17 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import LandingPage from "../components/landing/LandingPage.astro";
+import { landings } from "../data/landings.ts";
+
+export function getStaticPaths() {
+  return landings.map((content) => ({
+    params: { landing: content.slug },
+    props: { content },
+  }));
+}
+
+const { content } = Astro.props;
+---
+<BaseLayout title={content.metaTitle} description={content.metaDesc}>
+  <LandingPage content={content} />
+</BaseLayout>

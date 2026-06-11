@@ -9,11 +9,18 @@ const footerLinks = [
   { label: t.nav.pricing, path: "/prijzen" },
   { label: t.nav.contact, path: "/contact" },
 ];
+const serviceLinks = [
+  { label: "Website laten maken Den Haag", path: "/website-laten-maken-den-haag" },
+  { label: "Website laten maken ZZP", path: "/website-laten-maken-zzp" },
+  { label: "Website laten maken MKB", path: "/website-laten-maken-mkb" },
+  { label: "Wat kost een website?", path: "/website-laten-maken-kosten" },
+  { label: "Website vernieuwen", path: "/website-vernieuwen" },
+];
 const year = new Date().getFullYear();
 ---
 <footer class="border-t relative retro-grain" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream) / 0.68); border-color: hsl(var(--retro-cream) / 0.18)">
   <div class="container mx-auto px-6 py-16 relative z-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12">
       <div class="lg:col-span-2">
         <a href="/" class="font-display text-xl font-bold tracking-tight" style="color: hsl(var(--retro-cream))">
           haagse<span style="color: hsl(var(--retro-mustard))">brandmerk</span>
@@ -30,6 +37,17 @@ const year = new Date().getFullYear();
         <h4 class="font-display font-semibold mb-4 text-sm uppercase tracking-wider" style="color: hsl(var(--retro-cream))">{t.footer.navTitle}</h4>
         <ul class="space-y-3">
           {footerLinks.map((item) => (
+            <li>
+              <a href={item.path} class="text-sm transition-colors inline-block hover:underline" style="color: hsl(var(--retro-cream) / 0.68)">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display font-semibold mb-4 text-sm uppercase tracking-wider" style="color: hsl(var(--retro-cream))">Diensten</h4>
+        <ul class="space-y-3">
+          {serviceLinks.map((item) => (
             <li>
               <a href={item.path} class="text-sm transition-colors inline-block hover:underline" style="color: hsl(var(--retro-cream) / 0.68)">{item.label}</a>
             </li>
