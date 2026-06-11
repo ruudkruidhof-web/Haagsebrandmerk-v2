@@ -1,0 +1,204 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+import Icon from "../components/Icon.astro";
+import SunBurst from "../components/decor/SunBurst.astro";
+import Sparkle from "../components/decor/Sparkle.astro";
+import WavyDivider from "../components/decor/WavyDivider.astro";
+import RetroServiceIcon from "../components/decor/RetroServiceIcon.astro";
+import { t, PHONE_NUMBER, PHONE_DISPLAY } from "../data/content.ts";
+
+const stickerRotations = [-3, 2, -1];
+const stickerColors = [
+  { bg: "hsl(var(--retro-terracotta))", fg: "hsl(var(--retro-cream))" },
+  { bg: "hsl(var(--retro-mustard))", fg: "hsl(var(--retro-ink))" },
+  { bg: "hsl(var(--retro-olive) / 0.85)", fg: "hsl(var(--retro-cream))" },
+];
+const featuredServiceNames = ["Logo & huisstijl"];
+const serviceColorStops = [
+  "hsl(var(--retro-terracotta))",
+  "hsl(var(--retro-mustard))",
+  "hsl(var(--retro-butter))",
+  "hsl(var(--retro-olive) / 0.55)",
+  "hsl(var(--retro-cream))",
+  "hsl(var(--retro-terracotta) / 0.7)",
+  "hsl(var(--retro-mustard) / 0.7)",
+];
+const offsetShadow = (color: string, x = 6, y = 6) => `${x}px ${y}px 0 0 ${color}, 0 0 0 2px hsl(var(--retro-ink))`;
+---
+<BaseLayout
+  title="Hoi, ik ben Ruud | Webdesigner in Den Haag | Haagse Brandmerk"
+  description="Ik ben Ruud, webdesigner uit Den Haag. Ik bouw sites die mooi zijn én werken, en die voelen als jouw zaak. Maak kennis."
+>
+  <!-- 1. HERO -->
+  <section class="relative pt-32 pb-28 overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="absolute inset-0 opacity-50 pointer-events-none" style="background-image: radial-gradient(hsl(var(--retro-ink) / 0.18) 1.5px, transparent 1.5px); background-size: 22px 22px"></div>
+    <div class="absolute -left-24 top-10 w-72 h-72 retro-blob-radius retro-blob-idle-1 pointer-events-none" style="background: hsl(var(--retro-butter))"></div>
+    <Sparkle class="absolute top-24 left-[44%] w-6 h-6 retro-blob-idle-2" />
+    <Sparkle class="absolute top-44 right-[42%] w-5 h-5" color="hsl(var(--retro-terracotta))" />
+    <WavyDivider class="absolute bottom-0 left-0 w-full h-8" />
+
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <span class="inline-block px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider"
+            style="background: hsl(var(--retro-butter)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-terracotta)); transform: rotate(-2deg)">{t.about.tag}</span>
+          <h1 class="retro-display text-5xl md:text-7xl lg:text-[5.5rem] mt-8 leading-[0.95]">
+            <span style="color: hsl(var(--retro-ink))">{t.about.title}</span>
+            <span class="relative inline-block" style="color: hsl(var(--retro-terracotta))">
+              {t.about.titleHighlight}
+              <svg viewBox="0 0 320 22" class="absolute left-0 -bottom-3 w-full h-4" preserveAspectRatio="none" aria-hidden="true">
+                <path d="M4 14 C 80 4, 160 20, 240 8 S 316 14, 316 14" stroke="hsl(var(--retro-mustard))" stroke-width="6" stroke-linecap="round" fill="none" />
+              </svg>
+            </span>
+          </h1>
+          <p class="mt-8 text-lg md:text-xl leading-relaxed max-w-xl" style="color: hsl(var(--retro-ink) / 0.8)">{t.about.intro1}</p>
+          <div class="mt-10 flex flex-wrap items-center gap-x-10 gap-y-4">
+            <button data-contact-open class="fill-hover inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base"
+              style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 5px 5px 0 0 hsl(var(--retro-mustard)); --fill-color: hsl(var(--retro-rust))">
+              <span class="relative z-10 inline-flex items-center gap-2">{t.about.introCta} <Icon name="arrow-right" size={16} /></span>
+            </button>
+            <span class="font-handwritten text-2xl inline-block" style="color: hsl(var(--retro-rust)); transform: rotate(-4deg)">koffie regel ik ☕</span>
+          </div>
+        </div>
+
+        <ScrollReveal delay={150} class="lg:col-span-5 block">
+          <div class="relative w-full max-w-[420px] mx-auto lg:mx-0 lg:ml-auto">
+            <SunBurst class="absolute -inset-12 w-[140%] h-[140%] retro-spin pointer-events-none" color="hsl(var(--retro-mustard) / 0.8)" />
+            <div class="relative" style="transform: rotate(-3deg)">
+              <img src="/images/ruud-kruidhof.jpeg" alt="Ruud Kruidhof - freelance webdesigner Den Haag" loading="lazy" width="640" height="480"
+                class="relative w-full object-cover aspect-[3/4]"
+                style="border-radius: 62% 38% 55% 45% / 48% 56% 44% 52%; border: 2px solid hsl(var(--retro-ink)); box-shadow: 8px 8px 0 0 hsl(var(--retro-terracotta))" />
+            </div>
+            <div class="absolute -top-4 -left-6 lg:-left-12 z-10" style="transform: rotate(-8deg)">
+              <div class="relative px-5 py-2.5 rounded-2xl font-handwritten text-2xl"
+                style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-terracotta))">
+                dat ben ik! 👋
+                <svg viewBox="0 0 30 30" class="absolute -bottom-4 left-8 w-7 h-7" aria-hidden="true">
+                  <path d="M2 2 L 24 4 L 8 24 Z" fill="hsl(var(--retro-cream))" stroke="hsl(var(--retro-ink))" stroke-width="2" stroke-linejoin="round" />
+                </svg>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Waarom ik dit doe -->
+  <section class="relative py-24 md:py-32 overflow-hidden retro-grain" style="background: hsl(var(--retro-terracotta) / 0.55)">
+    <SunBurst class="absolute -top-32 -right-32 w-[500px] h-[500px] opacity-35 retro-spin pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <Sparkle class="absolute top-16 left-12 w-7 h-7" color="hsl(var(--retro-cream))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-4xl mx-auto">
+        <ScrollReveal class="text-center mb-12 block">
+          <span class="inline-block px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider mb-6"
+            style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-ink)); transform: rotate(2deg)">{t.about.storyTag}</span>
+          <h2 class="retro-display text-4xl md:text-6xl lg:text-7xl" style="color: hsl(var(--retro-ink))">{t.about.storyTitle}</h2>
+        </ScrollReveal>
+
+        <ScrollReveal class="block">
+          <p class="text-lg md:text-xl leading-relaxed mb-6" style="color: hsl(var(--retro-ink) / 0.92)">
+            <span class="float-left mr-4 mt-1 font-retro-display text-7xl md:text-8xl leading-none" style="color: hsl(var(--retro-ink)); font-weight: 800; text-shadow: 4px 4px 0 hsl(var(--retro-mustard))">{t.about.storyText1.charAt(0)}</span>
+            {t.about.storyText1.slice(1)}
+          </p>
+        </ScrollReveal>
+
+        <div class="flex flex-wrap justify-center gap-5 my-12">
+          {t.aboutMe.highlights.map((h, i) => (
+            <span class="inline-flex items-center gap-2 px-5 py-3 rounded-full text-base font-bold"
+              style={`background: ${stickerColors[i % 3].bg}; color: ${stickerColors[i % 3].fg}; border: 2px solid hsl(var(--retro-ink)); box-shadow: 5px 5px 0 0 hsl(var(--retro-ink)); transform: rotate(${stickerRotations[i % 3]}deg)`}>
+              <span class="text-xl">{h.emoji}</span>
+              {h.text}
+            </span>
+          ))}
+        </div>
+
+        <ScrollReveal class="block">
+          <p class="text-lg leading-relaxed mb-6 text-center" style="color: hsl(var(--retro-ink) / 0.88)">{t.about.storyText2}</p>
+        </ScrollReveal>
+        <ScrollReveal class="block">
+          <p class="text-lg leading-relaxed mb-10 text-center whitespace-pre-line" style="color: hsl(var(--retro-ink) / 0.88)">{t.about.storyText3}</p>
+        </ScrollReveal>
+
+        <ScrollReveal class="text-center block">
+          <button data-contact-open class="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold transition-all hover:-translate-y-0.5 hover:translate-x-0.5"
+            style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 5px 5px 0 0 hsl(var(--retro-cream))">
+            {t.about.storyCta} <Icon name="arrow-right" size={14} />
+          </button>
+          <p class="font-handwritten text-2xl mt-4 inline-block" style="color: hsl(var(--retro-ink)); transform: rotate(-2deg)">{t.about.storyCatchPhrase}</p>
+          <div class="mt-4">
+            <a href="/portfolio" class="retro-link-handdraw inline-flex items-center gap-1 text-sm font-bold" style="color: hsl(var(--retro-ink))">{t.about.storyPortfolioLink}</a>
+          </div>
+        </ScrollReveal>
+      </div>
+    </div>
+    <WavyDivider class="absolute bottom-0 left-0 w-full h-8" color="hsl(var(--retro-ink))" />
+  </section>
+
+  <!-- 3. Er kan meer -->
+  <section class="relative py-24 md:py-32 overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6 relative z-10">
+      <ScrollReveal class="text-center max-w-2xl mx-auto mb-16 block">
+        <span class="inline-block px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider mb-6"
+          style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-ink)); transform: rotate(1.5deg)">{t.about.servicesTag}</span>
+        <h2 class="retro-display text-4xl md:text-6xl lg:text-7xl mt-2 mb-4" style="color: hsl(var(--retro-ink))">{t.about.servicesTitle}</h2>
+        <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.75)">{t.about.servicesSubtitle}</p>
+      </ScrollReveal>
+
+      <div class="max-w-6xl mx-auto flex flex-wrap justify-center items-center gap-5 md:gap-7">
+        {t.about.services.map((service, i) => {
+          const isFeature = featuredServiceNames.includes(service.name);
+          const rot = ((i * 37) % 7) - 3;
+          const bg = serviceColorStops[i % serviceColorStops.length];
+          const shadowColor = i % 2 === 0 ? "hsl(var(--retro-ink))" : "hsl(var(--retro-terracotta))";
+          return (
+            <ScrollReveal delay={(i % 5) * 60}>
+              <div class:list={["relative hover-sticker", isFeature ? "p-6 md:p-7 max-w-[320px]" : "p-5 max-w-[260px]"]}
+                style={`background: ${bg}; border: 2px solid hsl(var(--retro-ink)); border-radius: 20px; box-shadow: ${offsetShadow(shadowColor, isFeature ? 7 : 5, isFeature ? 7 : 5)}; transform: rotate(${rot}deg)`}>
+                <div class="flex items-start gap-3 mb-2">
+                  <RetroServiceIcon kind={i} />
+                  <h3 class="retro-display flex-1" style={`color: hsl(var(--retro-ink)); font-size: ${isFeature ? "1.5rem" : "1.15rem"}; line-height: 1.05`}>{service.name}</h3>
+                </div>
+                <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.78)">{service.description}</p>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+
+      <ScrollReveal class="flex flex-col items-center gap-4 mt-14 block">
+        <p class="text-base max-w-2xl text-center" style="color: hsl(var(--retro-ink) / 0.75)">{t.about.servicesNote}</p>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- 4. CTA dark -->
+  <section data-section-dark="true" class="relative py-28 overflow-hidden retro-grain" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">
+    <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] opacity-25 pointer-events-none retro-spin" color="hsl(var(--retro-terracotta))" />
+    <Sparkle class="absolute top-12 left-16 w-6 h-6" color="hsl(var(--retro-mustard))" />
+    <Sparkle class="absolute top-1/3 right-12 w-5 h-5" color="hsl(var(--retro-terracotta))" />
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <ScrollReveal class="block">
+        <h2 class="retro-display text-4xl md:text-6xl lg:text-7xl mb-5">{t.about.ctaTitle}</h2>
+        <p class="max-w-lg mx-auto text-lg mb-10" style="color: hsl(var(--retro-cream) / 0.7)">{t.about.ctaSubtitle}</p>
+        <button data-contact-open class="fill-hover inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base"
+          style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-cream)); box-shadow: 6px 6px 0 0 hsl(var(--retro-mustard)); --fill-color: hsl(var(--retro-mustard))">
+          <span class="relative z-10 inline-flex items-center gap-2">{t.about.ctaButton} <Icon name="arrow-up-right" size={16} /></span>
+        </button>
+        <div class="mt-24 inline-flex flex-col items-center gap-1">
+          <div class="font-handwritten text-2xl px-4 py-1.5 rounded-2xl mb-2"
+            style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 0 hsl(var(--retro-cream)); transform: rotate(-3deg)">{t.about.ctaCallDirect} 👇</div>
+          <a href={`tel:${PHONE_NUMBER}`} class="inline-flex items-center gap-2 text-lg font-bold transition-colors" style="color: hsl(var(--retro-cream) / 0.9)">
+            <Icon name="phone" size={16} /> {PHONE_DISPLAY}
+          </a>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hover-sticker { transition: transform 0.4s cubic-bezier(.2,.8,.2,1); }
+  .hover-sticker:hover { transform: translateY(-5px) rotate(0deg) !important; }
+</style>

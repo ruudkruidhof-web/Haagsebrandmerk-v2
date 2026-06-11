@@ -1,0 +1,113 @@
+---
+import Icon from "./Icon.astro";
+import { t, EMAIL } from "../data/content.ts";
+---
+<dialog
+  id="contact-dialog"
+  class="contact-dialog w-[min(92vw,520px)] rounded-[1.5rem] p-0 bg-transparent backdrop:bg-black/50 backdrop:backdrop-blur-sm"
+>
+  <div class="retro-card !rounded-[1.5rem] p-6 sm:p-8 relative">
+    <button
+      type="button"
+      data-contact-close
+      class="absolute top-4 right-4 p-1.5 rounded-full hover:bg-retro-butter transition-colors"
+      aria-label="Sluiten"
+    >
+      <Icon name="x" size={20} />
+    </button>
+
+    <span class="retro-sticker mb-4">{t.contact.tag}</span>
+    <h2 class="text-2xl sm:text-3xl font-retro-display mb-2" style="color: hsl(var(--retro-ink))">{t.contact.title}</h2>
+    <p class="text-sm mb-6" style="color: hsl(var(--retro-ink) / 0.7)">{t.contact.intro1}</p>
+
+    <form id="contact-form" class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="cd-name">{t.contact.formName}</label>
+        <input id="cd-name" name="name" type="text" required placeholder={t.contact.formNamePlaceholder}
+          class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="cd-email">{t.contact.formEmail}</label>
+        <input id="cd-email" name="email" type="email" required placeholder={t.contact.formEmailPlaceholder}
+          class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+      </div>
+      <div>
+        <span class="block text-sm font-medium mb-1.5">{t.contact.formHelp}</span>
+        <div class="flex flex-wrap gap-2">
+          {t.contact.projectTypes.map((type, i) => (
+            <label class="cursor-pointer">
+              <input type="radio" name="projectType" value={type} class="peer sr-only" checked={i === 0} />
+              <span class="inline-block px-3.5 py-1.5 rounded-full text-xs font-medium border-[1.5px] transition-colors peer-checked:bg-retro-ink peer-checked:text-retro-cream"
+                style="border-color: hsl(var(--retro-ink)); color: hsl(var(--retro-ink))">{type}</span>
+            </label>
+          ))}
+        </div>
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="cd-website">{t.contact.formWebsite}</label>
+        <input id="cd-website" name="website" type="text" placeholder={t.contact.formWebsitePlaceholder}
+          class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+      </div>
+      <div>
+        <label class="block text-sm font-medium mb-1.5" for="cd-message">{t.contact.formMessage}</label>
+        <textarea id="cd-message" name="message" required rows="4" placeholder={t.contact.formMessagePlaceholder}
+          class="retro-field w-full px-4 py-3 rounded-xl text-sm focus:outline-none resize-y"></textarea>
+      </div>
+      <button type="submit" class="retro-pill-btn w-full justify-center">
+        <span>{t.contact.formSubmit}</span>
+        <Icon name="send" size={16} />
+      </button>
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 pt-1">
+        {t.contact.trustSignals.map((sig) => (
+          <span class="inline-flex items-center gap-1 text-xs" style="color: hsl(var(--retro-ink) / 0.6)">
+            <Icon name="check" size={13} /> {sig}
+          </span>
+        ))}
+      </div>
+    </form>
+  </div>
+</dialog>
+
+<script define:vars={{ EMAIL }}>
+  function initContactDialog() {
+    const dialog = document.getElementById("contact-dialog");
+    if (!dialog || dialog.dataset.bound) return;
+    dialog.dataset.bound = "true";
+
+    const open = () => { if (typeof dialog.showModal === "function") dialog.showModal(); };
+    const close = () => dialog.close();
+
+    document.addEventListener("click", (e) => {
+      const opener = e.target.closest("[data-contact-open]");
+      if (opener) { e.preventDefault(); open(); }
+      const closer = e.target.closest("[data-contact-close]");
+      if (closer) { e.preventDefault(); close(); }
+    });
+
+    // Click on backdrop closes
+    dialog.addEventListener("click", (e) => {
+      if (e.target === dialog) close();
+    });
+
+    const form = document.getElementById("contact-form");
+    form?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get("name") || "").toString();
+      const email = (data.get("email") || "").toString();
+      const type = (data.get("projectType") || "").toString();
+      const website = (data.get("website") || "").toString();
+      const message = (data.get("message") || "").toString();
+      const subject = `Aanvraag via website — ${name}`;
+      const body =
+        `Naam: ${name}\n` +
+        `E-mail: ${email}\n` +
+        `Type: ${type}\n` +
+        `Website: ${website}\n\n` +
+        `${message}`;
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+  initContactDialog();
+  document.addEventListener("astro:after-swap", initContactDialog);
+</script>

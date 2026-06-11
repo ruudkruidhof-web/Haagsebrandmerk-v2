@@ -1,0 +1,320 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+import FaqAccordion from "../components/FaqAccordion.astro";
+import Icon from "../components/Icon.astro";
+import SunBurst from "../components/decor/SunBurst.astro";
+import Sparkle from "../components/decor/Sparkle.astro";
+import { t, PHONE_NUMBER, PHONE_DISPLAY } from "../data/content.ts";
+
+const pkgAccents = [
+  { shadow: "hsl(var(--retro-mustard))", rot: -2 },
+  { shadow: "hsl(var(--retro-ink))", rot: 0 },
+  { shadow: "hsl(var(--retro-rust))", rot: 2 },
+];
+const dashIcons = ["bar-chart", "flask", "file-text"];
+const dashAccents = [
+  { shadow: "hsl(var(--retro-mustard))", badge: "hsl(var(--retro-rust))", rot: -2 },
+  { shadow: "hsl(var(--retro-terracotta))", badge: "hsl(var(--retro-mustard))", rot: 1 },
+  { shadow: "hsl(var(--retro-rust))", badge: "hsl(var(--retro-terracotta))", rot: -1 },
+];
+const headerBg = ["hsl(var(--retro-butter) / 0.5)", "hsl(var(--retro-mustard) / 0.45)", "hsl(var(--retro-butter) / 0.5)"];
+const maatwerkItems = ["Meerdere diensten of locaties", "Eigen CMS — zelf updates doen", "Boekings-, offerte- of checkoutflow", "Meertalig of koppelingen op maat"];
+const dashStats = [
+  { label: "Bezoekers", value: "1.248", change: "+12%" },
+  { label: "Pageviews", value: "3.891", change: "+8%" },
+  { label: "Conversies", value: "34", change: "+23%" },
+  { label: "Gem. tijd", value: "2:14", change: "+5%" },
+];
+const chartBars = [35, 42, 28, 55, 48, 62, 45, 70, 58, 75, 65, 80, 72, 85, 60, 90, 78, 95, 82, 68, 88, 76, 92, 85, 70, 88, 95, 82, 90, 85];
+---
+<BaseLayout
+  title="Website prijzen & pakketten | Haagse Brandmerk"
+  description="Van opfrisbeurt tot doorlopend partnerschap. Drie pakketten, heldere prijzen en geen verrassingen achteraf. Vanaf €995."
+>
+  <!-- HERO -->
+  <section class="pt-32 pb-20 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="hidden md:block absolute top-24 -right-16 w-[340px] h-[340px] retro-blob-radius-2 retro-blob-idle-2 pointer-events-none" style="background: hsl(var(--retro-terracotta) / 0.55); border: 2px solid hsl(var(--retro-ink)); box-shadow: 8px 8px 0 hsl(var(--retro-mustard))"></div>
+    <div class="hidden md:block absolute -left-16 top-48 w-[220px] h-[220px] retro-blob-radius retro-blob-idle-1 pointer-events-none" style="background: hsl(var(--retro-butter)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 6px 6px 0 hsl(var(--retro-rust))"></div>
+    <Sparkle class="absolute top-40 left-[18%] w-6 h-6 pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <Sparkle class="absolute bottom-16 left-[30%] w-5 h-5 pointer-events-none" color="hsl(var(--retro-rust))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="text-center max-w-2xl mx-auto">
+        <span class="inline-block px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider mb-6"
+          style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-ink)); transform: rotate(-2deg)">{t.pricing.tag}</span>
+        <h1 class="retro-display text-5xl md:text-7xl lg:text-8xl mt-3 mb-5">{t.pricing.title}</h1>
+        <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.75)">{t.pricing.subtitle}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING CARDS -->
+  <section class="py-20 relative retro-grain overflow-hidden" style="background: hsl(var(--retro-butter) / 0.42)">
+    <Sparkle class="hidden md:block absolute bottom-10 right-[10%] w-7 h-7 pointer-events-none" color="hsl(var(--retro-terracotta))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="relative grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 max-w-5xl mx-auto items-center">
+        {t.pricing.packages.map((pkg, i) => {
+          const accent = pkgAccents[i];
+          const isFeatured = !!(pkg as any).highlighted;
+          return (
+            <ScrollReveal delay={i * 120} class:list={["relative h-full flex flex-col pkg-card", isFeatured ? "md:scale-[1.04] z-10" : ""]}>
+              <div class="relative h-full flex flex-col" style={`background: ${isFeatured ? "hsl(var(--retro-mustard) / 0.35)" : "hsl(var(--retro-cream))"}; color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); border-radius: 20px; box-shadow: 8px 8px 0 0 ${accent.shadow}; transform: rotate(${accent.rot}deg)`}>
+                {isFeatured && (
+                  <span class="absolute -top-4 left-1/2 -translate-x-1/2 z-20 px-4 py-1.5 text-[11px] font-extrabold uppercase tracking-wider rounded-full whitespace-nowrap inline-flex items-center gap-1.5"
+                    style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink)); transform: rotate(-3deg)">
+                    <Icon name="crown" size={12} strokeWidth={2.5} /> {t.pricing.mostChosen}
+                  </span>
+                )}
+                <div class="p-8 flex flex-col flex-1">
+                  <h3 class="font-display font-bold text-xl" style="color: hsl(var(--retro-ink))">{pkg.name}</h3>
+                  <div class="min-h-[4.5rem] flex flex-col justify-center mt-2">
+                    <div class="flex items-baseline gap-1.5">
+                      <span class="font-display text-4xl font-black" style="color: hsl(var(--retro-ink))">{pkg.price}</span>
+                      <span class="text-[10px]" style="color: hsl(var(--retro-ink) / 0.6)">{(pkg as any).priceNote}</span>
+                    </div>
+                    {(pkg as any).priceSub && (<p class="text-[11px] mt-1 leading-snug" style="color: hsl(var(--retro-ink) / 0.6)">{(pkg as any).priceSub}</p>)}
+                  </div>
+                  <p class="text-sm mt-3 mb-6 leading-relaxed" style="color: hsl(var(--retro-ink) / 0.75)">{pkg.description}</p>
+                  <ul class="flex-1 space-y-3">
+                    {pkg.features.map((f) => {
+                      const hasValue = f.includes("(t.w.v.");
+                      return (
+                        <li class="flex items-start gap-2.5 text-sm">
+                          <Icon name="check" size={16} strokeWidth={2.5} class="shrink-0 mt-0.5" />
+                          <span style={`color: ${hasValue ? "hsl(var(--retro-ink))" : "hsl(var(--retro-ink) / 0.78)"}; font-weight: ${hasValue ? 600 : 400}`}>{f}</span>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <button data-contact-open class="fill-hover mt-7 w-full inline-flex h-12 items-center justify-center rounded-full font-bold text-sm"
+                    style={`background: ${isFeatured ? "hsl(var(--retro-ink))" : "hsl(var(--retro-cream))"}; color: ${isFeatured ? "hsl(var(--retro-cream))" : "hsl(var(--retro-ink))"}; border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 ${accent.shadow}; --fill-color: ${isFeatured ? "hsl(var(--retro-rust))" : "hsl(var(--retro-mustard))"}`}>
+                    <span class="relative z-10">{t.pricing.talkButton}</span>
+                  </button>
+                </div>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+
+      <!-- Webshop callout -->
+      <ScrollReveal class="mt-16 max-w-5xl mx-auto block">
+        <div class="p-6 md:p-8" style="background: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); border-radius: 20px; box-shadow: 8px 8px 0 hsl(var(--retro-rust)); transform: rotate(-1deg)">
+          <div class="flex flex-col md:flex-row md:items-center gap-6">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center shrink-0" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink)); transform: rotate(-6deg)">
+              <Icon name="shopping-cart" size={22} strokeWidth={2.25} />
+            </div>
+            <div class="flex-1">
+              <h3 class="retro-display text-xl md:text-2xl mb-1" style="color: hsl(var(--retro-ink))">{t.pricing.webshop.title}</h3>
+              <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.75)">{t.pricing.webshop.text}</p>
+            </div>
+            <div class="text-right shrink-0">
+              <span class="font-display font-black text-2xl block" style="color: hsl(var(--retro-ink))">{t.pricing.webshop.price}</span>
+              <span class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{t.pricing.webshop.note}</span>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+
+      <!-- Maatwerk callout -->
+      <ScrollReveal class="mt-8 max-w-5xl mx-auto block">
+        <div class="p-6 md:p-8" style="background: hsl(var(--retro-butter) / 0.6); border: 2px solid hsl(var(--retro-ink)); border-radius: 20px; box-shadow: 8px 8px 0 hsl(var(--retro-mustard)); transform: rotate(1deg)">
+          <div class="flex flex-col md:flex-row md:items-start gap-6">
+            <div class="w-14 h-14 rounded-full flex items-center justify-center shrink-0" style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink)); transform: rotate(6deg)">
+              <Icon name="settings" size={22} strokeWidth={2.25} />
+            </div>
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1.5">
+                <h3 class="retro-display text-xl md:text-2xl" style="color: hsl(var(--retro-ink))">Maatwerk & Groei — op aanvraag</h3>
+                <Icon name="sparkles" size={16} class="text-retro-rust" />
+              </div>
+              <p class="text-sm md:text-[15px] leading-relaxed mb-3" style="color: hsl(var(--retro-ink) / 0.8)">Voor bedrijven met meerdere diensten, locaties of een team. Denk aan uitgebreide websites, koppelingen met je systemen, een boekings- of offerteflow, of een meertalige site. We bouwen wat jouw zaak nodig heeft.</p>
+              <ul class="grid sm:grid-cols-2 gap-x-6 gap-y-1.5 text-sm" style="color: hsl(var(--retro-ink) / 0.78)">
+                {maatwerkItems.map((item) => (
+                  <li class="flex items-start gap-2"><Icon name="check" size={16} strokeWidth={2.5} class="shrink-0 mt-0.5 text-retro-rust" /><span>{item}</span></li>
+                ))}
+              </ul>
+            </div>
+            <div class="shrink-0 md:self-center">
+              <button data-contact-open class="retro-pill-btn-outline whitespace-nowrap">
+                <span class="relative z-10 inline-flex items-center gap-2">Plan een gesprek <Icon name="arrow-up-right" size={14} /></span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- COMPARISON TABLE -->
+  <section class="py-24 retro-grain relative overflow-hidden" style="background: hsl(var(--retro-cream))">
+    <Sparkle class="hidden md:block absolute bottom-20 left-[8%] w-6 h-6 pointer-events-none" color="hsl(var(--retro-terracotta))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <ScrollReveal class="max-w-4xl mx-auto block">
+        <h2 class="retro-display text-4xl md:text-6xl text-center mb-12">{t.pricing.compareTitle}</h2>
+        <div class="hidden md:block overflow-hidden" style="background: hsl(var(--retro-cream)); border: 2.5px solid hsl(var(--retro-ink)); border-radius: 18px; box-shadow: 10px 10px 0 hsl(var(--retro-mustard))">
+          <table class="w-full text-sm">
+            <thead>
+              <tr style="border-bottom: 2px solid hsl(var(--retro-ink))">
+                <th class="text-left py-5 px-6 font-bold uppercase tracking-wider text-xs" style="background: hsl(var(--retro-butter) / 0.6); color: hsl(var(--retro-ink) / 0.7)">{t.pricing.featureLabel}</th>
+                {t.pricing.columnHeaders.map((h, i) => (
+                  <th class="text-center py-5 px-5 retro-display text-xl" style={`background: ${headerBg[i]}; color: hsl(var(--retro-ink)); border-left: 2px solid hsl(var(--retro-ink))`}>{h}</th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {t.pricing.comparisonFeatures.map((feature, i) => (
+                <tr style={`border-bottom: 1.5px solid hsl(var(--retro-ink) / 0.15); background: ${i % 2 === 0 ? "transparent" : "hsl(var(--retro-butter) / 0.18)"}`}>
+                  <td class="py-4 px-6" style="color: hsl(var(--retro-ink) / 0.85); font-weight: 500">{feature}</td>
+                  {t.pricing.comparisonValues[i].map((val, j) => (
+                    <td class="text-center py-4 px-5" style={`border-left: 1.5px solid hsl(var(--retro-ink) / 0.12); ${j === 1 ? "background: hsl(var(--retro-mustard) / 0.06)" : ""}`}>
+                      {val === "✓" ? (<Icon name="check" size={16} strokeWidth={2.25} class="mx-auto" />) : val === "–" ? (<Icon name="minus" size={16} class="mx-auto" style="opacity:.3" />) : (<span class="text-xs font-bold" style="color: hsl(var(--retro-ink))">{val}</span>)}
+                    </td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div class="md:hidden space-y-6">
+          {t.pricing.columnHeaders.map((header, colIdx) => {
+            const shadow = ["hsl(var(--retro-mustard))", "hsl(var(--retro-rust))", "hsl(var(--retro-terracotta))"][colIdx];
+            return (
+              <div class="p-5" style={`background: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); border-radius: 16px; box-shadow: 5px 5px 0 ${shadow}`}>
+                <h3 class="retro-display text-xl mb-4" style="color: hsl(var(--retro-ink))">{header}</h3>
+                <ul class="space-y-3">
+                  {t.pricing.comparisonFeatures.map((feature, featureIdx) => {
+                    const val = t.pricing.comparisonValues[featureIdx][colIdx];
+                    if (val === "–") return null;
+                    return (
+                      <li class="flex items-center gap-2.5 text-sm">
+                        {val === "✓" ? (<Icon name="check" size={16} strokeWidth={2.5} />) : (<span class="text-xs font-bold px-2 py-0.5 rounded-full" style="background: hsl(var(--retro-ink) / 0.55); color: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink))">{val}</span>)}
+                        <span style="color: hsl(var(--retro-ink) / 0.85)">{feature}</span>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            );
+          })}
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- DASHBOARD SECTION (visueel) -->
+  <section class="py-24 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-butter) / 0.42)">
+    <Sparkle class="hidden md:block absolute bottom-32 right-[10%] w-5 h-5 pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-5xl mx-auto">
+        <ScrollReveal class="text-center mb-14 block">
+          <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full font-bold text-sm uppercase tracking-wider mb-5"
+            style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 4px 4px 0 0 hsl(var(--retro-ink)); transform: rotate(-2deg)">
+            <Icon name="monitor" size={14} /> {t.pricing.dashboardSection.tag}
+          </span>
+          <h2 class="retro-display text-4xl md:text-6xl mt-3 mb-3">{t.pricing.dashboardSection.title}</h2>
+          <p class="max-w-2xl mx-auto leading-relaxed" style="color: hsl(var(--retro-ink) / 0.75)">{t.pricing.dashboardSection.subtitle}</p>
+        </ScrollReveal>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {t.pricing.dashboardSection.features.map((feat, i) => (
+            <ScrollReveal delay={i * 100}>
+              <div class="p-6 h-full" style={`background: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); border-radius: 18px; box-shadow: 7px 7px 0 ${dashAccents[i].shadow}; transform: rotate(${dashAccents[i].rot}deg)`}>
+                <div class="w-12 h-12 rounded-full flex items-center justify-center mb-4" style={`background: ${dashAccents[i].badge}; color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink)); transform: rotate(${-dashAccents[i].rot * 2}deg)`}>
+                  <Icon name={dashIcons[i]} size={20} strokeWidth={2.25} />
+                </div>
+                <h3 class="retro-display text-xl mb-2" style="color: hsl(var(--retro-ink))">{feat.title}</h3>
+                <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.75)">{feat.text}</p>
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
+        <ScrollReveal class="block">
+          <div class="overflow-hidden" style="background: hsl(var(--retro-cream)); border: 2.5px solid hsl(var(--retro-ink)); border-radius: 18px; box-shadow: 10px 10px 0 hsl(var(--retro-mustard))">
+            <div class="flex items-center gap-1.5 px-4 py-2.5" style="background: hsl(var(--retro-ink) / 0.06); border-bottom: 1.5px solid hsl(var(--retro-ink))">
+              <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-rust)); border: 1px solid hsl(var(--retro-ink))"></span>
+              <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-mustard)); border: 1px solid hsl(var(--retro-ink))"></span>
+              <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-olive)); border: 1px solid hsl(var(--retro-ink))"></span>
+              <span class="ml-3 text-xs" style="color: hsl(var(--retro-ink) / 0.6)">haagsebrandmerk.nl/dashboard</span>
+            </div>
+            <div class="relative overflow-hidden" style="background: linear-gradient(135deg, hsl(var(--retro-butter) / 0.3), hsl(var(--retro-cream)))">
+              <div class="p-4 md:p-6 space-y-4">
+                <div class="flex items-center justify-between">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg flex items-center justify-center" style="background: hsl(var(--retro-rust) / 0.15); border: 1px solid hsl(var(--retro-ink))"><Icon name="bar-chart" size={14} class="text-retro-rust" /></div>
+                    <div><div class="text-xs font-medium">Overzicht</div><div class="text-[10px]" style="color: hsl(var(--retro-ink) / 0.6)">jouwbedrijf.nl</div></div>
+                  </div>
+                  <div class="flex gap-1.5">
+                    {["Statistieken", "SEO", "Wijzigingen"].map((tab, i) => (
+                      <span class="text-[10px] px-2.5 py-1 rounded-full" style={`background: ${i === 0 ? "hsl(var(--retro-rust) / 0.15)" : "transparent"}; color: ${i === 0 ? "hsl(var(--retro-rust))" : "hsl(var(--retro-ink) / 0.6)"}; font-weight: ${i === 0 ? 600 : 400}`}>{tab}</span>
+                    ))}
+                  </div>
+                </div>
+                <div class="grid grid-cols-4 gap-3">
+                  {dashStats.map((stat) => (
+                    <div class="rounded-lg p-3" style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink) / 0.5); box-shadow: 2px 2px 0 hsl(var(--retro-mustard))">
+                      <div class="text-[10px] mb-1" style="color: hsl(var(--retro-ink) / 0.6)">{stat.label}</div>
+                      <div class="font-display font-bold text-sm">{stat.value}</div>
+                      <div class="text-[10px]" style="color: hsl(var(--retro-rust))">{stat.change}</div>
+                    </div>
+                  ))}
+                </div>
+                <div class="rounded-lg p-3" style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink) / 0.5)">
+                  <div class="flex items-center justify-between mb-3">
+                    <span class="text-[10px] font-medium">Bezoekers deze maand</span>
+                    <span class="text-[10px]" style="color: hsl(var(--retro-ink) / 0.6)">Laatste 30 dagen</span>
+                  </div>
+                  <div class="flex items-end gap-[3px] h-16">
+                    {chartBars.map((h) => (<div class="flex-1 rounded-t" style={`height: ${h}%; background: hsl(var(--retro-rust) / 0.5)`}></div>))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <div class="text-center mt-10">
+          <button data-contact-open class="fill-hover inline-flex items-center gap-2 px-8 py-4 rounded-full font-bold text-base"
+            style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border: 2px solid hsl(var(--retro-ink)); box-shadow: 5px 5px 0 hsl(var(--retro-rust)); --fill-color: hsl(var(--retro-rust))">
+            <span class="relative z-10 inline-flex items-center gap-2">Demo aanvragen <Icon name="arrow-up-right" size={16} /></span>
+          </button>
+          <p class="text-xs mt-3" style="color: hsl(var(--retro-ink) / 0.65)">Bekijk hoe het dashboard werkt voor jouw website</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-24 retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6">
+      <div class="max-w-2xl mx-auto">
+        <ScrollReveal class="block"><h2 class="retro-display text-4xl md:text-6xl text-center mb-12">{t.pricing.faqTitle}</h2></ScrollReveal>
+        <FaqAccordion faqs={t.pricing.faqs} />
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section data-section-dark="true" class="py-28 relative overflow-hidden" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">
+    <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] opacity-15 retro-spin pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <Sparkle class="absolute bottom-16 right-[18%] w-9 h-9 pointer-events-none" color="hsl(var(--retro-cream))" />
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <ScrollReveal class="block">
+        <h2 class="retro-display text-4xl md:text-6xl lg:text-7xl mb-5">{t.cta.title}</h2>
+        <p class="max-w-lg mx-auto text-lg mb-10" style="color: hsl(var(--retro-cream) / 0.75)">{t.cta.subtitle}</p>
+        <button data-contact-open class="fill-hover inline-flex h-12 px-8 items-center rounded-full font-bold gap-2"
+          style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); border: 2px solid hsl(var(--retro-cream)); box-shadow: 5px 5px 0 hsl(var(--retro-mustard)); --fill-color: hsl(var(--retro-mustard))">
+          <span class="relative z-10 inline-flex items-center gap-2">{t.cta.button}<Icon name="arrow-up-right" size={16} /></span>
+        </button>
+        <a href={`tel:${PHONE_NUMBER}`} class="flex items-center justify-center gap-1.5 text-sm mt-8 transition-colors" style="color: hsl(var(--retro-cream) / 0.6)">
+          <Icon name="phone" size={14} /> {t.cta.callDirect} {PHONE_DISPLAY}
+        </a>
+      </ScrollReveal>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .pkg-card:hover > div { transform: rotate(0deg) translateY(-8px) !important; transition: transform 0.4s cubic-bezier(.2,.8,.2,1); }
+</style>

@@ -1,0 +1,33 @@
+---
+import Icon from "./Icon.astro";
+import ScrollReveal from "./ScrollReveal.astro";
+import { PHONE_NUMBER, PHONE_DISPLAY } from "../data/content.ts";
+
+interface Props {
+  title: string;
+  subtitle: string;
+  button: string;
+  callDirect: string;
+}
+const { title, subtitle, button, callDirect } = Astro.props;
+---
+<section data-section-dark="true" class="py-24 md:py-32" style="background: hsl(var(--retro-ink))">
+  <div class="container mx-auto px-6 text-center">
+    <ScrollReveal class="max-w-3xl mx-auto">
+      <h2 class="font-retro-display text-3xl md:text-5xl font-bold mb-6 leading-tight" style="color: hsl(var(--retro-cream))">{title}</h2>
+      <p class="text-base md:text-lg mb-10 leading-relaxed" style="color: hsl(var(--retro-cream) / 0.7)">{subtitle}</p>
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <button data-contact-open class="retro-pill-btn" style="background: hsl(var(--retro-mustard)); color: hsl(var(--retro-ink)); border-color: hsl(var(--retro-mustard)); box-shadow: 4px 4px 0 hsl(var(--retro-rust))">
+          <span>{button}</span>
+          <Icon name="arrow-right" size={18} />
+        </button>
+        <span class="text-sm flex items-center gap-2" style="color: hsl(var(--retro-cream) / 0.7)">
+          {callDirect}
+          <a href={`tel:${PHONE_NUMBER}`} class="font-medium hover:underline inline-flex items-center gap-1" style="color: hsl(var(--retro-cream))">
+            <Icon name="phone" size={14} /> {PHONE_DISPLAY}
+          </a>
+        </span>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>

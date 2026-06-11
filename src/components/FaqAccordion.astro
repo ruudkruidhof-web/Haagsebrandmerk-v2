@@ -1,0 +1,17 @@
+---
+import Icon from "./Icon.astro";
+interface Faq { q: string; a: string; }
+interface Props { faqs: Faq[]; class?: string; }
+const { faqs, class: className = "" } = Astro.props;
+---
+<div class:list={["w-full space-y-3", className]}>
+  {faqs.map((faq) => (
+    <details class="faq-retro-item px-6 py-1">
+      <summary class="flex items-center justify-between gap-4 py-4 text-left font-display font-semibold text-lg" style="color: hsl(var(--retro-ink))">
+        <span>{faq.q}</span>
+        <span class="faq-retro-chevron flex items-center justify-center"><Icon name="chevron-down" size={18} /></span>
+      </summary>
+      <div class="pb-5 leading-relaxed whitespace-pre-line" style="color: hsl(var(--retro-ink) / 0.75)">{faq.a}</div>
+    </details>
+  ))}
+</div>

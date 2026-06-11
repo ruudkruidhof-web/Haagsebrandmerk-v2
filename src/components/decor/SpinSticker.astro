@@ -1,0 +1,22 @@
+---
+import Icon from "../Icon.astro";
+interface Props { text: string; class?: string; }
+const { text, class: className = "" } = Astro.props;
+---
+<div class:list={["relative w-32 h-32", className]} aria-hidden="true">
+  <div class="absolute inset-0 retro-spin">
+    <svg viewBox="0 0 200 200" class="w-full h-full">
+      <defs>
+        <path id="spin-circle" d="M 100,100 m -75,0 a 75,75 0 1,1 150,0 a 75,75 0 1,1 -150,0" />
+      </defs>
+      <text fill="hsl(var(--retro-ink))" style="font-family: 'Space Grotesk', sans-serif; font-size: 15px; font-weight: 600; letter-spacing: 3px; text-transform: uppercase;">
+        <textPath href="#spin-circle" startOffset="0">{text}</textPath>
+      </text>
+    </svg>
+  </div>
+  <div class="absolute inset-0 flex items-center justify-center">
+    <div class="w-12 h-12 rounded-full flex items-center justify-center" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream))">
+      <Icon name="sparkles" size={20} />
+    </div>
+  </div>
+</div>

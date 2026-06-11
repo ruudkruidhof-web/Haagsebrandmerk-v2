@@ -1,0 +1,40 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import CaseV2 from "../../components/case-study/CaseV2.astro";
+import CaseEditorial from "../../components/case-study/CaseEditorial.astro";
+import { contentProjects } from "../../data/content.ts";
+import { portfolioV2Cases } from "../../data/portfolio-v2-cases.ts";
+import { editorialCaseContent } from "../../data/editorial-cases.ts";
+
+export function getStaticPaths() {
+  return contentProjects.map((project, i) => {
+    const nextProject = contentProjects[(i + 1) % contentProjects.length];
+    return {
+      params: { slug: project.id },
+      props: {
+        project,
+        next: { id: nextProject.id, title: nextProject.title, image: nextProject.image, tagline: nextProject.catchPhrase },
+      },
+    };
+  });
+}
+
+const { project, next } = Astro.props;
+const slug = project.id;
+const isEditorial = slug in editorialCaseContent;
+const v2 = portfolioV2Cases[slug]?.nl;
+const editorial = editorialCaseContent[slug]?.nl;
+const seoTitle = `${project.title} — Portfolio | Haagse Brandmerk`;
+---
+<BaseLayout title={seoTitle} description={project.description}>
+  {isEditorial && editorial ? (
+    <CaseEditorial slug={slug} content={editorial} liveUrl={project.liveUrl} next={next} />
+  ) : v2 ? (
+    <CaseV2 content={v2} currentId={slug} next={next} />
+  ) : (
+    <section class="pt-32 pb-24 container mx-auto px-6">
+      <h1 class="retro-display text-4xl">{project.title}</h1>
+      <p class="mt-4" style="color: hsl(var(--retro-ink) / 0.7)">{project.description}</p>
+    </section>
+  )}
+</BaseLayout>

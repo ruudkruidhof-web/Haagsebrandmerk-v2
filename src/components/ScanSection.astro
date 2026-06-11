@@ -1,0 +1,55 @@
+---
+import Icon from "./Icon.astro";
+import ScrollReveal from "./ScrollReveal.astro";
+---
+<section id="scan-section" class="py-20 md:py-28 relative overflow-hidden scroll-mt-20 retro-grain" style="background: hsl(var(--retro-butter) / 0.42); color: hsl(var(--retro-ink))">
+  <div class="absolute top-16 right-[6%] w-[260px] h-[260px] retro-blob-radius pointer-events-none hidden md:block" style="background: hsl(var(--retro-terracotta) / 0.32)"></div>
+  <div class="absolute bottom-16 left-[4%] w-[220px] h-[220px] retro-blob-radius-2 pointer-events-none hidden md:block" style="background: hsl(var(--retro-olive) / 0.22)"></div>
+
+  <div class="container mx-auto px-6 relative z-10">
+    <ScrollReveal class="max-w-[700px] mx-auto text-center mb-8">
+      <span class="retro-sticker mb-6">
+        <span class="w-1.5 h-1.5 rounded-full animate-pulse" style="background: hsl(var(--retro-rust))"></span>
+        Gratis Website Scan
+      </span>
+      <h2 class="retro-display text-5xl md:text-7xl leading-none" style="color: hsl(var(--retro-ink))">Hoe scoort jouw website?</h2>
+      <p class="text-sm md:text-base mt-5 max-w-[540px] mx-auto leading-relaxed" style="color: hsl(var(--retro-ink) / 0.72)">
+        Binnen twee minuten weet je waar je staat op snelheid, vindbaarheid, toegankelijkheid en veiligheid. Powered by Google Lighthouse.
+      </p>
+    </ScrollReveal>
+
+    <ScrollReveal delay={100} class="block">
+      <div class="max-w-[700px] mx-auto">
+        <div class="retro-card p-2 focus-within:translate-y-[-2px] transition-all duration-300">
+          <form class="flex flex-col sm:flex-row gap-2" data-scan-form>
+            <input type="text" placeholder="bijv. jouwbedrijf.nl"
+              class="flex-1 bg-transparent px-6 h-14 placeholder:text-foreground/45 focus:outline-none text-base md:text-lg"
+              style="color: hsl(var(--retro-ink))" />
+            <button type="submit" class="retro-pill-btn h-14 px-8 justify-center whitespace-nowrap text-base">
+              <span class="relative z-10 inline-flex items-center gap-2">Scan mijn website <Icon name="arrow-right" size={18} /></span>
+            </button>
+          </form>
+        </div>
+        <div class="flex items-center justify-center gap-4 mt-4">
+          <span class="flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="phone" size={12} class="text-primary" /> Mobiel</span>
+          <span class="text-muted-foreground/30">+</span>
+          <span class="flex items-center gap-1.5 text-xs text-muted-foreground"><Icon name="bar-chart" size={12} class="text-primary" /> Desktop</span>
+        </div>
+        <p class="text-center text-xs mt-4" style="color: hsl(var(--retro-ink) / 0.55)">De scan-tool is binnenkort weer beschikbaar.</p>
+      </div>
+    </ScrollReveal>
+  </div>
+</section>
+
+<script>
+  // Scan-velden zijn nog niet functioneel (backend volgt). Voorkom navigatie.
+  function bindScanForms() {
+    document.querySelectorAll("[data-scan-form]").forEach((f) => {
+      if ((f as HTMLElement).dataset.bound) return;
+      (f as HTMLElement).dataset.bound = "true";
+      f.addEventListener("submit", (e) => e.preventDefault());
+    });
+  }
+  bindScanForms();
+  document.addEventListener("astro:after-swap", bindScanForms);
+</script>

@@ -1,0 +1,83 @@
+---
+import Icon from "./Icon.astro";
+import { t, PHONE_NUMBER, PHONE_DISPLAY, EMAIL, LINKEDIN_URL } from "../data/content.ts";
+
+const footerLinks = [
+  { label: t.nav.home, path: "/" },
+  { label: t.nav.portfolio, path: "/portfolio" },
+  { label: t.nav.about, path: "/over" },
+  { label: t.nav.pricing, path: "/prijzen" },
+  { label: t.nav.contact, path: "/contact" },
+];
+const year = new Date().getFullYear();
+---
+<footer class="border-t relative retro-grain" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream) / 0.68); border-color: hsl(var(--retro-cream) / 0.18)">
+  <div class="container mx-auto px-6 py-16 relative z-10">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+      <div class="lg:col-span-2">
+        <a href="/" class="font-display text-xl font-bold tracking-tight" style="color: hsl(var(--retro-cream))">
+          haagse<span style="color: hsl(var(--retro-mustard))">brandmerk</span>
+        </a>
+        <p class="mt-4 max-w-sm leading-relaxed" style="color: hsl(var(--retro-cream) / 0.68)">{t.footer.description}</p>
+        <div class="flex flex-col gap-2 mt-6 text-sm" style="color: hsl(var(--retro-cream) / 0.68)">
+          <span class="flex items-center gap-1.5"><Icon name="mail" size={14} /> {EMAIL}</span>
+          <span class="flex items-center gap-1.5"><Icon name="map-pin" size={14} /> Den Haag, Nederland</span>
+          <a href={`tel:${PHONE_NUMBER}`} class="flex items-center gap-1.5 transition-colors hover:underline" style="color: hsl(var(--retro-cream) / 0.68)"><Icon name="phone" size={14} /> {PHONE_DISPLAY}</a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-display font-semibold mb-4 text-sm uppercase tracking-wider" style="color: hsl(var(--retro-cream))">{t.footer.navTitle}</h4>
+        <ul class="space-y-3">
+          {footerLinks.map((item) => (
+            <li>
+              <a href={item.path} class="text-sm transition-colors inline-block hover:underline" style="color: hsl(var(--retro-cream) / 0.68)">{item.label}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-display font-semibold mb-4 text-sm uppercase tracking-wider" style="color: hsl(var(--retro-cream))">{t.footer.socialsTitle}</h4>
+        <ul class="space-y-3">
+          <li>
+            <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" class="text-sm transition-colors inline-flex items-center gap-1 hover:underline" style="color: hsl(var(--retro-cream) / 0.68)">
+              LinkedIn <Icon name="arrow-up-right" size={12} />
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Gratis website scan (visueel — backend volgt later) -->
+    <div class="mt-12 pt-8" style="border-top: 1px solid hsl(var(--retro-cream) / 0.18)">
+      <div class="max-w-lg mx-auto text-center mb-8 retro-card p-6" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink))">
+        <h4 class="font-display font-semibold text-sm mb-2">Gratis Website Scan</h4>
+        <p class="text-xs mb-3" style="color: hsl(var(--retro-ink) / 0.7)">Benieuwd hoe jouw site scoort op snelheid, SEO en meer? Binnenkort beschikbaar.</p>
+        <form class="flex gap-2" data-scan-form>
+          <div class="flex-1 relative">
+            <span class="absolute left-3 top-1/2 -translate-y-1/2" style="color: hsl(var(--retro-ink) / 0.5)"><Icon name="search" size={14} /></span>
+            <input type="text" placeholder="bijv. jouwbedrijf.nl"
+              class="w-full h-9 pl-9 pr-3 rounded-full text-sm focus:outline-none focus:ring-1 transition-all"
+              style="background: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); color: hsl(var(--retro-ink))" />
+          </div>
+          <button type="submit" class="h-9 px-4 rounded-full text-xs font-medium transition-colors shrink-0"
+            style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">Scan</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="pt-8 flex flex-col items-center gap-3" style="border-top: 1px solid hsl(var(--retro-cream) / 0.18)">
+      <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-sm" style="color: hsl(var(--retro-cream) / 0.68)">
+        <span>© {year} haagsebrandmerk. {t.footer.rights}</span>
+        <span class="hidden sm:inline">·</span>
+        <span>KVK 42003114</span>
+        <span class="hidden sm:inline">·</span>
+        <span>BTW NL005426217B31</span>
+        <span class="hidden sm:inline">·</span>
+        <a href="/privacy" class="hover:underline transition-colors" style="color: hsl(var(--retro-cream) / 0.68)">Privacybeleid</a>
+      </div>
+      <p class="text-sm" style="color: hsl(var(--retro-cream) / 0.68)">{t.footer.madeBy}</p>
+    </div>
+  </div>
+</footer>

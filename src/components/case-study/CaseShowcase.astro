@@ -1,0 +1,37 @@
+---
+import Icon from "../Icon.astro";
+import ScrollReveal from "../ScrollReveal.astro";
+import { portfolioV2Cases } from "../../data/portfolio-v2-cases.ts";
+interface Props { currentId: string; accent?: string; }
+const { currentId, accent = "#F9AD76" } = Astro.props;
+const cases = Object.entries(portfolioV2Cases)
+  .filter(([id]) => id !== currentId)
+  .map(([id, c]) => ({ id, title: c.nl.title, tagline: c.nl.tagline, heroImage: c.nl.heroImage, eyebrow: c.nl.eyebrow, accent: c.nl.accent }));
+---
+<section class="py-16 md:py-24 border-t border-border">
+  <div class="container mx-auto px-6 mb-8">
+    <ScrollReveal class="flex items-end justify-between gap-4 block">
+      <div>
+        <div class="text-[11px] uppercase tracking-[0.3em] mb-2" style={`color: ${accent}`}>Meer cases</div>
+        <h2 class="font-display font-semibold text-foreground" style="font-size: clamp(1.5rem, 2.6vw, 2.2rem)">Andere projecten</h2>
+      </div>
+      <a href="/portfolio" class="hidden sm:inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors shrink-0">Alle cases <Icon name="arrow-right" size={14} /></a>
+    </ScrollReveal>
+  </div>
+  <div class="flex gap-5 overflow-x-auto pb-6 px-6 snap-x snap-mandatory">
+    {cases.map((c) => (
+      <a href={`/portfolio/${c.id}`} class="group snap-start shrink-0 w-[80vw] sm:w-[380px]">
+        <div class="rounded-2xl overflow-hidden border border-border bg-muted/30 h-full flex flex-col transition-transform duration-300 group-hover:-translate-y-1">
+          <div class="aspect-[16/10] overflow-hidden bg-muted">
+            <img src={c.heroImage} alt={c.title} loading="lazy" class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.04]" />
+          </div>
+          <div class="p-5 flex-1 flex flex-col">
+            <div class="text-[10px] uppercase tracking-[0.25em] mb-2" style={`color: ${c.accent}`}>{c.eyebrow}</div>
+            <h3 class="font-display font-semibold text-lg text-foreground mb-1">{c.title}</h3>
+            <p class="text-sm text-muted-foreground italic">{c.tagline}</p>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>

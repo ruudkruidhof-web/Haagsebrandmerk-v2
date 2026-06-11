@@ -1,0 +1,33 @@
+---
+import BrowserFrame from "./BrowserFrame.astro";
+import type { Project } from "../data/content.ts";
+
+interface Props {
+  project: Project;
+  concept?: boolean;
+}
+const { project, concept = false } = Astro.props;
+const badge = concept ? "Concept" : project.type === "redesign" ? "Redesign" : "Nieuw";
+---
+<a href={`/portfolio/${project.id}`} class="group block h-full">
+  <div class="retro-card h-full flex flex-col overflow-hidden !p-0">
+    <div class="relative">
+      <BrowserFrame url={project.liveUrl}>
+        <div class="aspect-[16/10] overflow-hidden bg-muted">
+          <img src={project.image} alt={project.title} loading="lazy"
+            class="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]" />
+        </div>
+      </BrowserFrame>
+      <span class="retro-stamp absolute top-3 right-3 z-10">{badge}</span>
+    </div>
+    <div class="p-5 flex flex-col flex-1">
+      <h3 class="font-retro-display text-xl font-bold mb-1.5" style="color: hsl(var(--retro-ink))">{project.title}</h3>
+      <p class="text-sm leading-relaxed mb-4 flex-1" style="color: hsl(var(--retro-ink) / 0.72)">{project.description}</p>
+      <div class="flex flex-wrap gap-1.5">
+        {project.tags.map((tag) => (
+          <span class="text-[11px] px-2.5 py-1 rounded-full font-medium" style="background: hsl(var(--retro-butter) / 0.5); color: hsl(var(--retro-ink)); border: 1px solid hsl(var(--retro-ink) / 0.3)">{tag}</span>
+        ))}
+      </div>
+    </div>
+  </div>
+</a>

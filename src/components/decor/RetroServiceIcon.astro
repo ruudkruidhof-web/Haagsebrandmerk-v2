@@ -1,0 +1,61 @@
+---
+interface Props { kind: number; }
+const { kind } = Astro.props;
+const k = kind % 9;
+const stroke = "hsl(var(--retro-ink))";
+---
+{k === 0 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <rect x="10" y="6" width="28" height="36" rx="4" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-butter))" />
+    <circle cx="24" cy="36" r="2" fill={stroke} />
+    <line x1="14" y1="12" x2="34" y2="12" stroke={stroke} stroke-width="2" />
+  </svg>
+)}
+{k === 1 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <path d="M8 30 Q 16 14, 24 24 T 40 18" stroke={stroke} stroke-width="2.5" fill="none" stroke-linecap="round" />
+    <circle cx="40" cy="18" r="3" fill="hsl(var(--retro-terracotta))" stroke={stroke} stroke-width="1.5" />
+  </svg>
+)}
+{k === 2 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <circle cx="24" cy="24" r="14" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-mustard))" />
+    <path d="M16 24 L 22 30 L 32 18" stroke={stroke} stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+)}
+{k === 3 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <path d="M10 38 L 24 8 L 38 38 Z" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-terracotta) / 0.5)" />
+    <circle cx="24" cy="28" r="4" fill={stroke} />
+  </svg>
+)}
+{k === 4 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <rect x="6" y="14" width="36" height="22" rx="3" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-cream))" />
+    <line x1="6" y1="20" x2="42" y2="20" stroke={stroke} stroke-width="2" />
+    <circle cx="11" cy="17" r="1.2" fill={stroke} />
+    <circle cx="15" cy="17" r="1.2" fill={stroke} />
+  </svg>
+)}
+{k === 5 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <path d="M24 6 L 28 18 L 42 18 L 31 26 L 35 38 L 24 30 L 13 38 L 17 26 L 6 18 L 20 18 Z" stroke={stroke} stroke-width="1.5" fill="hsl(var(--retro-mustard))" stroke-linejoin="round" />
+  </svg>
+)}
+{k === 6 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <circle cx="18" cy="20" r="10" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-terracotta))" />
+    <circle cx="32" cy="30" r="10" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-butter))" />
+  </svg>
+)}
+{k === 7 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <circle cx="24" cy="24" r="16" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-cream))" />
+    <path d="M32 32 L 40 40" stroke={stroke} stroke-width="3" stroke-linecap="round" />
+  </svg>
+)}
+{k === 8 && (
+  <svg viewBox="0 0 48 48" class="w-9 h-9">
+    <path d="M8 24 Q 24 6, 40 24 T 8 24 Z" stroke={stroke} stroke-width="2" fill="hsl(var(--retro-olive) / 0.4)" />
+  </svg>
+)}

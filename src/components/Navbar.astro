@@ -1,0 +1,135 @@
+---
+import Icon from "./Icon.astro";
+import { t, PHONE_NUMBER, PHONE_DISPLAY } from "../data/content.ts";
+
+const pathname = Astro.url.pathname;
+const navItems = [
+  { label: t.nav.home, path: "/" },
+  { label: t.nav.portfolio, path: "/portfolio" },
+  { label: t.nav.about, path: "/over" },
+  { label: t.nav.pricing, path: "/prijzen" },
+];
+const isActive = (p: string) => (p === "/" ? pathname === "/" : pathname.startsWith(p));
+---
+<header
+  id="site-header"
+  class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent"
+>
+  <div id="scroll-progress" class="absolute bottom-0 left-0 right-0 h-[2px] bg-primary origin-left" style="transform: scaleX(0)"></div>
+
+  <nav class="container mx-auto px-6 h-16 flex items-center justify-between">
+    <a href="/" class="font-display text-xl font-bold tracking-tight">
+      <span class="text-foreground">haagse</span><span class="text-primary">brandmerk</span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-8">
+      {navItems.map((item) => (
+        <li>
+          <a
+            href={item.path}
+            class:list={[
+              "text-sm font-medium transition-colors duration-300 relative py-1",
+              isActive(item.path) ? "text-primary" : "text-muted-foreground hover:text-foreground",
+            ]}
+          >
+            {item.label}
+            {isActive(item.path) && (
+              <span class="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+            )}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="hidden lg:flex items-center gap-3">
+      <button
+        data-contact-open
+        class="fill-hover inline-flex h-9 px-5 items-center rounded-full bg-primary text-primary-foreground text-sm font-medium transition-colors"
+      >
+        <span class="relative z-10">{t.nav.cta}</span>
+      </button>
+    </div>
+
+    <div class="lg:hidden flex items-center gap-2">
+      <button id="mobile-toggle" class="p-2 text-foreground" aria-label="Menu" aria-expanded="false">
+        <span data-menu-icon><Icon name="menu" size={20} /></span>
+        <span data-close-icon class="hidden"><Icon name="x" size={20} /></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="lg:hidden border-b border-border overflow-hidden bg-background hidden" style="background: hsl(var(--retro-cream)); border-color: hsl(var(--retro-ink) / 0.24)">
+    <ul class="container mx-auto px-6 py-6 space-y-4">
+      {navItems.map((item) => (
+        <li>
+          <a href={item.path} class:list={["block text-lg font-medium", isActive(item.path) ? "text-primary" : "text-muted-foreground"]}>
+            {item.label}
+          </a>
+        </li>
+      ))}
+      <li>
+        <button data-contact-open class="inline-flex h-10 px-6 items-center rounded-full bg-primary text-primary-foreground text-sm font-medium mt-2">
+          {t.nav.cta}
+        </button>
+      </li>
+      <li>
+        <a href={`tel:${PHONE_NUMBER}`} class="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors mt-1">
+          <Icon name="phone" size={14} /> {PHONE_DISPLAY}
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  function initNavbar() {
+    const header = document.getElementById("site-header");
+    const progress = document.getElementById("scroll-progress");
+    const toggle = document.getElementById("mobile-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (!header) return;
+
+    const menuIcon = toggle?.querySelector("[data-menu-icon]");
+    const closeIcon = toggle?.querySelector("[data-close-icon]");
+
+    const onScroll = () => {
+      const scrolled = window.scrollY > 20;
+      if (scrolled) {
+        header.style.background = "hsl(var(--retro-cream) / 0.86)";
+        header.style.borderBottom = "1px solid hsl(var(--retro-ink) / 0.24)";
+        header.style.backdropFilter = "blur(16px)";
+        (header.style as any).webkitBackdropFilter = "blur(16px)";
+        header.classList.add("shadow-sm");
+      } else if (!menu || menu.classList.contains("hidden")) {
+        header.style.background = "transparent";
+        header.style.borderBottom = "";
+        header.style.backdropFilter = "";
+        (header.style as any).webkitBackdropFilter = "";
+        header.classList.remove("shadow-sm");
+      }
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      if (progress) progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
+
+    let open = false;
+    toggle?.addEventListener("click", () => {
+      open = !open;
+      menu?.classList.toggle("hidden", !open);
+      menuIcon?.classList.toggle("hidden", open);
+      closeIcon?.classList.toggle("hidden", !open);
+      toggle.setAttribute("aria-expanded", String(open));
+      if (open) {
+        header.style.background = "hsl(var(--retro-cream))";
+        header.style.borderBottom = "1px solid hsl(var(--retro-ink) / 0.24)";
+      } else {
+        onScroll();
+      }
+    });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  initNavbar();
+  document.addEventListener("astro:after-swap", initNavbar);
+</script>

@@ -1,0 +1,194 @@
+---
+import Icon from "../Icon.astro";
+import ScrollReveal from "../ScrollReveal.astro";
+import CaseTrustCTA from "./CaseTrustCTA.astro";
+import CaseLivePreview from "./CaseLivePreview.astro";
+import CaseHowItWorks from "./CaseHowItWorks.astro";
+import CaseShowcase from "./CaseShowcase.astro";
+import CaseClosingCTA from "./CaseClosingCTA.astro";
+import type { EditorialContent } from "../../data/editorial-cases.ts";
+
+interface Props {
+  slug: string;
+  content: EditorialContent;
+  liveUrl: string;
+  next?: { id: string; title: string; image: string; tagline?: string } | null;
+}
+const { slug, content, liveUrl, next = null } = Astro.props;
+const accentHex: Record<string, string> = {
+  "angela-ceremonies": "#C0824F",
+  "reuring-op-de-delle": "#A8402F",
+  "digitale-hand": "#4A6E82",
+  "enjoy-the-breeze": "#3E9AA8",
+};
+const accent = accentHex[slug] ?? "#C0824F";
+const liveDomain = liveUrl.replace(/^https?:\/\//, "").replace(/\/$/, "");
+---
+<article class="editorial-case editorial-grain relative min-h-screen pt-24 md:pt-28" data-case={slug}>
+  <div class="container mx-auto px-6 pt-4 pb-6 relative z-10">
+    <a href="/portfolio" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] transition-opacity hover:opacity-70" style="color: hsl(var(--case-mute))">
+      <Icon name="arrow-left" size={14} /> Alle cases
+    </a>
+  </div>
+
+  <!-- Hero -->
+  <section class="container mx-auto px-6 relative z-10">
+    <div class="max-w-4xl">
+      <p class="text-[11px] uppercase tracking-[0.35em] mb-6" style="color: hsl(var(--case-accent))">{content.eyebrow}</p>
+      <h1 class="font-editorial font-bold leading-[0.95] tracking-tight mb-5" style="font-size: clamp(2.6rem, 7vw, 5.5rem); color: hsl(var(--case-ink))">{content.client}</h1>
+      <p class="text-xl md:text-2xl mb-3" style="color: hsl(var(--case-accent))">{content.heroSubtitle}</p>
+      {content.heroOneLiner && <p class="text-lg md:text-xl leading-relaxed max-w-2xl" style="color: hsl(var(--case-ink) / 0.78)">{content.heroOneLiner}</p>}
+    </div>
+    <div class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-5 mt-12 pt-8 border-t" style="border-color: hsl(var(--case-rule))">
+      <div><div class="text-[10px] uppercase tracking-[0.25em] mb-1.5" style="color: hsl(var(--case-mute))">Branche</div><div class="font-editorial font-medium" style="color: hsl(var(--case-ink))">{content.industry}</div></div>
+      <div><div class="text-[10px] uppercase tracking-[0.25em] mb-1.5" style="color: hsl(var(--case-mute))">Locatie</div><div class="font-editorial font-medium" style="color: hsl(var(--case-ink))">{content.year}</div></div>
+      <div><div class="text-[10px] uppercase tracking-[0.25em] mb-1.5" style="color: hsl(var(--case-mute))">Diensten</div><div class="font-editorial font-medium" style="color: hsl(var(--case-ink))">{content.services}</div></div>
+    </div>
+  </section>
+
+  {content.heroImage && (
+    <section class="container mx-auto px-6 mt-12 md:mt-16 relative z-10">
+      <div class="rounded-2xl md:rounded-[28px] overflow-hidden border" style="border-color: hsl(var(--case-rule)); box-shadow: 0 40px 80px -30px rgba(0,0,0,0.22)">
+        <img src={content.heroImage} alt={content.client} loading="eager" class="block w-full h-auto" />
+      </div>
+    </section>
+  )}
+
+  <!-- Intro -->
+  <section class="container mx-auto px-6 py-16 md:py-24 relative z-10">
+    <ScrollReveal class="block">
+      <p class="editorial-dropcap max-w-3xl text-xl md:text-2xl leading-[1.6]" style="color: hsl(var(--case-ink) / 0.9)">{content.intro}</p>
+    </ScrollReveal>
+  </section>
+
+  {content.summary && content.summary.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 border-t pt-10" style="border-color: hsl(var(--case-rule))">
+        {content.summary.map((s, i) => (
+          <ScrollReveal delay={i * 80} class="block">
+            <div class="text-[11px] uppercase tracking-[0.3em] mb-3" style="color: hsl(var(--case-accent))">{s.label}</div>
+            <p class="text-lg leading-relaxed" style="color: hsl(var(--case-ink) / 0.85)">{s.text}</p>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.challenge && content.challenge.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="max-w-3xl">
+        <div class="text-[11px] uppercase tracking-[0.3em] mb-5" style="color: hsl(var(--case-accent))">De uitdaging</div>
+        {content.challenge.map((p) => (<ScrollReveal class="block"><p class="text-lg leading-[1.7] mb-5" style="color: hsl(var(--case-ink) / 0.85)">{p}</p></ScrollReveal>))}
+      </div>
+    </section>
+  )}
+
+  {content.approach && content.approach.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="max-w-4xl space-y-12 md:space-y-16">
+        {content.approach.map((a, i) => (
+          <ScrollReveal class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start block">
+            <div class="md:col-span-3"><div class="editorial-num">{String(i + 1).padStart(2, "0")}</div></div>
+            <div class="md:col-span-9">
+              <h3 class="font-editorial font-bold text-2xl md:text-3xl mb-3" style="color: hsl(var(--case-ink))">{a.title}</h3>
+              <p class="text-lg leading-[1.7]" style="color: hsl(var(--case-ink) / 0.82)">{a.body}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.festivalMeta && content.festivalMeta.length > 0 && (
+    <section class="container mx-auto px-6 pb-12 relative z-10">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-6 border-y py-8" style="border-color: hsl(var(--case-rule))">
+        {content.festivalMeta.map((m) => (
+          <div class="text-center"><div class="font-editorial font-bold text-3xl md:text-4xl mb-1" style="color: hsl(var(--case-accent))">{m.value}</div><div class="text-[11px] uppercase tracking-[0.2em]" style="color: hsl(var(--case-mute))">{m.label}</div></div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.venues && content.venues.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+        {content.venues.map((v) => (
+          <ScrollReveal class="block">
+            <div class="p-6 rounded-2xl border h-full" style="border-color: hsl(var(--case-rule)); background: hsl(var(--case-bg-soft))">
+              <div class="font-editorial font-bold text-2xl mb-1" style="color: hsl(var(--case-accent))">{v.number}</div>
+              <h4 class="font-editorial font-bold text-xl mb-1" style="color: hsl(var(--case-ink))">{v.name}</h4>
+              <p class="text-sm mb-2" style="color: hsl(var(--case-ink) / 0.8)">{v.vibe}</p>
+              <p class="text-xs" style="color: hsl(var(--case-mute))">{v.detail}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.decisions && content.decisions.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="space-y-12">
+        {content.decisions.map((d) => (
+          <ScrollReveal class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start block">
+            <div class="md:col-span-3">
+              <div class="editorial-num">{d.number}</div>
+              <div class="text-[11px] uppercase tracking-[0.3em] mt-2" style="color: hsl(var(--case-accent))">{d.label}</div>
+            </div>
+            <div class="md:col-span-9">
+              <h3 class="font-editorial font-bold text-2xl md:text-3xl mb-3" style="color: hsl(var(--case-ink))">{d.title}</h3>
+              <p class="text-lg leading-[1.7]" style="color: hsl(var(--case-ink) / 0.82)">{d.body}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.stats && content.stats.length > 0 && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 border-y py-10" style="border-color: hsl(var(--case-rule))">
+        {content.stats.map((s) => (
+          <div class="text-center md:text-left">
+            <div class="font-editorial font-bold leading-none mb-2" style="font-size: clamp(2.5rem, 5vw, 4rem); color: hsl(var(--case-accent))">{s.value}</div>
+            <div class="font-editorial font-medium text-lg" style="color: hsl(var(--case-ink))">{s.label}</div>
+            {s.sub && <div class="text-sm mt-1" style="color: hsl(var(--case-mute))">{s.sub}</div>}
+          </div>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {content.quote && content.quote.text && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="max-w-4xl mx-auto text-center">
+        <div class="editorial-quotemark text-[8rem] md:text-[12rem]">"</div>
+        <blockquote class="font-editorial font-medium leading-[1.3] -mt-12 md:-mt-20 mb-8" style="font-size: clamp(1.5rem, 3.4vw, 2.6rem); color: hsl(var(--case-ink))">{content.quote.text}</blockquote>
+        <div class="flex items-center justify-center gap-3">
+          {content.quote.avatar && <img src={content.quote.avatar} alt={content.quote.name} loading="lazy" class="w-12 h-12 rounded-full object-cover" />}
+          <div class="text-left">
+            <div class="font-editorial font-semibold" style="color: hsl(var(--case-ink))">{content.quote.name}</div>
+            <div class="text-sm" style="color: hsl(var(--case-mute))">{content.quote.role}</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  {content.resultText && (
+    <section class="container mx-auto px-6 pb-16 md:pb-24 relative z-10">
+      <div class="max-w-3xl">
+        <div class="text-[11px] uppercase tracking-[0.3em] mb-4" style="color: hsl(var(--case-accent))">Het resultaat</div>
+        {content.resultHeadline && <h2 class="font-editorial font-bold text-3xl md:text-4xl mb-5" style="color: hsl(var(--case-ink))">{content.resultHeadline}</h2>}
+        <p class="text-lg leading-[1.7] mb-4" style="color: hsl(var(--case-ink) / 0.85)">{content.resultText}</p>
+        {content.resultFootnote && <p class="text-sm italic" style="color: hsl(var(--case-mute))">{content.resultFootnote}</p>}
+      </div>
+    </section>
+  )}
+
+  <CaseTrustCTA accent={accent} />
+  <CaseLivePreview liveUrl={liveUrl} liveDomain={liveDomain} accent={accent} accentInk="#ffffff" />
+  <CaseHowItWorks accent={accent} />
+  <CaseShowcase currentId={slug} accent={accent} />
+  <CaseClosingCTA next={next} accent={accent} />
+</article>

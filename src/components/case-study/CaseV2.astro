@@ -1,0 +1,123 @@
+---
+import Icon from "../Icon.astro";
+import ScrollReveal from "../ScrollReveal.astro";
+import CaseTrustCTA from "./CaseTrustCTA.astro";
+import CaseLivePreview from "./CaseLivePreview.astro";
+import CaseHowItWorks from "./CaseHowItWorks.astro";
+import CaseShowcase from "./CaseShowcase.astro";
+import CaseClosingCTA from "./CaseClosingCTA.astro";
+import type { CaseV2Content } from "../../data/portfolio-v2-cases.ts";
+
+interface Props {
+  content: CaseV2Content;
+  next?: { id: string; title: string; image: string; tagline?: string } | null;
+  currentId: string;
+}
+const { content, next = null, currentId } = Astro.props;
+
+let titleParts: [string, string, string] = [content.title, "", ""];
+if (content.titleAccent) {
+  const idx = content.title.indexOf(content.titleAccent);
+  if (idx !== -1) titleParts = [content.title.slice(0, idx), content.titleAccent, content.title.slice(idx + content.titleAccent.length)];
+}
+---
+<article class="relative min-h-screen pt-24 md:pt-28 bg-background text-foreground">
+  <div class="container mx-auto px-6 pt-4 pb-6">
+    <a href="/portfolio" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-muted-foreground hover:text-foreground transition-colors">
+      <Icon name="arrow-left" size={14} /> Alle cases
+    </a>
+  </div>
+
+  <!-- 1. Hero -->
+  <section class="container mx-auto px-6">
+    <div class="relative w-full overflow-hidden rounded-2xl md:rounded-[28px] bg-muted/40 border border-border" style="box-shadow: 0 40px 80px -30px rgba(0,0,0,0.22), 0 16px 32px -16px rgba(0,0,0,0.14)">
+      <img src={content.heroImage} alt={content.title} loading="eager" class="block w-full h-auto select-none" />
+    </div>
+  </section>
+
+  <!-- 2. Title + intro -->
+  <section class="container mx-auto px-6 pt-12 md:pt-16 pb-8 md:pb-10">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 md:gap-12 items-start">
+      <div class="md:col-span-6">
+        <ScrollReveal class="block">
+          <p class="text-[10px] md:text-[11px] uppercase tracking-[0.3em] mb-4 font-medium" style={`color: ${content.accent}`}>{content.eyebrow}</p>
+          <h1 class="font-display font-semibold leading-[0.98] tracking-tight text-foreground" style="font-size: clamp(2.1rem, 4.8vw, 4rem)">
+            {titleParts[0]}{titleParts[1] && (<em style={`font-style: italic; color: ${content.accent}`}>{titleParts[1]}</em>)}{titleParts[2]}
+          </h1>
+          {content.tagline && <p class="mt-4 md:mt-5 italic text-muted-foreground text-[1rem] md:text-[1.1rem] leading-relaxed">{content.tagline}</p>}
+        </ScrollReveal>
+      </div>
+      <div class="md:col-span-6">
+        <ScrollReveal delay={50} class="block">
+          <p class="text-[14px] md:text-[15px] leading-[1.7] text-foreground/85">{content.caseIntro}</p>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. Meta strip -->
+  <section class="container mx-auto px-6 pb-14 md:pb-20">
+    <ScrollReveal class="block">
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-5 pt-6 md:pt-8 border-t border-border">
+        {content.meta.map((m) => (
+          <div>
+            <div class="text-[10px] md:text-[11px] uppercase tracking-[0.25em] mb-1.5 text-muted-foreground">{m.label}</div>
+            <div class="font-display font-medium leading-snug text-foreground text-[0.95rem] md:text-[1rem]">{m.value}</div>
+          </div>
+        ))}
+      </div>
+    </ScrollReveal>
+  </section>
+
+  <!-- 4. Overview -->
+  <section class="container mx-auto px-6 pb-14 md:pb-20">
+    <ScrollReveal class="block">
+      <div class="max-w-5xl">
+        <div class="text-[11px] uppercase tracking-[0.3em] mb-3 font-medium" style={`color: ${content.accent}`}>01 — {content.overviewHeading}</div>
+        <h2 class="font-display font-semibold leading-[1.1] text-foreground mb-6 md:mb-8" style="font-size: clamp(1.5rem, 2.4vw, 2.1rem)">{content.overviewHeading}</h2>
+        <p class="leading-[1.7] text-foreground/85" style="font-size: clamp(0.98rem, 1.05vw, 1.05rem)">{content.overviewBody}</p>
+      </div>
+    </ScrollReveal>
+  </section>
+
+  <!-- 5. Mockups -->
+  <section class="container mx-auto px-6 pb-14 md:pb-20">
+    <ScrollReveal class="block">
+      <div class="relative rounded-[28px] md:rounded-[36px] overflow-hidden border border-border px-4 sm:px-8 md:px-14 pt-8 md:pt-16 pb-10 md:pb-20" style={`background: linear-gradient(135deg, ${content.accent}1a 0%, ${content.accent}08 60%, transparent 100%), hsl(var(--muted) / 0.4)`}>
+        <div class="relative grid grid-cols-12 gap-4 md:gap-6">
+          {content.mockups[0] && (
+            <div class="col-span-12 md:col-span-9 md:-mr-8 z-10">
+              <div class="rounded-xl overflow-hidden border border-border/80 bg-background" style="box-shadow: 0 40px 80px -30px rgba(0,0,0,0.30), 0 16px 32px -16px rgba(0,0,0,0.18)">
+                <img src={content.mockups[0].src} alt={`${content.title} screenshot 1`} loading="lazy" class="block w-full h-auto" />
+              </div>
+            </div>
+          )}
+          {content.mockups[1] && (
+            <div class="col-span-12 md:col-span-6 md:col-start-7 md:-mt-24 md:ml-4 z-20">
+              <div class="rounded-xl overflow-hidden border border-border/80 bg-background" style="box-shadow: 0 50px 90px -30px rgba(0,0,0,0.35), 0 20px 40px -20px rgba(0,0,0,0.20)">
+                <img src={content.mockups[1].src} alt={`${content.title} screenshot 2`} loading="lazy" class="block w-full h-auto" />
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </ScrollReveal>
+  </section>
+
+  <!-- 6. Approach -->
+  <section class="container mx-auto px-6 pb-16 md:pb-24">
+    <ScrollReveal class="block">
+      <div class="max-w-5xl">
+        <div class="text-[11px] uppercase tracking-[0.3em] mb-3 font-medium" style={`color: ${content.accent}`}>02 — {content.approachHeading}</div>
+        <h2 class="font-display font-semibold leading-[1.1] text-foreground mb-6 md:mb-8" style="font-size: clamp(1.5rem, 2.4vw, 2.1rem)">{content.approachHeading}</h2>
+        <p class="leading-[1.7] text-foreground/85" style="font-size: clamp(0.98rem, 1.05vw, 1.05rem)">{content.approachBody}</p>
+      </div>
+    </ScrollReveal>
+  </section>
+
+  <CaseTrustCTA accent={content.accent} />
+  <CaseLivePreview liveUrl={content.liveUrl} liveDomain={content.liveDomain} accent={content.accent} accentInk="#ffffff" />
+  <CaseHowItWorks accent={content.accent} />
+  <CaseShowcase currentId={currentId} accent={content.accent} />
+  <CaseClosingCTA next={next} accent={content.accent} />
+</article>

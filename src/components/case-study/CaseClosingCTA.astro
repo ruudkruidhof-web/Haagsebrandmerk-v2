@@ -1,0 +1,42 @@
+---
+import Icon from "../Icon.astro";
+import { PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
+interface Props {
+  next?: { id: string; title: string; image: string; tagline?: string } | null;
+  accent?: string;
+}
+const { next = null, accent = "#F9AD76" } = Astro.props;
+const INK = "#1A1A1A";
+const CREAM = "#F5F1EC";
+---
+<section class="grid grid-cols-1 lg:grid-cols-2 border-t" style={`border-color: ${INK}14`}>
+  {next ? (
+    <a href={`/portfolio/${next.id}`} class="group relative p-12 md:p-20 flex flex-col justify-center overflow-hidden min-h-[360px] md:min-h-[480px]" style={`background: ${INK}`}>
+      <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+        <img src={next.image} alt="" loading="lazy" class="w-full h-full object-cover" />
+        <div class="absolute inset-0 bg-gradient-to-r from-black/85 via-black/60 to-black/40"></div>
+      </div>
+      <div class="relative z-10">
+        <p class="text-[10px] uppercase tracking-[0.4em] mb-6" style={`color: ${CREAM}99`}>Volgend project</p>
+        <h3 class="font-display font-semibold leading-[0.95] mb-5" style={`font-size: clamp(2.2rem, 5vw, 4.2rem); color: ${CREAM}`}>{next.title}</h3>
+        {next.tagline && <p class="mb-10" style={`font-size: clamp(1rem, 1.5vw, 1.25rem); color: ${CREAM}b3`}>{next.tagline}</p>}
+        <span class="inline-block transition-transform duration-500 group-hover:translate-x-3" style={`color: ${accent}`}><Icon name="arrow-right" size={36} /></span>
+      </div>
+    </a>
+  ) : (
+    <div style={`background: ${INK}`} class="p-12 md:p-20"></div>
+  )}
+
+  <div class="relative p-12 md:p-20 flex flex-col justify-center" style={`background: ${CREAM}; color: ${INK}`}>
+    <h3 class="font-display font-semibold leading-[1.05] mb-6" style="font-size: clamp(1.9rem, 4vw, 3rem)">Ook zin om te bouwen? ☕</h3>
+    <p class="text-base md:text-lg leading-relaxed mb-10 max-w-md" style={`color: ${INK}b8`}>Stuur een bericht of bel direct. De kennismaking is volledig vrijblijvend.</p>
+    <div class="flex flex-wrap items-center gap-x-8 gap-y-4">
+      <button data-contact-open class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-xs uppercase tracking-[0.25em] font-medium transition-transform hover:scale-[1.02]" style={`background: ${INK}; color: ${CREAM}; box-shadow: 0 0 0 3px ${accent}`}>
+        Plan een kennismaking <Icon name="arrow-right" size={14} />
+      </button>
+      <a href={`tel:${PHONE_NUMBER}`} class="text-sm underline underline-offset-4 inline-flex items-center gap-2" style={`color: ${INK}; text-decoration-color: ${accent}`}>
+        <Icon name="phone" size={14} /> Of bel {PHONE_DISPLAY}
+      </a>
+    </div>
+  </div>
+</section>

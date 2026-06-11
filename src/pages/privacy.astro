@@ -1,0 +1,35 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import ScrollReveal from "../components/ScrollReveal.astro";
+
+const lastUpdated = "Laatst bijgewerkt: maart 2026";
+const sections = [
+  { heading: "1. Wie is verantwoordelijk?", text: "Haagse Brandmerk is verantwoordelijk voor de verwerking van persoonsgegevens zoals beschreven in dit privacybeleid. Haagse Brandmerk is een handelsnaam van Ruud Kruidhof, gevestigd in Den Haag." },
+  { heading: "2. Welke gegevens verzamelen we?", text: "Wij verzamelen alleen gegevens die je zelf aan ons verstrekt via het contactformulier: je naam, e-mailadres en je bericht. Daarnaast gebruiken we Google Analytics om geanonimiseerde bezoekersstatistieken te verzamelen, zoals het aantal bezoekers en bezochte pagina's." },
+  { heading: "3. Cookies", text: "Deze website gebruikt cookies van Google Analytics om het aantal bezoeken te meten en de gebruikservaring te verbeteren. Bij je eerste bezoek vragen we om toestemming. Je kunt cookies weigeren — dan worden er geen analytische cookies geplaatst. Je kunt je keuze op elk moment wijzigen door je browsercookies te verwijderen." },
+  { heading: "4. Waarvoor gebruiken we je gegevens?", text: "Je contactgegevens gebruiken we uitsluitend om je vraag te beantwoorden. We delen je gegevens niet met derden, verkopen ze niet en gebruiken ze niet voor marketingdoeleinden." },
+  { heading: "5. Hoe lang bewaren we je gegevens?", text: "Contactgegevens bewaren we niet langer dan nodig is om je vraag te beantwoorden, met een maximum van 12 maanden. Analytische data van Google Analytics wordt automatisch na 14 maanden verwijderd." },
+  { heading: "6. Je rechten", text: "Je hebt het recht om je gegevens in te zien, te corrigeren of te laten verwijderen. Neem hiervoor contact op via ruud@haagsebrandmerk.nl." },
+  { heading: "7. Beveiliging", text: "We nemen passende maatregelen om je gegevens te beschermen tegen ongeautoriseerde toegang, verlies of misbruik. De website maakt gebruik van een beveiligde HTTPS-verbinding." },
+  { heading: "8. Wijzigingen", text: "Dit privacybeleid kan worden aangepast. De meest recente versie is altijd beschikbaar op deze pagina." },
+  { heading: "9. Contact", text: "Heb je vragen over dit privacybeleid? Neem contact op via ruud@haagsebrandmerk.nl." },
+];
+---
+<BaseLayout title="Privacybeleid - Transparant en zonder kleine lettertjes | Haagse Brandmerk" description="Lees hoe Haagse Brandmerk omgaat met je gegevens, cookies en privacy. Transparant en eerlijk, zonder kleine lettertjes.">
+  <section class="pt-32 pb-24">
+    <div class="container mx-auto px-6 max-w-3xl">
+      <ScrollReveal class="block">
+        <h1 class="font-display text-3xl md:text-5xl font-bold mb-2">Privacybeleid</h1>
+        <p class="text-sm text-muted-foreground mb-12">{lastUpdated}</p>
+      </ScrollReveal>
+      <div class="space-y-8">
+        {sections.map((section) => (
+          <ScrollReveal class="block">
+            <h2 class="font-display text-lg font-semibold mb-2">{section.heading}</h2>
+            <p class="text-muted-foreground leading-relaxed">{section.text}</p>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  url: string;
+  class?: string;
+  roundedBottom?: boolean;
+}
+const { url, class: className = "", roundedBottom = false } = Astro.props;
+const displayUrl = url.replace(/\.vercel\.app/gi, "");
+---
+<div class:list={[roundedBottom ? "rounded-xl" : "rounded-t-xl", "overflow-hidden border border-border bg-muted/30 browser-frame", className]}>
+  <div class="flex items-center gap-2 px-3 py-2 bg-muted/60 border-b border-border">
+    <div class="flex gap-1.5">
+      <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-rust))"></span>
+      <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-mustard))"></span>
+      <span class="w-2.5 h-2.5 rounded-full" style="background: hsl(var(--retro-olive))"></span>
+    </div>
+    <div class="flex-1 ml-2">
+      <div class="bg-background/80 rounded-md px-3 py-1 text-[11px] text-muted-foreground truncate max-w-[220px] sm:max-w-none">
+        {displayUrl}
+      </div>
+    </div>
+  </div>
+  <slot />
+</div>

@@ -1,0 +1,31 @@
+---
+import Icon from "../Icon.astro";
+import ScrollReveal from "../ScrollReveal.astro";
+const avatars = [
+  { src: "/images/angela-photo.png", alt: "Angela" },
+  { src: "/images/lisa-photo.png", alt: "Lisa" },
+  { src: "/images/romy-blaak.jpg", alt: "Romy" },
+];
+---
+<section class="container mx-auto px-6 -mt-6 md:-mt-10 mb-16 md:mb-24">
+  <ScrollReveal class="block">
+    <div class="max-w-5xl">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-5 sm:gap-7">
+        <button data-contact-open class="group inline-flex items-center gap-3 px-7 py-3.5 rounded-full text-white font-medium text-[15px] transition-transform hover:scale-[1.02] shadow-lg" style="background: #56708a">
+          Plan een kennismaking <Icon name="arrow-up-right" size={16} />
+        </button>
+        <div class="flex items-center gap-3">
+          <div class="flex -space-x-3">
+            {avatars.map((a) => (
+              <img src={a.src} alt={a.alt} loading="lazy" class="w-11 h-11 rounded-full object-cover border-[3px] border-background shadow-sm" />
+            ))}
+          </div>
+          <div class="leading-tight">
+            <div class="font-display font-semibold text-[15px]" style="color: #56708a">25+ ondernemers</div>
+            <div class="text-[13px] text-muted-foreground">werkten al graag samen met Ruud</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ScrollReveal>
+</section>

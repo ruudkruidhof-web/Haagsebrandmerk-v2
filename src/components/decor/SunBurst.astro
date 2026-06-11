@@ -1,0 +1,10 @@
+---
+interface Props { class?: string; color?: string; }
+const { class: className = "", color = "hsl(var(--retro-mustard))" } = Astro.props;
+const rays = Array.from({ length: 24 }, (_, i) => ({ angle: (i * 360) / 24, opacity: i % 2 === 0 ? 0.9 : 0.55 }));
+---
+<svg viewBox="0 0 200 200" class={className} aria-hidden="true">
+  {rays.map((r) => (
+    <rect x="98" y="0" width="4" height="60" fill={color} transform={`rotate(${r.angle} 100 100)`} opacity={r.opacity} />
+  ))}
+</svg>
