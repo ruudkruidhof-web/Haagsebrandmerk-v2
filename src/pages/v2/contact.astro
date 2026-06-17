@@ -1,0 +1,121 @@
+---
+import V2Layout from "../../layouts/V2Layout.astro";
+import ScrollReveal from "../../components/ScrollReveal.astro";
+import Icon from "../../components/Icon.astro";
+import Sparkle from "../../components/decor/Sparkle.astro";
+import { t, PHONE_NUMBER, PHONE_DISPLAY, EMAIL } from "../../data/content.ts";
+---
+<V2Layout
+  title="Contact - Laten we kennismaken | Haagse Brandmerk"
+  description="Heb je het gevoel dat je website meer kan? Stuur een berichtje of bel. Ik denk graag mee en kom vaak met ideeën waar je meteen iets aan hebt."
+>
+  <section class="pt-32 pb-24 relative overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="absolute -left-24 top-20 w-72 h-72 retro-blob-radius retro-blob-idle-1 pointer-events-none" style="background: hsl(var(--retro-butter))"></div>
+    <Sparkle class="absolute top-28 right-[12%] w-6 h-6 retro-blob-idle-2 pointer-events-none" color="hsl(var(--retro-mustard))" />
+
+    <div class="container mx-auto px-6 relative z-10">
+      <ScrollReveal class="max-w-2xl mb-16 block">
+        <span class="retro-sticker mb-5">{t.contact.tag}</span>
+        <h1 class="retro-display text-5xl md:text-7xl mt-2 mb-6">{t.contact.title}</h1>
+        <p class="text-lg leading-relaxed mb-4" style="color: hsl(var(--retro-ink) / 0.8)">{t.contact.intro1}</p>
+        <p class="text-base leading-relaxed" style="color: hsl(var(--retro-ink) / 0.7)">{t.contact.intro2}</p>
+      </ScrollReveal>
+
+      <div class="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
+        <!-- Contact info -->
+        <ScrollReveal class="lg:col-span-2 block">
+          <div class="retro-card p-7 space-y-6">
+            <a href={`mailto:${EMAIL}`} class="flex items-center gap-3 group">
+              <span class="retro-icon-badge w-11 h-11 rounded-xl flex items-center justify-center shrink-0"><Icon name="mail" size={18} /></span>
+              <span>
+                <span class="block text-xs uppercase tracking-wider font-semibold" style="color: hsl(var(--retro-ink) / 0.55)">{t.contact.emailLabel}</span>
+                <span class="font-medium group-hover:underline" style="color: hsl(var(--retro-ink))">{EMAIL}</span>
+              </span>
+            </a>
+            <a href={`tel:${PHONE_NUMBER}`} class="flex items-center gap-3 group">
+              <span class="retro-icon-badge w-11 h-11 rounded-xl flex items-center justify-center shrink-0"><Icon name="phone" size={18} /></span>
+              <span>
+                <span class="block text-xs uppercase tracking-wider font-semibold" style="color: hsl(var(--retro-ink) / 0.55)">{t.contact.phoneLabel}</span>
+                <span class="font-medium group-hover:underline" style="color: hsl(var(--retro-ink))">{PHONE_DISPLAY}</span>
+              </span>
+            </a>
+            <div class="flex items-center gap-3">
+              <span class="retro-icon-badge w-11 h-11 rounded-xl flex items-center justify-center shrink-0"><Icon name="map-pin" size={18} /></span>
+              <span>
+                <span class="block text-xs uppercase tracking-wider font-semibold" style="color: hsl(var(--retro-ink) / 0.55)">{t.contact.locationLabel}</span>
+                <span class="font-medium" style="color: hsl(var(--retro-ink))">{t.contact.location}</span>
+              </span>
+            </div>
+            <div class="pt-4 border-t flex flex-col gap-2" style="border-color: hsl(var(--retro-ink) / 0.15)">
+              {t.contact.trustSignals.map((sig) => (
+                <span class="inline-flex items-center gap-2 text-sm" style="color: hsl(var(--retro-ink) / 0.7)"><Icon name="check" size={15} /> {sig}</span>
+              ))}
+            </div>
+          </div>
+        </ScrollReveal>
+
+        <!-- Form -->
+        <ScrollReveal delay={100} class="lg:col-span-3 block">
+          <form id="contact-page-form" class="retro-card p-7 space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div>
+                <label class="block text-sm font-medium mb-1.5" for="cp-name">{t.contact.formName}</label>
+                <input id="cp-name" name="name" type="text" required placeholder={t.contact.formNamePlaceholder} class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+              </div>
+              <div>
+                <label class="block text-sm font-medium mb-1.5" for="cp-email">{t.contact.formEmail}</label>
+                <input id="cp-email" name="email" type="email" required placeholder={t.contact.formEmailPlaceholder} class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+              </div>
+            </div>
+            <div>
+              <span class="block text-sm font-medium mb-1.5">{t.contact.formHelp}</span>
+              <div class="flex flex-wrap gap-2">
+                {t.contact.projectTypes.map((type, i) => (
+                  <label class="cursor-pointer">
+                    <input type="radio" name="projectType" value={type} class="peer sr-only" checked={i === 0} />
+                    <span class="inline-block px-3.5 py-1.5 rounded-full text-xs font-medium border-[1.5px] transition-colors peer-checked:bg-retro-ink peer-checked:text-retro-cream"
+                      style="border-color: hsl(var(--retro-ink)); color: hsl(var(--retro-ink))">{type}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5" for="cp-website">{t.contact.formWebsite}</label>
+              <input id="cp-website" name="website" type="text" placeholder={t.contact.formWebsitePlaceholder} class="retro-field w-full h-11 px-4 rounded-xl text-sm focus:outline-none" />
+            </div>
+            <div>
+              <label class="block text-sm font-medium mb-1.5" for="cp-message">{t.contact.formMessage}</label>
+              <textarea id="cp-message" name="message" required rows="5" placeholder={t.contact.formMessagePlaceholder} class="retro-field w-full px-4 py-3 rounded-xl text-sm focus:outline-none resize-y"></textarea>
+            </div>
+            <button type="submit" class="retro-pill-btn w-full justify-center">
+              <span>{t.contact.formSubmit}</span>
+              <Icon name="send" size={16} />
+            </button>
+          </form>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+</V2Layout>
+
+<script define:vars={{ EMAIL }}>
+  function initContactPage() {
+    const form = document.getElementById("contact-page-form");
+    if (!form || form.dataset.bound) return;
+    form.dataset.bound = "true";
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const data = new FormData(form);
+      const name = (data.get("name") || "").toString();
+      const email = (data.get("email") || "").toString();
+      const type = (data.get("projectType") || "").toString();
+      const website = (data.get("website") || "").toString();
+      const message = (data.get("message") || "").toString();
+      const subject = `Aanvraag via website - ${name}`;
+      const body = `Naam: ${name}\nE-mail: ${email}\nType: ${type}\nWebsite: ${website}\n\n${message}`;
+      window.location.href = `mailto:${EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  }
+  initContactPage();
+  document.addEventListener("astro:after-swap", initContactPage);
+</script>

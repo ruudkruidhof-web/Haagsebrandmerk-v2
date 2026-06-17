@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prototype · Kies je aanpak · Haagse Brandmerk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F4E9D6; --butter:#F5D58E; --terracotta:#D2674A; --rust:#C24A2C;
+    --mustard:#E0A52A; --olive:#6E7A45; --plum:#6E3B4F; --ink:#2E211A; --paper:#FBF5EA;
+    /* live accent — wordt door JS geswapt in de keuzesectie */
+    --accent:#E0A52A; --accent-soft:#F5D58E;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Space Grotesk',system-ui,sans-serif; font-size:16px; line-height:1.6;}
+  .display{font-family:'Bricolage Grotesque','Space Grotesk',sans-serif; font-weight:800; letter-spacing:-0.03em; line-height:0.98;}
+  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  h1,h2,h3{font-family:'Bricolage Grotesque','Space Grotesk',sans-serif; letter-spacing:-0.03em; line-height:1; margin:0;}
+  .wrap{max-width:1140px; margin:0 auto; padding:0 24px;}
+  a{color:var(--rust); text-decoration:none;}
+  .grain{position:relative;}
+  .grain::before{content:""; position:absolute; inset:0; pointer-events:none; opacity:.5; mix-blend-mode:multiply; background-image:radial-gradient(rgba(46,33,26,.05) 1px, transparent 1px); background-size:4px 4px;}
+
+  .sticker{display:inline-flex; align-items:center; gap:.4rem; padding:.35rem .85rem; background:var(--butter); color:var(--ink); border:1.5px solid var(--ink); border-radius:999px; font-weight:600; font-size:.74rem; text-transform:uppercase; letter-spacing:.09em; box-shadow:3px 3px 0 var(--ink);}
+  .btn{display:inline-flex; align-items:center; gap:.5rem; padding:.85rem 1.6rem; border-radius:999px; font-weight:700; font-size:.95rem; border:1.5px solid var(--ink); cursor:pointer; transition:transform .2s, box-shadow .2s; text-decoration:none;}
+  .btn-dark{background:var(--ink); color:var(--cream); box-shadow:4px 4px 0 var(--terracotta);}
+  .btn-dark:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--terracotta);}
+  .btn-outline{background:transparent; color:var(--ink); box-shadow:4px 4px 0 var(--mustard);}
+  .btn-outline:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--mustard);}
+  .btn-accent{background:var(--ink); color:var(--cream); box-shadow:4px 4px 0 var(--accent); transition:transform .2s, box-shadow .2s, background .3s;}
+  .btn-accent:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--accent);}
+
+  /* NAV */
+  nav.bar{position:sticky; top:0; z-index:40; background:hsl(38 55% 92% / .85); backdrop-filter:blur(12px); border-bottom:1.5px solid rgba(46,33,26,.18);}
+  nav.bar .row{display:flex; align-items:center; justify-content:space-between; height:64px;}
+  nav .logo{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.25rem;}
+  nav .logo b{color:var(--rust);}
+  nav .links{display:flex; gap:1.6rem; align-items:center;}
+  nav .links a{color:rgba(46,33,26,.7); font-weight:500; font-size:.92rem;}
+  nav .links a:hover{color:var(--ink);}
+  @media(max-width:780px){ nav .links{display:none;} }
+
+  /* HERO */
+  .hero{position:relative; overflow:hidden; padding:84px 0 72px;}
+  .hero .blob{position:absolute; border-radius:62% 38% 55% 45%/48% 56% 44% 52%; pointer-events:none; opacity:.55;}
+  .hero-grid{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center;}
+  @media(max-width:880px){ .hero-grid{grid-template-columns:1fr; gap:32px;} }
+  .hero h1{font-size:clamp(2.8rem,6.5vw,5.2rem);}
+  .hero h1 .it{font-style:italic; color:var(--rust);}
+  .hero p.lede{font-size:1.18rem; color:rgba(46,33,26,.78); max-width:34ch; margin:1.6rem 0 2rem;}
+  .hero .cta-row{display:flex; gap:1rem; flex-wrap:wrap; margin-bottom:1.8rem;}
+  .trust{display:flex; gap:1.2rem 1.6rem; flex-wrap:wrap;}
+  .trust span{display:inline-flex; align-items:center; gap:.4rem; font-size:.9rem; font-weight:600; color:rgba(46,33,26,.72);}
+  .trust .dot{width:7px;height:7px;border-radius:50%;background:var(--olive);}
+  .portrait{position:relative; aspect-ratio:4/5; border-radius:62% 38% 55% 45%/48% 56% 44% 52%; background:linear-gradient(150deg,var(--butter),var(--terracotta)); border:2px solid var(--ink); box-shadow:8px 8px 0 var(--terracotta); display:flex; align-items:flex-end; justify-content:center; overflow:hidden;}
+  .portrait .ph{color:rgba(46,33,26,.5); font-weight:600; font-size:.8rem; padding:14px; text-align:center;}
+  .speech{position:absolute; bottom:18px; left:-14px; background:var(--cream); border:1.75px solid var(--ink); border-radius:1.2rem; padding:.5rem 1rem; box-shadow:4px 4px 0 var(--mustard); font-family:'Caveat',cursive; font-size:1.3rem; font-weight:700; transform:rotate(-4deg);}
+  .marquee{margin-top:56px; background:var(--ink); color:var(--cream); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink); padding:.8rem 0; font-size:.8rem; text-transform:uppercase; letter-spacing:.22em; overflow:hidden; white-space:nowrap;}
+  .marquee span{margin:0 1.4rem; opacity:.9;}
+
+  section{padding:72px 0;}
+  .eyebrow{font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:.76rem; color:var(--rust); margin-bottom:10px;}
+  .h2{font-size:clamp(2rem,4.5vw,3.2rem);}
+  .sub{color:rgba(46,33,26,.74); font-size:1.08rem; max-width:60ch;}
+
+  /* proof */
+  .proof{background:var(--paper); border-top:1.5px solid var(--ink); border-bottom:1.5px solid var(--ink);}
+  .proof .row{display:flex; align-items:center; gap:28px; flex-wrap:wrap; justify-content:space-between;}
+  .proof .lbl{font-weight:700; font-size:.95rem;}
+  .proof .logos{display:flex; gap:14px; flex-wrap:wrap;}
+  .proof .chip{padding:.5rem .9rem; border:1.5px solid rgba(46,33,26,.35); border-radius:999px; font-size:.82rem; font-weight:600; color:rgba(46,33,26,.7); background:var(--cream);}
+
+  /* value */
+  .vgrid{display:grid; grid-template-columns:repeat(4,1fr); gap:18px; margin-top:34px;}
+  @media(max-width:880px){ .vgrid{grid-template-columns:1fr 1fr;} }
+  @media(max-width:520px){ .vgrid{grid-template-columns:1fr;} }
+  .vcard{background:var(--paper); border:1.5px solid var(--ink); border-radius:1.1rem; padding:22px; box-shadow:5px 5px 0 var(--ink); transition:transform .25s, box-shadow .25s;}
+  .vcard:hover{transform:translate(-3px,-3px); box-shadow:8px 8px 0 var(--ink);}
+  .vcard .ic{width:44px;height:44px;border-radius:.8rem;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);margin-bottom:14px;font-size:1.3rem;}
+  .vcard h3{font-size:1.15rem; margin-bottom:6px;}
+  .vcard p{font-size:.9rem; color:rgba(46,33,26,.72); margin:0;}
+
+  /* work teaser */
+  .work{background:var(--cream);}
+  .wgrid{display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:30px;}
+  @media(max-width:780px){ .wgrid{grid-template-columns:1fr;} }
+  .frame{border:1.75px solid var(--ink); border-radius:1rem; overflow:hidden; box-shadow:6px 6px 0 var(--ink); background:var(--paper);}
+  .frame .top{display:flex; gap:6px; padding:9px 12px; background:rgba(46,33,26,.06); border-bottom:1.5px solid var(--ink);}
+  .frame .top i{width:9px;height:9px;border-radius:50%;display:block;}
+  .frame .canvas{aspect-ratio:16/8.4; background:linear-gradient(135deg,var(--butter),var(--cream)); display:flex; align-items:center; justify-content:center; color:rgba(46,33,26,.45); font-weight:600;}
+  .frame .meta{padding:14px 16px; border-top:1.5px solid var(--ink);}
+  .frame .meta h4{font-size:1.05rem; margin:0 0 4px;}
+  .frame .meta p{margin:0; font-size:.85rem; color:rgba(46,33,26,.7);}
+
+  /* ====== KIES JE AANPAK (de showpiece) ====== */
+  .approach{position:relative; overflow:hidden; border-top:2px solid var(--ink); border-bottom:2px solid var(--ink); background:var(--accent-soft); transition:background .5s ease;}
+  .approach .watermark{position:absolute; top:-2.5rem; right:-1rem; font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(8rem,22vw,20rem); color:rgba(46,33,26,.06); line-height:.8; pointer-events:none; user-select:none; transition:color .4s;}
+  .approach .head{max-width:60ch;}
+  .approach .head h2{font-size:clamp(2.1rem,5vw,3.6rem);}
+  .approach .head h2 .u{ background-image:linear-gradient(transparent 62%, var(--accent) 62%); transition:background-image .4s; padding:0 .1em;}
+
+  /* segmented control */
+  .seg{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:34px 0 8px;}
+  @media(max-width:780px){ .seg{grid-template-columns:1fr;} }
+  .seg button{text-align:left; cursor:pointer; background:var(--paper); border:1.75px solid var(--ink); border-radius:1rem; padding:16px 18px; box-shadow:4px 4px 0 rgba(46,33,26,.22); transition:transform .2s, box-shadow .2s, background .25s; display:flex; gap:13px; align-items:flex-start; font-family:inherit;}
+  .seg button .sic{width:40px;height:40px;flex:0 0 40px;border-radius:.7rem;display:flex;align-items:center;justify-content:center;border:1.5px solid var(--ink);box-shadow:2px 2px 0 var(--ink);font-size:1.2rem; transition:background .25s;}
+  .seg button .st{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:1.05rem; display:block; margin-bottom:2px;}
+  .seg button .sd{font-size:.82rem; color:rgba(46,33,26,.68); display:block;}
+  .seg button:hover{transform:translate(-2px,-2px);}
+  .seg button[aria-selected="true"]{background:var(--ink); box-shadow:5px 5px 0 var(--accent);}
+  .seg button[aria-selected="true"] .st{color:var(--cream);}
+  .seg button[aria-selected="true"] .sd{color:rgba(244,233,214,.78);}
+  .seg button[aria-selected="true"] .sic{background:var(--accent); color:var(--ink);}
+
+  /* transforming panel */
+  .panel-wrap{margin-top:22px; position:relative;}
+  .panel{display:none; grid-template-columns:1.05fr .95fr; gap:28px; align-items:stretch;}
+  .panel.active{display:grid; animation:panelIn .45s cubic-bezier(.2,.8,.2,1);}
+  @media(max-width:880px){ .panel{grid-template-columns:1fr;} }
+  @keyframes panelIn{from{opacity:0; transform:translateY(16px);} to{opacity:1; transform:none;}}
+  .pcol{background:var(--paper); border:1.75px solid var(--ink); border-radius:1.3rem; padding:30px 32px; box-shadow:8px 8px 0 var(--ink);}
+  .pcol .spoorlbl{font-weight:700; text-transform:uppercase; letter-spacing:.12em; font-size:.72rem; color:var(--accent-ink, var(--rust)); margin-bottom:10px;}
+  .pcol h3{font-size:clamp(1.6rem,3vw,2.2rem); margin-bottom:12px;}
+  .pcol p.body{color:rgba(46,33,26,.8); margin:0 0 18px; font-size:1rem;}
+  .pcol ul{list-style:none; padding:0; margin:0;}
+  .pcol ul li{display:flex; gap:10px; padding:7px 0; font-size:.95rem; border-bottom:1px solid rgba(46,33,26,.1);}
+  .pcol ul li:last-child{border-bottom:0;}
+  .pcol ul li .ck{color:var(--accent); font-weight:800;}
+
+  /* investering card (rechts) — krijgt accent */
+  .invest{background:var(--ink); color:var(--cream); border:1.75px solid var(--ink); border-radius:1.3rem; padding:30px 32px; box-shadow:8px 8px 0 var(--accent); display:flex; flex-direction:column; transition:box-shadow .4s;}
+  .invest .tag{align-self:flex-start; font-size:.72rem; font-weight:800; text-transform:uppercase; letter-spacing:.1em; padding:.3rem .8rem; border-radius:999px; background:var(--accent); color:var(--ink); border:1.5px solid var(--cream);}
+  .invest .price{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:3rem; line-height:1; margin:18px 0 2px;}
+  .invest .pricesub{color:rgba(244,233,214,.7); font-size:.85rem; margin-bottom:18px;}
+  .invest .lines{margin:0 0 22px; padding:0; list-style:none; flex:1;}
+  .invest .lines li{display:flex; justify-content:space-between; gap:12px; padding:9px 0; border-bottom:1px solid rgba(244,233,214,.16); font-size:.92rem;}
+  .invest .lines li:last-child{border-bottom:0;}
+  .invest .lines li b{font-weight:700;}
+  .invest .lines li .muted{color:rgba(244,233,214,.65);}
+  .invest .roi{background:rgba(244,233,214,.08); border:1px solid rgba(244,233,214,.2); border-radius:.8rem; padding:14px 16px; margin-bottom:20px; font-size:.9rem; color:rgba(244,233,214,.92);}
+  .invest .roi b{color:var(--accent);}
+  .invest .cta{align-self:flex-start; background:var(--cream); color:var(--ink); border:1.5px solid var(--cream); box-shadow:4px 4px 0 var(--accent);}
+  .invest .cta:hover{transform:translate(-2px,-2px); box-shadow:6px 6px 0 var(--accent);}
+  .helper{text-align:center; margin-top:26px; color:rgba(46,33,26,.72);}
+  .helper a{font-weight:700; text-decoration:underline;}
+
+  /* final cta */
+  .final{background:var(--ink); color:var(--cream); text-align:center; position:relative; overflow:hidden;}
+  .final h2{font-size:clamp(2.2rem,5vw,3.6rem); margin-bottom:14px;}
+  .final p{color:rgba(244,233,214,.75); max-width:46ch; margin:0 auto 26px;}
+  footer{background:var(--ink); color:rgba(244,233,214,.6); padding:28px 0; border-top:1px solid rgba(244,233,214,.16); font-size:.85rem;}
+  footer .row{display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;}
+
+  .note{background:var(--rust); color:var(--cream); text-align:center; font-size:.82rem; padding:8px 16px; font-weight:600; letter-spacing:.02em;}
+</style>
+</head>
+<body>
+
+<div class="note">PROTOTYPE · concept "kies je aanpak" · losse mockup, raakt de echte site niet</div>
+
+<nav class="bar">
+  <div class="wrap row">
+    <span class="logo">haagse<b>brandmerk</b></span>
+    <div class="links">
+      <a href="#">werk</a>
+      <a href="#aanpak">aanpak &amp; prijzen</a>
+      <a href="#">over</a>
+      <a class="btn btn-dark" style="padding:.5rem 1.1rem; font-size:.85rem;" href="#">Plan een kennismaking</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO: één sterk verhaal, geen keuze opgedrongen -->
+<header class="hero grain">
+  <div class="blob" style="background:var(--butter); width:420px; height:420px; left:-150px; top:-60px;"></div>
+  <div class="blob" style="background:rgba(210,103,74,.28); width:360px; height:360px; right:-120px; bottom:-120px;"></div>
+  <div class="wrap" style="position:relative; z-index:1;">
+    <div class="hero-grid">
+      <div>
+        <span class="sticker" style="margin-bottom:24px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--rust);display:inline-block;"></span> Beschikbaar voor nieuwe projecten</span>
+        <h1 class="display">Een website om <span class="it">trots</span> op te zijn.</h1>
+        <p class="lede">Ik bouw websites voor ondernemers die online willen groeien. Persoonlijk gemaakt, goed vindbaar in Google, en gebouwd om bezoekers klant te laten worden.</p>
+        <div class="cta-row">
+          <a href="#aanpak" class="btn btn-dark">Bekijk wat het kost →</a>
+          <a href="#" class="btn btn-outline">Bekijk mijn werk</a>
+        </div>
+        <div class="trust">
+          <span><span class="dot"></span> Persoonlijk gemaakt</span>
+          <span><span class="dot"></span> Vaste prijs vooraf</span>
+          <span><span class="dot"></span> Eén vast aanspreekpunt</span>
+        </div>
+      </div>
+      <div>
+        <div class="portrait">
+          <div class="speech">dat ben ik! 👋</div>
+          <div class="ph">[ foto Ruud ]</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="marquee"><span>Webdesign</span>★<span>SEO</span>★<span>Branding</span>★<span>Onderhoud</span>★<span>Strategie</span>★<span>Maatwerk</span>★<span>Webdesign</span>★<span>SEO</span>★<span>Branding</span></div>
+</header>
+
+<!-- PROOF -->
+<section class="proof grain" style="padding:34px 0;">
+  <div class="wrap row">
+    <span class="lbl">Vertrouwd door 25+ ondernemers</span>
+    <div class="logos">
+      <span class="chip">Reuring op de Delle</span>
+      <span class="chip">Angela Ceremonies</span>
+      <span class="chip">Digitale Hand</span>
+      <span class="chip">Enjoy The Breeze</span>
+    </div>
+  </div>
+</section>
+
+<!-- VALUE: universeel, trekt iedereen erin -->
+<section class="grain">
+  <div class="wrap">
+    <span class="eyebrow">Wat je website voor je doet</span>
+    <h2 class="h2 display">Je website is meer dan een plaatje. Laat 'm werken.</h2>
+    <div class="vgrid">
+      <div class="vcard"><div class="ic" style="background:var(--terracotta);color:var(--cream);">👁️</div><h3>Eerste indruk die raakt</h3><p>Binnen drie seconden besluit een bezoeker te blijven of weg te klikken. Die seconden winnen we.</p></div>
+      <div class="vcard"><div class="ic" style="background:var(--mustard);color:var(--ink);">📱</div><h3>Strak op elk scherm</h3><p>Meer dan de helft komt via mobiel. Daar is je site niet "ook" goed, maar voor gemaakt.</p></div>
+      <div class="vcard"><div class="ic" style="background:var(--olive);color:var(--cream);">🔎</div><h3>Gevonden in Google</h3><p>Technische SEO en een slimme structuur, zodat de juiste mensen je vinden.</p></div>
+      <div class="vcard"><div class="ic" style="background:var(--rust);color:var(--cream);">❤️</div><h3>Van bezoeker naar klant</h3><p>Heldere opbouw en knoppen die op het juiste moment verschijnen. Daar draait het om.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- WORK teaser -->
+<section class="work grain" style="padding-top:0;">
+  <div class="wrap">
+    <span class="eyebrow">Recent werk</span>
+    <h2 class="h2 display">Een paar projecten waar ik trots op ben</h2>
+    <div class="wgrid">
+      <div class="frame"><div class="top"><i style="background:var(--rust)"></i><i style="background:var(--mustard)"></i><i style="background:var(--olive)"></i></div><div class="canvas">angelaceremonies.com</div><div class="meta"><h4>Angela Ceremonies</h4><p>Van visitekaartje naar verhaal: een warme site die past bij haar ceremonies.</p></div></div>
+      <div class="frame"><div class="top"><i style="background:var(--rust)"></i><i style="background:var(--mustard)"></i><i style="background:var(--olive)"></i></div><div class="canvas">reuringopdedelle.nl</div><div class="meta"><h4>Reuring op de Delle</h4><p>Een digitaal podium dat de energie van het festival al voelbaar maakt.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ★ KIES JE AANPAK — laag op de pagina, bij de investering ★ -->
+<section class="approach grain" id="aanpak">
+  <div class="watermark" data-watermark>01</div>
+  <div class="wrap" style="position:relative; z-index:1;">
+    <div class="head">
+      <span class="eyebrow">Investering &amp; aanpak</span>
+      <h2 class="display">Wat het kost? Dat hangt af van <span class="u" data-underline>waar je naartoe wilt.</span></h2>
+      <p class="sub" style="margin-top:16px;">De ene ondernemer wil snel en helder online, de ander zoekt een doordacht maatwerktraject of juist doorlopende groei. Kies je aanpak, dan past alles hieronder zich aan. Twijfel je? Begin gewoon met een kennismaking.</p>
+    </div>
+
+    <!-- segmented control -->
+    <div class="seg" role="tablist" aria-label="Kies je aanpak">
+      <button role="tab" data-mode="snel" aria-selected="true">
+        <span class="sic" style="background:var(--mustard);color:var(--ink);">🚀</span>
+        <span><span class="st">Snel &amp; helder</span><span class="sd">Snel een nette site, vaste prijs, geen gedoe.</span></span>
+      </button>
+      <button role="tab" data-mode="maatwerk" aria-selected="false">
+        <span class="sic" style="background:var(--terracotta);color:var(--cream);">✦</span>
+        <span><span class="st">Maatwerk &amp; merk</span><span class="sd">Strategie, positionering en een uniek ontwerp.</span></span>
+      </button>
+      <button role="tab" data-mode="groei" aria-selected="false">
+        <span class="sic" style="background:var(--olive);color:var(--cream);">📈</span>
+        <span><span class="st">Groei &amp; resultaat</span><span class="sd">Doorlopend optimaliseren tot een verkoopkanaal.</span></span>
+      </button>
+    </div>
+
+    <div class="panel-wrap">
+      <!-- SNEL -->
+      <div class="panel active" data-panel="snel">
+        <div class="pcol">
+          <div class="spoorlbl" style="--accent-ink:#9a6a00;">Spoor 1 · voor starters &amp; kleine ondernemers</div>
+          <h3 class="display">Snel professioneel online, zonder gedoe</h3>
+          <p class="body">Je wilt geen maandenlang traject, maar gewoon snel een nette site tegen een prijs die vooraf vaststaat. Heb je al een site? Dan fris ik 'm op. Begin je bij nul? Dan zetten we iets nieuws neer.</p>
+          <ul>
+            <li><span class="ck">✓</span> Binnen 2 weken live</li>
+            <li><span class="ck">✓</span> Vaste prijs vooraf, geen verrassingen</li>
+            <li><span class="ck">✓</span> Geen abonnement nodig</li>
+            <li><span class="ck">✓</span> Eén vast aanspreekpunt</li>
+          </ul>
+        </div>
+        <div class="invest">
+          <span class="tag">Vaste prijzen</span>
+          <div class="price">vanaf €795</div>
+          <div class="pricesub">excl. btw · eenmalig</div>
+          <ul class="lines">
+            <li><span>Starterssite <span class="muted">· one-pager, nieuw</span></span> <b>€795</b></li>
+            <li><span>Opfrisbeurt <span class="muted">· bestaande site</span></span> <b>€995</b></li>
+            <li><span>Volledige redesign <span class="muted">· tot 5 pagina's</span></span> <b>€2.295</b></li>
+          </ul>
+          <a href="#" class="btn cta">Snel online →</a>
+        </div>
+      </div>
+
+      <!-- MAATWERK -->
+      <div class="panel" data-panel="maatwerk">
+        <div class="pcol">
+          <div class="spoorlbl" style="--accent-ink:#C24A2C;">Spoor 2 · voor ambitieuze merken &amp; MKB</div>
+          <h3 class="display">Een website die je positionering waarmaakt</h3>
+          <p class="body">Soms is een pakket te krap. Je merk verdient een eigen verhaal, een doordachte structuur en een ontwerp dat nergens anders bestaat. Dat begint niet bij een prijs, maar bij een goed gesprek over je positie en ambitie.</p>
+          <ul>
+            <li><span class="ck">✓</span> Strategie &amp; positionering vooraf</li>
+            <li><span class="ck">✓</span> Volledig op maat, geen template</li>
+            <li><span class="ck">✓</span> Meerdere diensten, locaties of koppelingen</li>
+            <li><span class="ck">✓</span> Eigen CMS, meertalig of een boekingsflow</li>
+          </ul>
+        </div>
+        <div class="invest">
+          <span class="tag">Op aanvraag</span>
+          <div class="price" style="font-size:2.2rem; margin-top:24px;">Op maat geprijsd</div>
+          <div class="pricesub">na een goed gesprek, met een heldere offerte</div>
+          <div class="roi">Geen twee maatwerktrajecten zijn hetzelfde. Daarom werk ik hier niet met een vast tarief, maar met een prijs die past bij wat jouw merk echt verdient. <b>Geen verrassingen, wel ruimte.</b></div>
+          <ul class="lines">
+            <li><span>Strategie &amp; merkfundament</span> <b>✓</b></li>
+            <li><span>Uniek ontwerp op maat</span> <b>✓</b></li>
+            <li><span>Onbeperkt pagina's &amp; koppelingen</span> <b>✓</b></li>
+          </ul>
+          <a href="#" class="btn cta">Plan een strategiegesprek →</a>
+        </div>
+      </div>
+
+      <!-- GROEI -->
+      <div class="panel" data-panel="groei">
+        <div class="pcol">
+          <div class="spoorlbl" style="--accent-ink:#566036;">Spoor 3 · voor wie wil blijven groeien</div>
+          <h3 class="display">Een website die klanten blijft opleveren</h3>
+          <p class="body">Een site is geen eenmalig project, maar een investering die zich moet terugverdienen. We bouwen je site en laten 'm daarna elke maand beter presteren: testen, verbeteren en rapporteren. Geen onderbuik, maar cijfers.</p>
+          <ul>
+            <li><span class="ck">✓</span> Eigen dashboard met je echte cijfers</li>
+            <li><span class="ck">✓</span> Maandelijks één ding testen &amp; verbeteren</li>
+            <li><span class="ck">✓</span> Persoonlijk maandrapport</li>
+            <li><span class="ck">✓</span> Evaluatie na 3 maanden</li>
+          </ul>
+        </div>
+        <div class="invest">
+          <span class="tag">Partnerschap</span>
+          <div class="price">€395<span style="font-size:1.1rem; font-weight:600;"> /mnd</span></div>
+          <div class="pricesub">excl. btw · 12 maanden, evaluatie na 3</div>
+          <div class="roi">Even rekenen: levert een nieuwe klant je gemiddeld €750 op? Dan is <b>één extra klant per maand</b> al genoeg om de investering ruim terug te verdienen. Alles daarboven is winst.</div>
+          <ul class="lines">
+            <li><span>Alles uit een volledige redesign</span> <b>✓</b></li>
+            <li><span>Optimalisatie &amp; rapportage p/m</span> <b>✓</b></li>
+            <li><span>Onbeperkt pagina's</span> <b>✓</b></li>
+          </ul>
+          <a href="#" class="btn cta">Plan een groeigesprek →</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="helper">Niet zeker welke aanpak bij je past? <a href="#">Plan een vrijblijvende kennismaking</a> — dan denk ik met je mee.</p>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final grain">
+  <div class="wrap" style="position:relative; z-index:1;">
+    <h2 class="display">Wat is er voor jou mogelijk?</h2>
+    <p>Een kennismaking duurt een half uurtje, is vrijblijvend, en meestal heb je er meteen iets aan. Ook als je uiteindelijk niet voor mij kiest.</p>
+    <a href="#" class="btn" style="background:var(--cream); color:var(--ink); box-shadow:5px 5px 0 var(--mustard);">Plan gratis kennismaking →</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap row">
+    <span>© 2026 haagsebrandmerk — prototype "kies je aanpak"</span>
+    <span>Den Haag, Nederland</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var accents = {
+      snel:      { accent:'#E0A52A', soft:'#F8E9C6', wm:'01' },
+      maatwerk:  { accent:'#D2674A', soft:'#F4DCD2', wm:'02' },
+      groei:     { accent:'#6E7A45', soft:'#E4E7D6', wm:'03' }
+    };
+    var root = document.documentElement;
+    var section = document.getElementById('aanpak');
+    var tabs = section.querySelectorAll('.seg button');
+    var panels = section.querySelectorAll('.panel');
+    var watermark = section.querySelector('[data-watermark]');
+
+    function select(mode){
+      tabs.forEach(function(t){ t.setAttribute('aria-selected', String(t.dataset.mode === mode)); });
+      panels.forEach(function(p){ p.classList.toggle('active', p.dataset.panel === mode); });
+      var a = accents[mode];
+      root.style.setProperty('--accent', a.accent);
+      root.style.setProperty('--accent-soft', a.soft);
+      if (watermark) watermark.textContent = a.wm;
+    }
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(){ select(t.dataset.mode); });
+    });
+    // init
+    select('snel');
+  })();
+</script>
+</body>
+</html>

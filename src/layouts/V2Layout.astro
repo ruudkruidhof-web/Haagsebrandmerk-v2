@@ -1,0 +1,106 @@
+---
+// V2Layout — identiek aan BaseLayout, maar met de v2-nav/footer en noindex.
+// Zo blijft de hele /v2-preview buiten Google en navigeert alles binnen /v2.
+import { ClientRouter } from "astro:transitions";
+import V2Navbar from "../components/v2/V2Navbar.astro";
+import V2Footer from "../components/v2/V2Footer.astro";
+import ContactDialog from "../components/ContactDialog.astro";
+import "../styles/global.css";
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+  noHeader?: boolean;
+  noFooter?: boolean;
+}
+
+const {
+  title = "Preview — Haagse Brandmerk",
+  description = "Preview-omgeving (niet geïndexeerd).",
+  image = "/og-image.jpg",
+  noHeader = false,
+  noFooter = false,
+} = Astro.props;
+
+const ogImage = new URL(image, Astro.site ?? "https://haagsebrandmerk.nl").href;
+---
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content="Haagse Brandmerk" />
+    <!-- Preview: nooit indexeren -->
+    <meta name="robots" content="noindex, nofollow" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="nl_NL" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Lato:wght@300;400;700;900&family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <ClientRouter />
+  </head>
+  <body class="neo-retro-site min-h-screen flex flex-col">
+    {!noHeader && <V2Navbar />}
+    <main class="flex-1">
+      <slot />
+    </main>
+    {!noFooter && <V2Footer />}
+    <ContactDialog />
+
+    <script>
+      function initReveal() {
+        const els = document.querySelectorAll(".reveal:not(.is-visible)");
+        if (!("IntersectionObserver" in window)) {
+          els.forEach((el) => el.classList.add("is-visible"));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("is-visible");
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
+        );
+        els.forEach((el) => io.observe(el));
+      }
+      initReveal();
+      document.addEventListener("astro:after-swap", () => {
+        window.scrollTo(0, 0);
+        initReveal();
+      });
+    </script>
+
+    <script>
+      import Lenis from "lenis";
+      let lenis;
+      function initLenis() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        lenis = new Lenis({ duration: 1.1, smoothWheel: true });
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        requestAnimationFrame(raf);
+      }
+      initLenis();
+    </script>
+  </body>
+</html>
