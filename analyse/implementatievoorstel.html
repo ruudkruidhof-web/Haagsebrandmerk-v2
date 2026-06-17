@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Implementatievoorstel · Drie sporen, één merk · Haagse Brandmerk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F4E9D6; --butter:#F5D58E; --terracotta:#D2674A; --rust:#C24A2C;
+    --mustard:#E0A52A; --olive:#6E7A45; --plum:#6E3B4F; --ink:#2E211A; --paper:#FBF5EA;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--cream); color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif; font-size:16px; line-height:1.65;
+    background-image:radial-gradient(rgba(46,33,26,.05) 1.2px, transparent 1.2px); background-size:22px 22px;}
+  .wrap{max-width:1040px; margin:0 auto; padding:0 22px;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif; line-height:1.06; font-weight:800;}
+  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  a{color:var(--rust);}
+  .sticker{display:inline-block; padding:6px 15px; border:2px solid var(--ink); border-radius:999px; background:var(--mustard); color:var(--ink); font-weight:700; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; box-shadow:3px 3px 0 var(--ink);}
+  header.hero{background:var(--cream); border-bottom:2.5px solid var(--ink); padding:60px 0 50px; position:relative; overflow:hidden;}
+  header.hero .blob{position:absolute; border-radius:46% 54% 60% 40%/55% 45% 55% 45%; opacity:.5; pointer-events:none;}
+  header.hero h1{font-size:clamp(2.4rem,5.5vw,4rem); margin:14px 0 10px;}
+  header.hero h1 em{font-style:italic; color:var(--rust);}
+  header.hero .lede{font-size:1.1rem; max-width:64ch; color:rgba(46,33,26,.82);}
+  .toc{display:flex; flex-wrap:wrap; gap:8px; margin-top:22px;}
+  .toc a{display:inline-block; padding:6px 13px; border:2px solid var(--ink); border-radius:999px; background:var(--paper); color:var(--ink); text-decoration:none; font-size:.82rem; font-weight:600; box-shadow:2px 2px 0 var(--ink);}
+  .toc a:hover{background:var(--mustard);}
+  section{padding:50px 0;}
+  section.alt{background:rgba(245,213,142,.28); border-top:2px solid var(--ink); border-bottom:2px solid var(--ink);}
+  .eyebrow{font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:.74rem; color:var(--rust); margin:0 0 6px;}
+  h2.sec{font-size:clamp(1.8rem,4vw,2.7rem); margin:0 0 8px;}
+  .sec-sub{max-width:72ch; color:rgba(46,33,26,.8); margin:0 0 24px;}
+  .card{background:var(--paper); border:2px solid var(--ink); border-radius:18px; box-shadow:7px 7px 0 var(--ink); padding:22px 26px; margin-bottom:20px;}
+  .card.mustard{box-shadow:7px 7px 0 var(--mustard);} .card.terra{box-shadow:7px 7px 0 var(--terracotta);}
+  .card.rust{box-shadow:7px 7px 0 var(--rust);} .card.olive{box-shadow:7px 7px 0 var(--olive);}
+  .callout{border:2.5px solid var(--ink); border-radius:18px; padding:22px 26px; margin:8px 0 24px; background:var(--ink); color:var(--cream); box-shadow:8px 8px 0 var(--rust);}
+  .callout h3{color:var(--cream); margin:0 0 10px; font-size:1.35rem;} .callout p{color:rgba(244,233,214,.9); margin:0 0 10px;}
+  .callout .key{color:var(--butter); font-weight:700;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;} @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+  .grid3{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;} @media(max-width:760px){.grid3{grid-template-columns:1fr;}}
+  .mini-h{font-family:'Fraunces',serif; font-weight:800; font-size:1.05rem; margin:16px 0 8px;}
+  ul.clean{list-style:none; padding:0; margin:0;}
+  ul.clean li{position:relative; padding:7px 0 7px 26px; border-bottom:1px solid rgba(46,33,26,.12);}
+  ul.clean li:last-child{border-bottom:0;}
+  ul.clean li::before{position:absolute; left:0; top:7px; font-weight:800; color:var(--terracotta); content:"→";}
+  ul.check li::before{content:"✓"; color:var(--olive);} ul.no li::before{content:"✕"; color:var(--rust);}
+  q,.quote{font-style:italic; color:var(--plum);}
+  .src{font-size:.78rem; color:rgba(46,33,26,.58);}
+  .verdict{display:inline-block; font-weight:800; font-size:.72rem; padding:3px 11px; border-radius:999px; border:2px solid var(--ink); text-transform:uppercase; letter-spacing:.06em;}
+  .v-keep{background:rgba(110,122,69,.28); color:#3f4a1f;} .v-change{background:rgba(194,74,44,.2); color:var(--rust);} .v-tweak{background:rgba(224,165,42,.35); color:#8a5e00;}
+
+  /* ===== wireframe ===== */
+  .wf{border:2.5px solid var(--ink); border-radius:14px; background:#fff; box-shadow:8px 8px 0 var(--ink); overflow:hidden; margin:8px 0 6px;}
+  .wf .bar{display:flex; align-items:center; gap:6px; padding:8px 12px; background:var(--ink);}
+  .wf .bar .dot{width:9px; height:9px; border-radius:50%; background:var(--cream); opacity:.6;}
+  .wf .bar .url{margin-left:8px; font-size:.72rem; color:var(--cream); opacity:.85; font-family:'Inter';}
+  .wf .body{padding:14px;}
+  .blk{border:2px dashed rgba(46,33,26,.5); border-radius:10px; padding:12px 14px; margin-bottom:10px; background:var(--cream);}
+  .blk .tag{display:inline-block; font-size:.62rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase; color:var(--rust); margin-bottom:4px;}
+  .blk.solid{background:var(--ink); color:var(--cream); border-style:solid; border-color:var(--ink);}
+  .blk.solid .tag{color:var(--butter);}
+  .blk.accent{background:var(--mustard); border-style:solid; border-color:var(--ink);}
+  .blk h5{margin:2px 0 4px; font-family:'Fraunces',serif; font-size:1.05rem;}
+  .blk p{margin:0; font-size:.85rem; color:rgba(46,33,26,.78);}
+  .blk.solid p{color:rgba(244,233,214,.85);}
+  .choices{display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin-top:8px;}
+  @media(max-width:620px){.choices{grid-template-columns:1fr;}}
+  .choice{border:2px solid var(--ink); border-radius:10px; padding:10px; background:var(--paper); font-size:.78rem;}
+  .choice b{display:block; font-family:'Fraunces',serif; font-size:.95rem; margin-bottom:3px;}
+  .choice.c1{box-shadow:3px 3px 0 var(--mustard);} .choice.c2{box-shadow:3px 3px 0 var(--terracotta);} .choice.c3{box-shadow:3px 3px 0 var(--olive);}
+  .annot{font-size:.8rem; color:rgba(46,33,26,.62); margin:4px 0 0; padding-left:14px; border-left:3px solid var(--mustard);}
+  .flow{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:10px 0;}
+  .flow .node{border:2px solid var(--ink); border-radius:10px; padding:8px 12px; background:var(--paper); font-size:.82rem; font-weight:600; box-shadow:3px 3px 0 var(--ink);}
+  .flow .arr{font-weight:800; color:var(--rust);}
+
+  table.cmp{border-collapse:collapse; width:100%; font-size:.85rem; margin-top:6px;}
+  table.cmp th,table.cmp td{border:1px solid rgba(46,33,26,.2); padding:9px 11px; text-align:left; vertical-align:top;}
+  table.cmp thead th{background:var(--ink); color:var(--cream); font-family:'Fraunces',serif;}
+  table.cmp td.l{background:rgba(245,213,142,.35); font-weight:600;}
+
+  .phase{border-left:3px dashed var(--ink); margin-left:8px; padding-left:22px;}
+  .phase .step{margin-bottom:18px; position:relative;}
+  .phase .step::before{content:""; position:absolute; left:-30px; top:5px; width:14px; height:14px; background:var(--rust); border:2px solid var(--ink); border-radius:50%;}
+  .phase .step h4{margin:0 0 4px; font-size:1.12rem;}
+  footer{background:var(--ink); color:var(--cream); padding:32px 0; border-top:2.5px solid var(--ink);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center;}
+  footer a{color:var(--butter);}
+  hr.wavy{border:0; height:14px; margin:30px 0; background:radial-gradient(circle at 10px -4px, transparent 12px, var(--ink) 13px, transparent 14px); background-size:22px 18px; opacity:.25;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob" style="background:var(--butter); width:340px; height:340px; left:-110px; top:-70px;"></div>
+  <div class="blob" style="background:rgba(110,122,69,.4); width:280px; height:280px; right:-80px; bottom:-90px;"></div>
+  <div class="wrap" style="position:relative; z-index:1;">
+    <span class="sticker">Implementatievoorstel</span>
+    <h1>Drie sporen, <em>één</em> merk</h1>
+    <p class="lede">Hoe we de doelgroep-audit concreet doorvoeren over de hele site: wat de bezoeker kiest en wat er dan gebeurt, hoe de homepage en de spoor-pagina's eruit komen te zien, wat we met de prijzenpagina en de tabellen doen, en hoe we dit volledig omkeerbaar bouwen in een kopie van de site.</p>
+    <div class="toc">
+      <a href="#mechaniek">De keuze-mechaniek</a>
+      <a href="#home">Homepage</a>
+      <a href="#spoor">Spoor-pagina</a>
+      <a href="#prijzen">Prijzenpagina</a>
+      <a href="#gedeeld">Gedeelde pagina's</a>
+      <a href="#sandbox">Veilige kopie</a>
+      <a href="#fasering">Fasering</a>
+    </div>
+  </div>
+</header>
+
+<!-- ===== MECHANIEK ===== -->
+<section id="mechaniek">
+  <div class="wrap">
+    <p class="eyebrow">Je belangrijkste vraag</p>
+    <h2 class="sec">Wat gebeurt er als de bezoeker kiest?</h2>
+    <p class="sec-sub">Kort antwoord: <b>de hele site verandert niet, en er is geen "modus" die aanstaat.</b> Dat zou fragiel, verwarrend en slecht voor Google zijn. In plaats daarvan werkt de homepage als een <b>kruispunt</b> en heeft elk spoor zijn eigen, volledig op die doelgroep toegesneden pagina. De bezoeker sorteert zichzelf en landt in zijn eigen verhaal.</p>
+
+    <div class="flow">
+      <span class="node">Homepage (gedeeld merk + keuze)</span>
+      <span class="arr">→</span>
+      <span class="node" style="box-shadow:3px 3px 0 var(--mustard)">/snel</span>
+      <span class="node" style="box-shadow:3px 3px 0 var(--terracotta)">/maatwerk</span>
+      <span class="node" style="box-shadow:3px 3px 0 var(--olive)">/groei</span>
+      <span class="arr">→</span>
+      <span class="node">eigen CTA per spoor</span>
+    </div>
+
+    <div class="grid2">
+      <div class="card olive">
+        <h3 style="margin-top:0;">✓ Waarom dedicated spoor-pagina's</h3>
+        <ul class="clean check">
+          <li>Elke pagina is <b>deelbaar en vindbaar in Google</b> (eigen URL, eigen titel). Een "toggle" op de homepage kun je niet delen of laten ranken.</li>
+          <li><b>Geen technische complexiteit of staat</b> die mis kan gaan; gewoon nette, snelle statische pagina's — past bij hoe de site nu al gebouwd is.</li>
+          <li>Je kunt een spoor <b>direct als bestemming gebruiken</b> in advertenties, mail of offertes ("kijk eens op /maatwerk").</li>
+          <li>Sluit naadloos aan op je <b>bestaande landingspagina's</b> (ZZP, MKB, kosten) — die zijn al ruwweg deze sporen.</li>
+        </ul>
+      </div>
+      <div class="card rust">
+        <h3 style="margin-top:0;">✕ Waarom geen "site-wide modus"</h3>
+        <ul class="clean no">
+          <li>Eén keuze die de héle site herthemed = veel techniek, kans op bugs, en onverwacht gedrag bij terugknop/delen.</li>
+          <li>Een bezoeker die via Google direct op /over of /prijzen binnenkomt, heeft nooit gekozen — welke "modus" toon je dan?</li>
+          <li>Je verliest de SEO-waarde van aparte pagina's.</li>
+          <li>Overkill voor een persoonlijke webdesign-site; het straalt eerder "gimmick" uit dan rust.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="callout" style="box-shadow:8px 8px 0 var(--mustard);">
+      <h3>Het model in één zin</h3>
+      <p>Eén warm merk met een <span class="key">gedeelde homepage als kruispunt</span>, drie <span class="key">eigen spoor-pagina's</span> (/snel, /maatwerk, /groei) met elk hun eigen toon, bewijs en CTA, en een <span class="key">herziene prijzenpagina</span> die diezelfde drie sporen spiegelt in plaats van drie losse doosjes. De gedeelde pagina's (over, portfolio, contact) blijven één versie, maar krijgen een tweede, zakelijker register zodat ze álle sporen bedienen.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOMEPAGE ===== -->
+<section id="home" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Hoe het eruit komt te zien · 1</p>
+    <h2 class="sec">De homepage als kruispunt</h2>
+    <p class="sec-sub">De huidige homepage blijft grotendeels intact — we halen alleen de signalen weg die de verkeerde doelgroep afschrikken, en voegen één keuzeblok toe. Hieronder de voorgestelde opbouw (wireframe).</p>
+
+    <div class="wf">
+      <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">haagsebrandmerk.nl</span></div>
+      <div class="body">
+        <div class="blk solid">
+          <span class="tag">Hero — ongewijzigd in sfeer</span>
+          <h5>"Een website om trots op te zijn."</h5>
+          <p>USP-balk wordt neutraal: <b>Persoonlijk · Vaste prijs vooraf · Eén aanspreekpunt</b>. → "Binnen 2 weken live" verhuist naar het snelle spoor, niet meer universeel.</p>
+        </div>
+        <div class="blk accent">
+          <span class="tag">NIEUW · Keuzeblok "Waar sta jij?"</span>
+          <h5>Wat past bij jou?</h5>
+          <p>Drie klikbare kaarten. Dit is het kruispunt. Eén regel uitleg per spoor, dan door naar de eigen pagina.</p>
+          <div class="choices">
+            <div class="choice c1"><b>Snel &amp; helder</b>Ik wil snel een nette, betaalbare site. → /snel</div>
+            <div class="choice c2"><b>Maatwerk &amp; merk</b>Ik wil een doordacht traject op maat. → /maatwerk</div>
+            <div class="choice c3"><b>Groei &amp; resultaat</b>Ik wil dat m'n site klanten oplevert. → /groei</div>
+          </div>
+        </div>
+        <div class="blk"><span class="tag">Gedeeld</span><h5>Wat een goede website doet</h5><p>Blijft — werkt voor iedereen.</p></div>
+        <div class="blk"><span class="tag">Gedeeld · met echte cijfers</span><h5>Stats + bewijs</h5><p>Lege labels vullen, incl. minstens één klant-uitkomst ("gem. +X% aanvragen").</p></div>
+        <div class="blk"><span class="tag">Gedeeld · gesplitst</span><h5>Recente projecten</h5><p>Echte klantcases vooraan; concepten apart gegroepeerd.</p></div>
+        <div class="blk"><span class="tag">Aangepast</span><h5>Pakketten-preview</h5><p>Verwijst naar de herziene prijzenpagina; "Meest gekozen" heroverwogen.</p></div>
+        <div class="blk"><span class="tag">Gedeeld</span><h5>Testimonials · FAQ · CTA</h5><p>Blijft.</p></div>
+      </div>
+    </div>
+    <p class="annot">Belangrijk: wie de keuze overslaat en gewoon doorscrolt, ziet nog steeds een complete, kloppende homepage. Het keuzeblok is een snelweg, geen tolpoort.</p>
+  </div>
+</section>
+
+<!-- ===== SPOOR-PAGINA ===== -->
+<section id="spoor">
+  <div class="wrap">
+    <p class="eyebrow">Hoe het eruit komt te zien · 2</p>
+    <h2 class="sec">Een spoor-pagina (voorbeeld: Maatwerk &amp; Merk)</h2>
+    <p class="sec-sub">Elk spoor krijgt een eigen pagina met een eigen toon en bewijs. Ter illustratie het spoor dat nu het slechtst bediend wordt: de maatwerk-zoeker. Let op wat hier bewust <em>ontbreekt</em>: geen "binnen 2 weken", geen laag prijsanker bovenaan.</p>
+
+    <div class="grid2">
+      <div>
+        <div class="wf">
+          <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">haagsebrandmerk.nl/maatwerk</span></div>
+          <div class="body">
+            <div class="blk solid"><span class="tag">Hero — zakelijk register</span><h5>Een website die je positionering waarmaakt</h5><p>Over strategie, merk en onderscheid. Geen snelheid, geen prijs.</p></div>
+            <div class="blk"><span class="tag">Proces</span><h5>Begint met strategie &amp; discovery</h5><p>Positionering → ontwerp → bouw. Diepgang vooraan.</p></div>
+            <div class="blk"><span class="tag">Bewijs</span><h5>Strategisch-diepe case(s)</h5><p>Echt werk met denkproces en uitkomst.</p></div>
+            <div class="blk accent"><span class="tag">Aanbod</span><h5>Maatwerk — op aanvraag</h5><p>Volwaardig, prijsloos. "Vanaf een serieus instapbedrag."</p></div>
+            <div class="blk"><span class="tag">CTA</span><h5>Plan een strategiegesprek</h5><p>Niet "koffie", maar een inhoudelijk gesprek.</p></div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="card terra">
+          <div class="mini-h">Wat verschilt per spoor</div>
+          <table class="cmp">
+            <thead><tr><th>Element</th><th>/snel</th><th>/maatwerk</th><th>/groei</th></tr></thead>
+            <tbody>
+              <tr><td class="l">Snelheids&shy;belofte</td><td>Vooraan</td><td>Weg</td><td>Subtiel</td></tr>
+              <tr><td class="l">Prijs bovenaan</td><td>Vanaf €995</td><td>Op aanvraag</td><td>€395/mnd + ROI</td></tr>
+              <tr><td class="l">Toon</td><td>Warm, vlot</td><td>Warm + zakelijk</td><td>Bewijs &gt; sfeer</td></tr>
+              <tr><td class="l">Bewijs</td><td>Reviews</td><td>Strategie-case</td><td>Cijfers, ROI</td></tr>
+              <tr><td class="l">CTA</td><td>Snel starten</td><td>Strategie&shy;gesprek</td><td>Groeigesprek</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="annot">/snel en /groei bouwen we deels op je bestaande ZZP- en MKB-landingspagina's voort, zodat we niet bij nul beginnen.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRIJZEN ===== -->
+<section id="prijzen" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Je tweede vraag</p>
+    <h2 class="sec">Wat doen we met de prijzenpagina?</h2>
+    <p class="sec-sub">Mijn oordeel per onderdeel. Kort gezegd: de prijzen zelf zijn grotendeels prima — het probleem is niet het getal, maar de <b>structuur</b> en het <b>ontbrekende instapproduct</b>. De grote tabel houden we, maar anders ingezet.</p>
+
+    <div class="card">
+      <p><span class="verdict v-keep">Behouden</span> &nbsp; <b>De prijzen zelf (€995 / €2.295 / €395&nbsp;p/m).</b></p>
+      <p style="margin:6px 0 0;">Voor het snelle spoor en het groei-spoor zijn deze prima en goed te verdedigen. De fout zit 'm niet in de hoogte, maar in het feit dat <span class="quote">"vanaf €995"</span> nu het enige, universele anker is — dat diskwalificeert je in de ogen van de maatwerk-zoeker. Oplossing: het lage anker leeft alleen op /snel; /maatwerk toont geen prijs.</p>
+    </div>
+
+    <div class="card rust">
+      <p><span class="verdict v-change">Toevoegen</span> &nbsp; <b>Een instapproduct voor een nieuwe, simpele site.</b></p>
+      <p style="margin:6px 0 0;">Dit is het echte gat: de <span class="quote">"Opfrisbeurt €995"</span> is voor wie al een site heeft. Een starter zonder site landt nu noodgedwongen op €2.295. Voeg een helder instapproduct toe (one-pager / nieuwe simpele site), zodat de prijsbewuste starter een logisch beginpunt heeft. Dit dicht het lek dat zelfs persona ① op 6,5 hield.</p>
+    </div>
+
+    <div class="card terra">
+      <p><span class="verdict v-tweak">Herinrichten</span> &nbsp; <b>De vergelijkingstabel (±20 rijen).</b></p>
+      <p style="margin:6px 0 10px;">De tabel is inhoudelijk goed en geeft houvast aan de starter, maar in deze vorm werkt hij twee kanten op:</p>
+      <ul class="clean">
+        <li>Voor de scanner (starter) is hij te lang → keuzestress.</li>
+        <li>Voor de maatwerk-zoeker versterkt een vinkjes-tabel juist het "commodity/doosjes"-gevoel dat hem wegjaagt.</li>
+      </ul>
+      <div class="mini-h">Voorstel</div>
+      <ul class="clean check">
+        <li><b>Houd de tabel</b>, maar groepeer 'm en zet 'm onder een "Alle details vergelijken"-uitklap, zodat hij niet domineert.</li>
+        <li>Zet er een korte <b>"welk pakket past bij mij?"-wegwijzer</b> (2–3 vragen) bovenop tegen de keuzestress.</li>
+        <li><b>Zet maatwerk NIET in de vinkjes-tabel.</b> Maatwerk krijgt een eigen verhaalblok ("op aanvraag"), geen kolom met vinkjes — anders voelt het weer als een doosje.</li>
+        <li>Leid features met de <b>uitkomst</b> ("zodat je gevonden wordt") in plaats van kale features.</li>
+      </ul>
+    </div>
+
+    <div class="card olive">
+      <p><span class="verdict v-tweak">Onderbouwen</span> &nbsp; <b>Het Groei-pakket (€395/mnd · 12 maanden).</b></p>
+      <p style="margin:6px 0 0;">Het model is sterk, maar de 12-maandenbinding zónder bewijs is een drempel. Voeg toe: een <b>ROI-rekensom</b> ("bij een gemiddelde klantwaarde van €X verdien je dit terug bij Y extra klanten"), <b>één echt Groei-resultaat</b>, en een <b>evaluatiemoment</b> (bijv. na 3 maanden) zodat "vastzitten" verandert in "samen bewijzen". En: dashboard eerlijk labelen, scan-tool repareren of weghalen.</p>
+    </div>
+
+    <div class="card mustard">
+      <div class="mini-h" style="margin-top:0;">Hoe de nieuwe prijzenpagina zich verhoudt tot de sporen</div>
+      <p style="margin:0 0 6px;">In plaats van drie generieke kaarten wordt de prijzenpagina opgebouwd in drie herkenbare blokken die de sporen spiegelen:</p>
+      <div class="grid3">
+        <div class="choice c1"><b>Snel &amp; helder</b>Instapproduct + Opfrisbeurt + Volledig. Vaste prijzen, snelle oplevering.</div>
+        <div class="choice c2"><b>Maatwerk &amp; merk</b>Eigen blok, op aanvraag. Geen prijs, geen vinkjes, wel een verhaal.</div>
+        <div class="choice c3"><b>Groei &amp; resultaat</b>€395/mnd met ROI-onderbouwing en evaluatiemoment.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== GEDEELDE PAGINA'S ===== -->
+<section id="gedeeld">
+  <div class="wrap">
+    <p class="eyebrow">De rest van de site</p>
+    <h2 class="sec">Gedeelde pagina's: lichte aanpassingen</h2>
+    <p class="sec-sub">Over, portfolio en contact blijven één versie voor iedereen — geen aparte varianten per spoor. Ze krijgen alleen de aanpassingen die in alle sporen helpen.</p>
+    <div class="grid3">
+      <div class="card"><h3 style="margin-top:0;">Over</h3><p style="font-size:.9rem;">Warme verhaal blijft. Eén passage toevoegen over de <b>strategische/positionerings-aanpak</b>, zodat de maatwerk-zoeker de diepgang voelt.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Portfolio</h3><p style="font-size:.9rem;">Splitsen in <b>"Echte klantprojecten"</b> en <b>"Concepten &amp; eigen werk"</b>. Resultaten uitkomst-gericht maken; minstens één MKB/strategische case.</p></div>
+      <div class="card"><h3 style="margin-top:0;">Contact</h3><p style="font-size:.9rem;">Formulier <b>direct laten versturen</b> (nu opent het een mailprogramma). WhatsApp prominenter. Eventueel een keuzeveld "welk spoor".</p></div>
+    </div>
+    <div class="card terra">
+      <div class="mini-h" style="margin-top:0;">Sitebrede micro-fixes (gelden voor alles)</div>
+      <ul class="clean check">
+        <li>Oplevertijd overal gelijktrekken (2 óf 3 weken — nu inconsistent).</li>
+        <li>Alle getallen consistent maken (20+ / 25+ / 100+).</li>
+        <li>Scan-tool repareren of tijdelijk verwijderen; dashboard eerlijk als voorbeeld labelen.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SANDBOX ===== -->
+<section id="sandbox" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Je belangrijkste zorg</p>
+    <h2 class="sec">De slimme, omkeerbare aanpak</h2>
+    <p class="sec-sub">Je wilt het kunnen zien zonder dat er iets onomkeerbaars met de echte site gebeurt. Dat kan op twee niveaus tegelijk, en ze versterken elkaar.</p>
+
+    <div class="grid2">
+      <div class="card olive">
+        <h3 style="margin-top:0;">Laag 1 — De feature-branch</h3>
+        <p style="font-size:.92rem;">We werken al op een aparte branch (<code>claude/fervent-hypatia-hcndwz</code>). <b>Niets daarvan raakt de echte site</b> tot jij bewust besluit te publiceren. De branch is in feite al een veilige kopie van het hele project.</p>
+      </div>
+      <div class="card mustard">
+        <h3 style="margin-top:0;">Laag 2 — Een /v2-kopie van de site</h3>
+        <p style="font-size:.92rem;">Binnen het project bouwen we de nieuwe opzet als een <b>parallelle set pagina's onder <code>/v2/…</code></b> (bijv. <code>/v2</code>, <code>/v2/prijzen</code>, <code>/v2/maatwerk</code>). De bestaande pagina's (<code>/</code>, <code>/prijzen</code>, …) blijven <b>volledig ongewijzigd</b> ernaast bestaan.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h3>Wat dat oplevert</h3>
+      <ul class="clean check" style="color:var(--cream);">
+        <li style="border-color:rgba(244,233,214,.2);">Je kunt de hele nieuwe site <b>klikbaar bekijken en vergelijken</b> naast de oude — zelfde merk, zelfde componenten.</li>
+        <li style="border-color:rgba(244,233,214,.2);"><b>Volledig omkeerbaar:</b> map <code>/v2</code> weggooien = alles weg, geen spoor op de echte pagina's.</li>
+        <li style="border-color:rgba(244,233,214,.2);">We zetten <code>/v2</code> op <b>noindex + in robots.txt</b>, zodat Google het niet oppikt zolang het preview is.</li>
+        <li style="border-color:rgba(244,233,214,.2);"><b>Go-live = een bewuste, simpele stap:</b> als je tevreden bent, promoveren we /v2 naar de echte pagina's (of zetten een redirect). Geen big bang.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <div class="mini-h" style="margin-top:0;">Hoe je het te zien krijgt</div>
+      <p style="margin:0;">Omdat de site statisch is, kan ik per stap een preview-build maken en je <b>screenshots</b> sturen, en/of — afhankelijk van waar je host (Vercel, Netlify, Cloudflare Pages, etc.) — geeft je hosting vaak <b>automatisch een aparte preview-URL per branch</b>. Zodra ik weet hoe je host, kies ik de fijnste route. De <code>/v2</code>-kopie werkt sowieso, ongeacht de host.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FASERING ===== -->
+<section id="fasering">
+  <div class="wrap">
+    <p class="eyebrow">Voorgestelde route</p>
+    <h2 class="sec">Fasering</h2>
+    <p class="sec-sub">Zo houden we het behapbaar en kun je bij elke stap meekijken voordat we verder gaan.</p>
+    <div class="phase">
+      <div class="step"><h4>Fase 0 · De veilige kopie opzetten</h4><p style="margin:0; font-size:.93rem;">De <code>/v2</code>-structuur scaffolden (gekopieerde pagina's, noindex). Niets aan de echte site. Jij krijgt meteen een klikbare basis.</p></div>
+      <div class="step"><h4>Fase 1 · Homepage-kruispunt + sitebrede micro-fixes</h4><p style="margin:0; font-size:.93rem;">Keuzeblok, neutralere hero-USP, echte cijfers, portfolio-split, consistente getallen/tijden.</p></div>
+      <div class="step"><h4>Fase 2 · De drie spoor-pagina's</h4><p style="margin:0; font-size:.93rem;">/snel, /maatwerk, /groei — elk met eigen toon, bewijs en CTA. Voortbouwend op bestaande landings.</p></div>
+      <div class="step"><h4>Fase 3 · De herziene prijzenpagina</h4><p style="margin:0; font-size:.93rem;">Instapproduct, maatwerk-blok, ROI bij Groei, tabel ingeklapt + wegwijzer.</p></div>
+      <div class="step"><h4>Fase 4 · Review &amp; bewust live</h4><p style="margin:0; font-size:.93rem;">Samen doorlopen, finetunen, en pas dan /v2 promoveren naar de echte URL's.</p></div>
+    </div>
+
+    <hr class="wavy" />
+    <div class="card mustard">
+      <h3 style="margin-top:0;">Wat ik van jou nodig heb om te starten</h3>
+      <p style="margin:0;">Drie knopen om door te hakken (zie mijn vragen in de chat): de <b>preview-aanpak</b>, de <b>structuur van de sporen</b> (aparte pagina's of secties op de homepage), en de <b>scope van de prijzen</b>. Daarna begin ik met Fase 0 — de veilige kopie — zodat je direct iets klikbaars hebt.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong style="font-family:'Fraunces',serif; font-size:1.2rem;">Implementatievoorstel · Haagse Brandmerk</strong><br/>
+      <span style="opacity:.7; font-size:.85rem;">Drie sporen, één merk · vervolg op de doelgroep-audit</span>
+    </div>
+    <div style="font-size:.85rem; opacity:.8;"><a href="https://haagsebrandmerk.nl">haagsebrandmerk.nl</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

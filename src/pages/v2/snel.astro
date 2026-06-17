@@ -1,0 +1,133 @@
+---
+import V2Layout from "../../layouts/V2Layout.astro";
+import ScrollReveal from "../../components/ScrollReveal.astro";
+import FaqAccordion from "../../components/FaqAccordion.astro";
+import Icon from "../../components/Icon.astro";
+import SunBurst from "../../components/decor/SunBurst.astro";
+import Sparkle from "../../components/decor/Sparkle.astro";
+import { v2snel, sporen } from "../../data/v2.ts";
+import { contentTestimonials, PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
+
+const review = contentTestimonials[2]; // Lisa — "nuchter, snel aan de slag"
+const faqs = [
+  { q: "Hoe snel staat mijn site live?", a: "Een starterssite of opfrisbeurt is meestal binnen 2 weken klaar, een volledige redesign binnen 3 weken. Hoe sneller je teksten en foto's aanlevert, hoe sneller het kan. We plannen het vooraf samen in." },
+  { q: "Wat als ik nog geen teksten of foto's heb?", a: "Geen stress. Ik help je op weg en denk mee over wat je nodig hebt. We beginnen met jouw verhaal, de rest vullen we samen aan." },
+  { q: "Zit ik ergens aan vast?", a: "Nee. De starterssite, opfrisbeurt en volledige redesign zijn eenmalig, met een vaste prijs vooraf. Geen abonnement, geen verrassingen achteraf." },
+];
+---
+<V2Layout title="Snel een website laten maken (vanaf €795) | Haagse Brandmerk" description="Snel en betaalbaar professioneel online. Vaste prijs vooraf, binnen 2 weken live, geen gedoe. Voor starters en kleine ondernemers.">
+
+  <!-- HERO -->
+  <section class="relative pt-32 pb-20 overflow-hidden retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="absolute -left-28 top-16 w-[420px] h-[420px] retro-blob-radius retro-blob-idle-1 pointer-events-none" style="background: hsl(var(--retro-mustard) / 0.35)"></div>
+    <Sparkle class="absolute top-32 right-[16%] w-6 h-6 retro-blob-idle-2 pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-3xl">
+        <span class="retro-sticker mb-6">{v2snel.hero.eyebrow}</span>
+        <h1 class="retro-display text-5xl md:text-7xl lg:text-[5rem] mb-6">{v2snel.hero.title}</h1>
+        <p class="text-lg md:text-xl leading-relaxed mb-8 max-w-2xl" style="color: hsl(var(--retro-ink) / 0.78)">{v2snel.hero.subtitle}</p>
+        <div class="flex flex-wrap gap-4 mb-8">
+          <button data-contact-open class="retro-pill-btn"><span class="relative z-10 inline-flex items-center gap-2">Plan een kennismaking <Icon name="arrow-right" size={16} /></span></button>
+          <a href="/v2/prijzen" class="retro-pill-btn-outline"><span class="relative z-10 inline-flex items-center gap-2">Bekijk de prijzen <Icon name="arrow-up-right" size={14} /></span></a>
+        </div>
+        <div class="flex flex-wrap gap-x-6 gap-y-2">
+          {v2snel.hero.usps.map((u) => (
+            <span class="inline-flex items-center gap-1.5 text-sm font-semibold" style="color: hsl(var(--retro-ink) / 0.75)"><Icon name="check" size={16} class="shrink-0" /> {u}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VOOR WIE -->
+  <section class="py-16 md:py-20 retro-grain" style="background: hsl(var(--retro-butter) / 0.4); border-top: 2px solid hsl(var(--retro-ink)); border-bottom: 2px solid hsl(var(--retro-ink))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="max-w-4xl mx-auto block">
+        <h2 class="retro-display text-3xl md:text-4xl mb-8 text-center">{v2snel.forWho.title}</h2>
+        <div class="grid sm:grid-cols-3 gap-5">
+          {v2snel.forWho.items.map((item) => (
+            <div class="retro-card retro-card-shadow-mustard p-5 flex items-start gap-3">
+              <span class="retro-icon-badge w-9 h-9 rounded-xl flex items-center justify-center shrink-0"><Icon name="check" size={16} strokeWidth={2.5} /></span>
+              <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.85)">{item}</p>
+            </div>
+          ))}
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- PAKKETTEN -->
+  <section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="text-center max-w-2xl mx-auto mb-14 block">
+        <span class="retro-sticker mb-5">Investering</span>
+        <h2 class="retro-display text-4xl md:text-6xl mb-4">{v2snel.packagesIntro.title}</h2>
+        <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.72)">{v2snel.packagesIntro.subtitle}</p>
+      </ScrollReveal>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7 max-w-5xl mx-auto items-stretch">
+        {v2snel.packages.map((pkg, i) => {
+          const shadow = ["retro-card-shadow-mustard", "retro-card-shadow-rust", "retro-card-shadow-terracotta"][i];
+          return (
+            <ScrollReveal delay={i * 90} class="block">
+              <div class:list={["retro-card", shadow, "p-7 h-full flex flex-col"]}>
+                <span class="inline-block self-start px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-wide mb-3" style="background: hsl(var(--retro-butter)); color: hsl(var(--retro-ink)); border: 1.5px solid hsl(var(--retro-ink))">{pkg.tag}</span>
+                <h3 class="font-display font-bold text-xl" style="color: hsl(var(--retro-ink))">{pkg.name}</h3>
+                <div class="flex items-baseline gap-2 mt-1 mb-3">
+                  <span class="retro-display text-3xl" style="color: hsl(var(--retro-ink))">{pkg.price}</span>
+                </div>
+                <p class="text-[11px] mb-3" style="color: hsl(var(--retro-ink) / 0.55)">{pkg.note}</p>
+                <p class="text-sm leading-relaxed mb-5" style="color: hsl(var(--retro-ink) / 0.78)">{pkg.description}</p>
+                <ul class="space-y-2.5 flex-1">
+                  {pkg.features.map((f) => (
+                    <li class="flex items-start gap-2 text-sm" style="color: hsl(var(--retro-ink) / 0.82)"><Icon name="check" size={15} strokeWidth={2.5} class="shrink-0 mt-0.5" /> {f}</li>
+                  ))}
+                </ul>
+                <div class="mt-5 pt-4" style="border-top: 1.5px dashed hsl(var(--retro-ink) / 0.25)">
+                  <p class="text-xs font-semibold mb-3" style="color: hsl(var(--retro-rust))">{pkg.best}</p>
+                  <button data-contact-open class="fill-hover w-full inline-flex h-11 items-center justify-center rounded-full font-semibold text-sm" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); --fill-color: hsl(var(--retro-rust))"><span class="relative z-10">Dit wil ik bespreken</span></button>
+                </div>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+      <p class="text-center text-sm mt-8" style="color: hsl(var(--retro-ink) / 0.6)">Iets uitgebreiders of juist op maat nodig? Bekijk <a href="/v2/maatwerk" class="font-semibold underline" style="color: hsl(var(--retro-rust))">maatwerk &amp; merk</a>.</p>
+    </div>
+  </section>
+
+  <!-- REVIEW -->
+  <section class="py-16 retro-grain" style="background: hsl(var(--retro-butter) / 0.4); border-top: 2px solid hsl(var(--retro-ink)); border-bottom: 2px solid hsl(var(--retro-ink))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="max-w-3xl mx-auto text-center block">
+        <div class="flex justify-center gap-0.5 mb-4">{Array.from({ length: 5 }).map(() => (<Icon name="star" size={18} class="text-retro-mustard" />))}</div>
+        <blockquote class="retro-display text-2xl md:text-3xl leading-snug mb-5" style="color: hsl(var(--retro-ink))">{review.quote}</blockquote>
+        <div class="flex items-center justify-center gap-3">
+          <img src={review.avatar} alt={review.name} loading="lazy" class="w-11 h-11 rounded-full object-cover" style="border: 2px solid hsl(var(--retro-ink))" />
+          <div class="text-left"><p class="font-bold leading-tight" style="color: hsl(var(--retro-ink))">{review.name}</p><p class="text-xs" style="color: hsl(var(--retro-ink) / 0.6)">{review.role}</p></div>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="py-20 md:py-24 retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6">
+      <div class="max-w-2xl mx-auto">
+        <ScrollReveal class="block"><h2 class="retro-display text-3xl md:text-5xl text-center mb-10">Veelgestelde vragen</h2></ScrollReveal>
+        <FaqAccordion faqs={faqs} />
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section data-section-dark="true" class="py-24 relative overflow-hidden" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">
+    <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-15 retro-spin pointer-events-none" color="hsl(var(--retro-mustard))" />
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h2 class="retro-display text-4xl md:text-6xl mb-5">Klaar om snel online te gaan?</h2>
+      <p class="max-w-lg mx-auto text-lg mb-9" style="color: hsl(var(--retro-cream) / 0.75)">Een kennismaking is gratis en vrijblijvend. Vaak weet je binnen een half uur precies wat er mogelijk is.</p>
+      <button data-contact-open class="fill-hover inline-flex h-12 px-8 items-center rounded-full font-bold gap-2" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); box-shadow: 5px 5px 0 hsl(var(--retro-mustard)); --fill-color: hsl(var(--retro-mustard))"><span class="relative z-10 inline-flex items-center gap-2">Plan een kennismaking <Icon name="arrow-up-right" size={16} /></span></button>
+      <a href={`tel:${PHONE_NUMBER}`} class="flex items-center justify-center gap-1.5 text-sm mt-7" style="color: hsl(var(--retro-cream) / 0.65)"><Icon name="phone" size={14} /> Of bel direct: {PHONE_DISPLAY}</a>
+    </div>
+  </section>
+</V2Layout>

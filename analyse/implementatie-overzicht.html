@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Implementatie-overzicht · tekstuele wijzigingen · Haagse Brandmerk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Space+Grotesk:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{ --cream:#F4E9D6; --butter:#F5D58E; --terracotta:#D2674A; --rust:#C24A2C; --mustard:#E0A52A; --olive:#6E7A45; --plum:#6E3B4F; --ink:#2E211A; --paper:#FBF5EA; }
+  *{box-sizing:border-box;}
+  body{margin:0; background:var(--cream); color:var(--ink); font-family:'Space Grotesk',system-ui,sans-serif; font-size:16px; line-height:1.62; background-image:radial-gradient(rgba(46,33,26,.05) 1.1px,transparent 1.1px); background-size:22px 22px;}
+  h1,h2,h3,h4{font-family:'Bricolage Grotesque','Space Grotesk',sans-serif; letter-spacing:-0.025em; line-height:1.05; margin:0;}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 22px;}
+  a{color:var(--rust);}
+  code{font-family:ui-monospace,Menlo,monospace; font-size:.85em; background:rgba(46,33,26,.08); padding:1px 6px; border-radius:5px;}
+  .sticker{display:inline-block; padding:6px 15px; border:2px solid var(--ink); border-radius:999px; background:var(--mustard); color:var(--ink); font-weight:700; font-size:.72rem; letter-spacing:.12em; text-transform:uppercase; box-shadow:3px 3px 0 var(--ink);}
+  header.hero{background:var(--cream); border-bottom:2.5px solid var(--ink); padding:56px 0 44px;}
+  header.hero h1{font-size:clamp(2.3rem,5.5vw,3.6rem); margin:14px 0 10px;}
+  header.hero p{font-size:1.08rem; color:rgba(46,33,26,.82); max-width:64ch;}
+  .toc{display:flex; flex-wrap:wrap; gap:8px; margin-top:20px;}
+  .toc a{display:inline-block; padding:6px 13px; border:2px solid var(--ink); border-radius:999px; background:var(--paper); color:var(--ink); text-decoration:none; font-size:.8rem; font-weight:600; box-shadow:2px 2px 0 var(--ink);}
+  .toc a:hover{background:var(--mustard);}
+  section{padding:44px 0; border-bottom:1.5px solid rgba(46,33,26,.14);}
+  .eyebrow{font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:.74rem; color:var(--rust); margin-bottom:6px;}
+  h2.sec{font-size:clamp(1.7rem,3.6vw,2.4rem); margin-bottom:6px;}
+  .lead{color:rgba(46,33,26,.78); max-width:72ch; margin:0 0 18px;}
+  .card{background:var(--paper); border:2px solid var(--ink); border-radius:16px; box-shadow:6px 6px 0 var(--ink); padding:20px 24px; margin-bottom:18px;}
+  .card.mustard{box-shadow:6px 6px 0 var(--mustard);} .card.olive{box-shadow:6px 6px 0 var(--olive);} .card.terra{box-shadow:6px 6px 0 var(--terracotta);} .card.rust{box-shadow:6px 6px 0 var(--rust);}
+  .mini-h{font-family:'Bricolage Grotesque',serif; font-weight:800; font-size:1.05rem; margin:14px 0 8px;}
+  ul.clean{list-style:none; padding:0; margin:0;}
+  ul.clean li{position:relative; padding:6px 0 6px 24px; border-bottom:1px solid rgba(46,33,26,.1);}
+  ul.clean li:last-child{border-bottom:0;}
+  ul.clean li::before{position:absolute; left:0; top:6px; font-weight:800;}
+  ul.add li::before{content:"+"; color:var(--olive);}
+  ul.del li::before{content:"–"; color:var(--rust);}
+  ul.chg li::before{content:"→"; color:var(--terracotta);}
+  .copy{background:var(--ink); color:var(--cream); border-radius:12px; padding:14px 18px; margin:10px 0; font-size:.95rem;}
+  .copy .lbl{display:block; font-size:.68rem; text-transform:uppercase; letter-spacing:.12em; color:var(--butter); margin-bottom:6px; font-weight:700;}
+  .copy.old{background:transparent; color:rgba(46,33,26,.7); border:1.5px dashed rgba(46,33,26,.4);}
+  .copy.old .lbl{color:var(--rust);}
+  .tag{display:inline-block; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.06em; padding:2px 8px; border-radius:999px; border:1.5px solid var(--ink); margin-left:6px;}
+  .t-keep{background:rgba(110,122,69,.25); color:#3f4a1f;} .t-del{background:rgba(194,74,44,.18); color:var(--rust);} .t-new{background:rgba(224,165,42,.3); color:#8a5e00;}
+  table.cmp{border-collapse:collapse; width:100%; font-size:.86rem; margin-top:8px; background:var(--paper); border:2px solid var(--ink); border-radius:12px; overflow:hidden;}
+  table.cmp th,table.cmp td{border:1px solid rgba(46,33,26,.14); padding:9px 11px; text-align:center;}
+  table.cmp th:first-child,table.cmp td:first-child{text-align:left; font-weight:500;}
+  table.cmp thead th{background:var(--ink); color:var(--cream); font-family:'Bricolage Grotesque',sans-serif;}
+  table.cmp tr.grp td{background:var(--butter); font-weight:800; text-transform:uppercase; font-size:.68rem; letter-spacing:.08em; text-align:left;}
+  table.cmp td.y{color:var(--olive); font-weight:800;} table.cmp td.n{color:rgba(46,33,26,.3); font-weight:800;}
+  table.cmp td.v{font-weight:700; font-size:.82rem;}
+  table.cmp tbody td:nth-child(3){background:rgba(224,165,42,.08);}
+  .pills{display:flex; gap:8px; flex-wrap:wrap; margin:6px 0 0;}
+  .pill{font-size:.78rem; font-weight:700; padding:4px 11px; border:1.5px solid var(--ink); border-radius:999px; background:var(--cream);}
+  .map{width:100%; border-collapse:collapse; font-size:.9rem;}
+  .map th,.map td{border:1.5px solid rgba(46,33,26,.18); padding:10px 12px; text-align:left; vertical-align:top;}
+  .map thead th{background:var(--ink); color:var(--cream); font-family:'Bricolage Grotesque',sans-serif;}
+  footer{background:var(--ink); color:rgba(244,233,214,.7); padding:26px 0; text-align:center; font-size:.85rem;}
+  .checkbox{list-style:none; padding:0; margin:0;}
+  .checkbox li{padding:7px 0 7px 30px; position:relative; border-bottom:1px solid rgba(46,33,26,.1);}
+  .checkbox li::before{content:"☐"; position:absolute; left:0; top:5px; font-size:1.1rem; color:var(--rust);}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <span class="sticker">Implementatie-overzicht</span>
+    <h1>Alle tekstuele wijzigingen voor de site</h1>
+    <p>Eén werklijst om mee te nemen naar de juiste repo (HB-V2). Per pagina: wat eruit gaat, wat erin komt en de exacte nieuwe copy — gebaseerd op de doelgroep-audits en afgestemd op de nieuwe pakketten (Het Fundament · Vakwerk · Maatwerk). Inclusief de vergelijkingstabel.</p>
+    <div class="toc">
+      <a href="#model">0 · Pakketten &amp; tabel</a>
+      <a href="#prijzen">1 · Prijzenpagina</a>
+      <a href="#home">2 · Homepage</a>
+      <a href="#over">3 · Over</a>
+      <a href="#portfolio">4 · Portfolio</a>
+      <a href="#landings">5 · Landingspagina's</a>
+      <a href="#site">6 · Sitebreed</a>
+      <a href="#doelgroep">7 · Doelgroep-check</a>
+      <a href="#checklist">8 · Checklist</a>
+    </div>
+  </div>
+</header>
+
+<!-- 0. MODEL -->
+<section id="model">
+  <div class="wrap">
+    <p class="eyebrow">Stap 0 · het anker</p>
+    <h2 class="sec">De nieuwe pakketten &amp; de tabel</h2>
+    <p class="lead">Alles op de site lijnt zich hierop uit. Drie pakketten; het groei-/abonnementsmodel vervalt volledig. Eigen CMS zit voortaan in Vakwerk (geen maatwerk-trigger meer).</p>
+
+    <div class="card mustard">
+      <div class="mini-h">Het Fundament — €995 <span class="tag t-keep">behouden bedrag</span></div>
+      <p style="margin:0 0 6px;">Voor ondernemers die snel en helder online willen. <b>Nieuw of opfrisbeurt.</b></p>
+      <div class="pills"><span class="pill">1–3 pagina's</span><span class="pill">Responsive</span><span class="pill">Snelle laadtijd</span><span class="pill">Basis-SEO</span><span class="pill">Binnen 2 weken live</span></div>
+    </div>
+    <div class="card">
+      <div class="mini-h">Vakwerk — €2.295 <span class="tag t-keep">behouden bedrag</span> <span class="tag t-new">+ eigen CMS</span></div>
+      <p style="margin:0 0 6px;">Voor ondernemers die een complete site willen die ze ook zelf beheren. <b>"Meest gekozen".</b></p>
+      <div class="pills"><span class="pill">Tot 5 pagina's</span><span class="pill">Strategisch plan &amp; uniek ontwerp</span><span class="pill">Eigen CMS</span><span class="pill">Sterke SEO + analytics</span><span class="pill">Binnen 3 weken live</span></div>
+    </div>
+    <div class="card terra">
+      <div class="mini-h">Maatwerk — op aanvraag <span class="tag t-new">vervangt "Groei"</span></div>
+      <p style="margin:0 0 6px;">Voor merken met wensen die niet in een pakket passen. <b>Geen prijs, wel een gesprek → neem contact op.</b></p>
+      <div class="pills"><span class="pill">Webshop met iDeal</span><span class="pill">Koppelingen / boekingsflow</span><span class="pill">Meertalig / meerdere locaties</span><span class="pill">Onbeperkt pagina's</span><span class="pill">Strategie &amp; merktraject</span></div>
+    </div>
+
+    <div class="mini-h">De vergelijkingstabel (gegroepeerd) <span class="tag t-new">terug op de pagina</span></div>
+    <table class="cmp">
+      <thead><tr><th>Wat je krijgt</th><th>Het Fundament</th><th>Vakwerk</th><th>Maatwerk</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="4">Ontwerp &amp; basis</td></tr>
+        <tr><td>Professioneel ontwerp</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Responsive (mobiel/tablet/desktop)</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Aantal pagina's</td><td class="v">1–3</td><td class="v">tot 5</td><td class="v">Onbeperkt</td></tr>
+        <tr><td>Snelle laadtijd</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Oplevering</td><td class="v">2 weken</td><td class="v">3 weken</td><td class="v">In overleg</td></tr>
+        <tr class="grp"><td colspan="4">Vindbaarheid &amp; inzicht</td></tr>
+        <tr><td>Basis-SEO</td><td class="y">✓</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Uitgebreide SEO</td><td class="n">–</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Analytics &amp; tracking</td><td class="n">–</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr class="grp"><td colspan="4">Inhoud &amp; beheer</td></tr>
+        <tr><td>Strategisch plan &amp; uniek ontwerp</td><td class="n">–</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Eigen CMS (zelf aanpassen)</td><td class="n">–</td><td class="y">✓</td><td class="y">✓</td></tr>
+        <tr><td>Webshop, koppelingen, meertalig</td><td class="n">–</td><td class="n">–</td><td class="y">✓</td></tr>
+        <tr><td>Feedbackrondes</td><td class="v">2</td><td class="v">3</td><td class="v">In overleg</td></tr>
+        <tr><td>Nazorg na oplevering</td><td class="v">2 weken</td><td class="v">1 maand</td><td class="v">In overleg</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- 1. PRIJZEN -->
+<section id="prijzen">
+  <div class="wrap">
+    <p class="eyebrow">Stap 1 · grootste ingreep</p>
+    <h2 class="sec">Prijzenpagina <span class="tag t-keep" style="font-size:.6rem;">src/data/content.ts → t.pricing + src/pages/prijzen.astro</span></h2>
+    <div class="card rust">
+      <div class="mini-h">Eruit <span class="tag t-del">verwijderen</span></div>
+      <ul class="clean del">
+        <li>Het hele pakket <b>"Redesign + Groei" (€395/mnd)</b> — inclusief <code>priceSub</code> met 12-maandenbinding en jaarbedrag.</li>
+        <li>De volledige <b>dashboard-sectie</b> (<code>t.pricing.dashboardSection</code> + het dashboard-blok in <code>prijzen.astro</code> + de "Demo aanvragen"-knop).</li>
+        <li>Alle <b>groei-gerelateerde FAQ's</b>: "Wat houdt het Groei-pakket precies in", "Kan ik het Groei-pakket later opzeggen", en de A/B-test/maandrapport-claims.</li>
+        <li>De losse <b>webshop-callout</b> als apart blok (gaat op in Maatwerk).</li>
+      </ul>
+    </div>
+    <div class="card olive">
+      <div class="mini-h">Erin / wijzigen <span class="tag t-new">nieuw</span></div>
+      <ul class="clean chg">
+        <li>Drie pakketten herschrijven naar <b>Het Fundament / Vakwerk / Maatwerk</b> (zie stap 0). <code>highlighted: true</code> blijft op Vakwerk ("Meest gekozen").</li>
+        <li>De <b>vergelijkingstabel</b> vervangen door de gegroepeerde versie uit stap 0 (<code>comparisonFeatures</code>/<code>comparisonValues</code>/<code>columnHeaders</code> → 3 groepen).</li>
+        <li>Maatwerk-kaart krijgt knop <b>"Neem contact op"</b> i.p.v. een prijs.</li>
+      </ul>
+      <div class="copy"><span class="lbl">Nieuwe FAQ's (prijzen)</span>
+        <b>Kan ik mijn website zelf aanpassen?</b> — Ja. Bij Vakwerk krijg je een eigen CMS waarmee je zelf teksten en foto's aanpast, wanneer je wilt. Geen technische kennis nodig.<br><br>
+        <b>Wanneer is iets maatwerk?</b> — Zodra je wensen niet in Het Fundament of Vakwerk passen: een webshop, koppelingen, meerdere locaties, meertalig of onbeperkt pagina's. Een eigen CMS valt hier níét onder, dat zit in Vakwerk.<br><br>
+        <b>Hoe lang duurt het?</b> — Het Fundament binnen 2 weken, Vakwerk binnen 3 weken, maatwerk in overleg.<br><br>
+        <b>Hoe werkt de betaling?</b> — 50% aanbetaling bij start, rest bij oplevering (Fundament &amp; Vakwerk). Bij maatwerk stemmen we de termijnen vooraf af.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 2. HOME -->
+<section id="home">
+  <div class="wrap">
+    <p class="eyebrow">Stap 2</p>
+    <h2 class="sec">Homepage <span class="tag t-keep" style="font-size:.6rem;">index.astro + t.hero / t.packagesPreview / t.homeFaq / t.stats</span></h2>
+    <div class="card">
+      <div class="mini-h">Hero-USP balk <span class="tag t-del">snelheid eruit</span></div>
+      <div class="copy old"><span class="lbl">nu</span>100% tevredenheidsgarantie · Vaste prijzen, altijd vooraf helder · <b>Binnen 2 weken live</b></div>
+      <div class="copy"><span class="lbl">wordt</span>100% tevredenheidsgarantie · Vaste prijs vooraf · Eén vast aanspreekpunt</div>
+      <p style="margin:6px 0 0; font-size:.9rem; color:rgba(46,33,26,.7)">Waarom: "binnen 2 weken live" universeel bovenaan schrikt de maatwerk-doelgroep af (audit). Snelheid leeft nu netjes per pakket.</p>
+    </div>
+    <div class="card mustard">
+      <div class="mini-h">Pakketten-preview (<code>t.packagesPreview</code>) <span class="tag t-new">nieuwe namen</span></div>
+      <ul class="clean chg">
+        <li><b>Het Fundament — vanaf €995:</b> "Een sterke, heldere website om mee te starten. Nieuw of een opfrisbeurt."</li>
+        <li><b>Vakwerk — €2.295 (Meest gekozen):</b> "Een complete site op maat, die je bovendien zelf beheert met een eigen CMS."</li>
+        <li><b>Maatwerk — op aanvraag:</b> "Grotere of bijzondere wensen? Dan bouwen we precies wat jouw merk nodig heeft."</li>
+      </ul>
+    </div>
+    <div class="card olive">
+      <div class="mini-h">Home-FAQ (<code>t.homeFaq</code>) <span class="tag t-new">herschrijven</span></div>
+      <div class="copy"><span class="lbl">Wat kost een website?</span>Het Fundament begint bij €995, Vakwerk bij €2.295 (inclusief een eigen CMS). Grotere of bijzondere wensen zijn maatwerk, op aanvraag. Altijd vaste prijzen, vooraf. Excl. btw.</div>
+      <div class="copy"><span class="lbl">Hoe lang duurt het?</span>Het Fundament staat binnen 2 weken live, Vakwerk binnen 3 weken, maatwerk in overleg. De doorlooptijd hangt ook af van hoe snel je content aanlevert.</div>
+      <div class="copy"><span class="lbl">Bouw je ook webshops?</span>Ja. Een webshop bouw ik als onderdeel van een maatwerktraject, met productpagina's, winkelwagen en iDeal.</div>
+    </div>
+    <div class="card terra">
+      <div class="mini-h">Bewijs &amp; cijfers <span class="tag t-new">audit</span></div>
+      <ul class="clean chg">
+        <li>Lege stat-labels in <code>t.stats.items</code> ("Meer bezoekers na lancering" zonder cijfer) <b>vullen met echte cijfers of weghalen</b>.</li>
+        <li>Featured projecten: <b>echte klantcases eerst</b>, concepten erachter (en de "Concept"-badge consequent).</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 3. OVER -->
+<section id="over">
+  <div class="wrap">
+    <p class="eyebrow">Stap 3</p>
+    <h2 class="sec">Over-pagina <span class="tag t-keep" style="font-size:.6rem;">over.astro / t.about</span></h2>
+    <div class="card">
+      <ul class="clean chg">
+        <li>Warme verhaal blijft. Voeg één passage toe over de <b>strategische/positionerings-aanpak</b>, zodat de maatwerk-doelgroep de diepgang voelt.</li>
+      </ul>
+      <div class="copy"><span class="lbl">voorbeeld-zin om toe te voegen</span>"Voor grotere trajecten begin ik niet bij het ontwerp, maar bij je positionering: wat maakt jouw merk uniek, en wie wil je bereiken? Pas als dat scherp is, gaat de eerste pixel aan."</div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. PORTFOLIO -->
+<section id="portfolio">
+  <div class="wrap">
+    <p class="eyebrow">Stap 4</p>
+    <h2 class="sec">Portfolio <span class="tag t-keep" style="font-size:.6rem;">portfolio.astro</span></h2>
+    <div class="card">
+      <ul class="clean chg">
+        <li>Splits in <b>"Echte klantprojecten"</b> en <b>"Concepten &amp; eigen werk"</b> (nu door elkaar). Echte cases voorop.</li>
+        <li>Maak de "Resultaten" in cases waar mogelijk <b>uitkomst-gericht</b> (wat het opleverde) i.p.v. alleen wat er gebouwd is.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 5. LANDINGS -->
+<section id="landings">
+  <div class="wrap">
+    <p class="eyebrow">Stap 5</p>
+    <h2 class="sec">Landingspagina's <span class="tag t-keep" style="font-size:.6rem;">src/data/landings.ts</span></h2>
+    <p class="lead">Vijf SEO-pagina's verwijzen nog naar de oude pakketten/prijzen. Overal gelijktrekken met het nieuwe model.</p>
+    <div class="card rust">
+      <ul class="clean chg">
+        <li><b>Overal:</b> "€395 per maand / groeipakket / Groei-pakket" <b>verwijderen</b>; verwijzen naar Maatwerk (op aanvraag) waar relevant.</li>
+        <li><b>Prijzen consistent:</b> "vanaf €995" (Fundament) en "€2.295" (Vakwerk, incl. CMS). Doorlooptijd: Fundament 2 weken, Vakwerk 3 weken — <b>de "2 tot 3 weken"-formuleringen opschonen</b>.</li>
+        <li><b>MKB-landing:</b> leunde zwaar op het groeipakket → herschrijven naar Vakwerk (compleet + CMS + analytics) en Maatwerk (koppelingen, meerdere locaties).</li>
+        <li><b>ZZP- &amp; Den Haag-landing:</b> nadruk op Het Fundament + Vakwerk; "geen abonnementsverplichting" mag blijven (klopt nu helemaal).</li>
+        <li><b>Kosten-landing:</b> de prijstabel/kostentabel updaten naar Fundament €995 / Vakwerk €2.295 / Maatwerk op aanvraag; webshop blijft "vanaf €995 (binnen maatwerk)".</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 6. SITEBREED -->
+<section id="site">
+  <div class="wrap">
+    <p class="eyebrow">Stap 6</p>
+    <h2 class="sec">Sitebrede consistentie &amp; toon</h2>
+    <div class="card mustard">
+      <ul class="clean chg">
+        <li><b>Getallen gelijktrekken:</b> nu staan "20+ websites", "25+ ondernemers" en "100+ pagina's" door elkaar (TrustStrip vs Testimonials vs landings). Kies één set en gebruik die overal.</li>
+        <li><b>Oplevertijd:</b> overal Fundament = 2 weken, Vakwerk = 3 weken, maatwerk = in overleg. Nergens meer "2 vs 3 weken" tegenspraak.</li>
+        <li><b>Scan-tool</b> (footer + ScanSection): repareren of tijdelijk weghalen — "binnenkort beschikbaar" ondermijnt vertrouwen (audit).</li>
+        <li><b>Toon:</b> de warme stijl blijft overal. Voeg alléén rond Maatwerk/over een iets strategischer, zakelijker register toe — niet de hoofdtoon vervangen.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- 7. DOELGROEP-CHECK -->
+<section id="doelgroep">
+  <div class="wrap">
+    <p class="eyebrow">Stap 7 · controle</p>
+    <h2 class="sec">Spreken we alle doelgroepen aan?</h2>
+    <p class="lead">Check op basis van de persona-audits: elke lead heeft nu een duidelijk thuis, zonder dat we ons op één type vastpinnen.</p>
+    <table class="map">
+      <thead><tr><th>Doelgroep (uit de audit)</th><th>Thuis op de site</th><th>Wat 'm overtuigt</th></tr></thead>
+      <tbody>
+        <tr><td><b>De snelle / kleine ondernemer</b></td><td>Het Fundament (€995)</td><td>Helder, betaalbaar, snel live, vaste prijs. Geen jargon, geen overweldiging.</td></tr>
+        <tr><td><b>De ondernemer die "compleet" wil</b></td><td>Vakwerk (€2.295)</td><td>Volledige site op maat + eigen CMS om zelf te beheren. Lost de meest gestelde vraag op.</td></tr>
+        <tr><td><b>De maatwerk-zoeker / ambitieus merk</b></td><td>Maatwerk (op aanvraag)</td><td>Geen laag prijsanker, "alles is mogelijk", strategie, en een gesprek i.p.v. een hokje.</td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top:14px; font-size:.92rem; color:rgba(46,33,26,.75)">Het groei-/resultaat-profiel uit de audit vervalt bewust: dat model (abonnement, dashboard, 12-maandenbinding) verzwakte juist het vertrouwen en is uit het aanbod.</p>
+  </div>
+</section>
+
+<!-- 8. CHECKLIST -->
+<section id="checklist">
+  <div class="wrap">
+    <p class="eyebrow">Stap 8</p>
+    <h2 class="sec">Implementatie-checklist</h2>
+    <div class="card olive">
+      <ul class="checkbox">
+        <li>Prijzenpagina: groei-pakket + dashboard + groei-FAQ's verwijderen</li>
+        <li>Prijzenpagina: drie pakketten herschrijven (Fundament/Vakwerk/Maatwerk) + CMS in Vakwerk</li>
+        <li>Prijzenpagina: gegroepeerde vergelijkingstabel terugzetten</li>
+        <li>Prijzenpagina: nieuwe FAQ's (zelf aanpassen / wanneer maatwerk / duur / betaling)</li>
+        <li>Homepage: hero-USP "binnen 2 weken live" vervangen</li>
+        <li>Homepage: pakketten-preview + home-FAQ herschrijven</li>
+        <li>Homepage: stats met echte cijfers; echte cases vooraan</li>
+        <li>Over: strategie-/positioneringspassage toevoegen</li>
+        <li>Portfolio: echt vs. concept splitsen; resultaten uitkomst-gericht</li>
+        <li>Landingspagina's: groei eruit, prijzen/namen/doorlooptijd gelijktrekken</li>
+        <li>Sitebreed: getallen consistent, scan-tool, oplevertijd</li>
+      </ul>
+    </div>
+    <p style="font-size:.9rem; color:rgba(46,33,26,.7)">Tip voor de HB-V2-sessie: vrijwel alle copy zit centraal in <code>src/data/content.ts</code> (<code>t.*</code>) en <code>src/data/landings.ts</code>. Begin daar — dan werken de meeste wijzigingen meteen door op alle pagina's.</p>
+  </div>
+</section>
+
+<footer>Implementatie-overzicht · Haagse Brandmerk · door te voeren in HB-V2</footer>
+</body>
+</html>

@@ -1,0 +1,122 @@
+---
+import Icon from "../Icon.astro";
+import { PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
+
+const pathname = Astro.url.pathname;
+const navItems = [
+  { label: "home", path: "/v2" },
+  { label: "snel", path: "/v2/snel" },
+  { label: "maatwerk", path: "/v2/maatwerk" },
+  { label: "groei", path: "/v2/groei" },
+  { label: "prijzen", path: "/v2/prijzen" },
+  { label: "over", path: "/v2/over" },
+];
+const isActive = (p: string) => (p === "/v2" ? pathname === "/v2" || pathname === "/v2/" : pathname.startsWith(p));
+---
+<header id="site-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-transparent">
+  <div id="scroll-progress" class="absolute bottom-0 left-0 right-0 h-[2px] origin-left" style="background: hsl(var(--retro-rust)); transform: scaleX(0)"></div>
+
+  <nav class="container mx-auto px-6 h-16 flex items-center justify-between gap-4">
+    <a href="/v2" class="font-display text-xl font-bold tracking-tight shrink-0 flex items-center gap-2" style="color: hsl(var(--retro-ink))">
+      <span>haagse<span style="color: hsl(var(--retro-rust))">brandmerk</span></span>
+      <span class="retro-stamp !px-2 !py-0.5 !text-[9px] !tracking-widest" style="transform: rotate(-4deg)">preview</span>
+    </a>
+
+    <ul class="hidden lg:flex items-center gap-6">
+      {navItems.map((item) => (
+        <li>
+          <a href={item.path}
+            class:list={["text-sm font-medium transition-colors relative py-1 capitalize", isActive(item.path) ? "" : "hover:opacity-100"]}
+            style={`color: hsl(var(--retro-ink) / ${isActive(item.path) ? "1" : "0.6"})`}>
+            {item.label}
+            {isActive(item.path) && <span class="absolute -bottom-0.5 left-0 right-0 h-0.5 rounded-full" style="background: hsl(var(--retro-rust))"></span>}
+          </a>
+        </li>
+      ))}
+    </ul>
+
+    <div class="hidden lg:flex items-center shrink-0">
+      <button data-contact-open class="fill-hover inline-flex h-9 px-5 items-center rounded-full text-sm font-semibold"
+        style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); --fill-color: hsl(var(--retro-rust))">
+        <span class="relative z-10">Plan een kennismaking</span>
+      </button>
+    </div>
+
+    <div class="lg:hidden flex items-center gap-2">
+      <button id="mobile-toggle" class="p-2" style="color: hsl(var(--retro-ink))" aria-label="Menu" aria-expanded="false">
+        <span data-menu-icon><Icon name="menu" size={22} /></span>
+        <span data-close-icon class="hidden"><Icon name="x" size={22} /></span>
+      </button>
+    </div>
+  </nav>
+
+  <div id="mobile-menu" class="lg:hidden overflow-hidden hidden" style="background: hsl(var(--retro-cream)); border-bottom: 1.5px solid hsl(var(--retro-ink) / 0.24)">
+    <ul class="container mx-auto px-6 py-6 space-y-3">
+      {navItems.map((item) => (
+        <li>
+          <a href={item.path} class="block text-lg font-medium capitalize" style={`color: hsl(var(--retro-ink) / ${isActive(item.path) ? "1" : "0.7"})`}>{item.label}</a>
+        </li>
+      ))}
+      <li><a href="/v2/portfolio" class="block text-lg font-medium" style="color: hsl(var(--retro-ink) / 0.7)">portfolio</a></li>
+      <li class="pt-2">
+        <button data-contact-open class="inline-flex h-10 px-6 items-center rounded-full text-sm font-semibold"
+          style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">Plan een kennismaking</button>
+      </li>
+      <li>
+        <a href={`tel:${PHONE_NUMBER}`} class="inline-flex items-center gap-1.5 text-sm mt-1" style="color: hsl(var(--retro-ink) / 0.7)">
+          <Icon name="phone" size={14} /> {PHONE_DISPLAY}
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>
+
+<script>
+  function initV2Navbar() {
+    const header = document.getElementById("site-header");
+    const progress = document.getElementById("scroll-progress");
+    const toggle = document.getElementById("mobile-toggle");
+    const menu = document.getElementById("mobile-menu");
+    if (!header || header.dataset.bound) return;
+    header.dataset.bound = "true";
+
+    const menuIcon = toggle?.querySelector("[data-menu-icon]");
+    const closeIcon = toggle?.querySelector("[data-close-icon]");
+
+    const onScroll = () => {
+      const scrolled = window.scrollY > 20;
+      if (scrolled) {
+        header.style.background = "hsl(var(--retro-cream) / 0.86)";
+        header.style.borderBottom = "1px solid hsl(var(--retro-ink) / 0.24)";
+        header.style.backdropFilter = "blur(16px)";
+        (header.style as any).webkitBackdropFilter = "blur(16px)";
+      } else if (!menu || menu.classList.contains("hidden")) {
+        header.style.background = "transparent";
+        header.style.borderBottom = "";
+        header.style.backdropFilter = "";
+        (header.style as any).webkitBackdropFilter = "";
+      }
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      if (progress) progress.style.transform = `scaleX(${max > 0 ? window.scrollY / max : 0})`;
+    };
+
+    let open = false;
+    toggle?.addEventListener("click", () => {
+      open = !open;
+      menu?.classList.toggle("hidden", !open);
+      menuIcon?.classList.toggle("hidden", open);
+      closeIcon?.classList.toggle("hidden", !open);
+      toggle.setAttribute("aria-expanded", String(open));
+      if (open) {
+        header.style.background = "hsl(var(--retro-cream))";
+        header.style.borderBottom = "1px solid hsl(var(--retro-ink) / 0.24)";
+      } else { onScroll(); }
+    });
+
+    window.addEventListener("scroll", onScroll, { passive: true });
+    onScroll();
+  }
+  initV2Navbar();
+  document.addEventListener("astro:after-swap", initV2Navbar);
+</script>

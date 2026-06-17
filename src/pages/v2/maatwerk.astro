@@ -1,0 +1,123 @@
+---
+import V2Layout from "../../layouts/V2Layout.astro";
+import ScrollReveal from "../../components/ScrollReveal.astro";
+import Icon from "../../components/Icon.astro";
+import SunBurst from "../../components/decor/SunBurst.astro";
+import Sparkle from "../../components/decor/Sparkle.astro";
+import { v2maatwerk } from "../../data/v2.ts";
+import { contentProjects, PHONE_NUMBER, PHONE_DISPLAY } from "../../data/content.ts";
+
+const caseStudy = contentProjects.find((p) => p.id === "angela-ceremonies")!;
+---
+<V2Layout title="Maatwerk website & merk op maat | Haagse Brandmerk" description="Een doordacht maatwerktraject: strategie, positionering en een uniek ontwerp dat je merk waarmaakt. Op aanvraag, voor ambitieuze ondernemers.">
+
+  <!-- HERO (editorial, geen prijs/snelheid) -->
+  <section class="relative pt-32 pb-24 overflow-hidden retro-grain" style="background: hsl(var(--retro-terracotta) / 0.16)">
+    <div class="absolute -right-24 top-20 w-[440px] h-[440px] retro-blob-radius-2 retro-blob-idle-2 pointer-events-none" style="background: hsl(var(--retro-terracotta) / 0.3)"></div>
+    <Sparkle class="absolute top-36 left-[12%] w-6 h-6 pointer-events-none" color="hsl(var(--retro-terracotta))" />
+    <div class="container mx-auto px-6 relative z-10">
+      <div class="max-w-3xl">
+        <span class="retro-sticker mb-6" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream))">{v2maatwerk.hero.eyebrow}</span>
+        <h1 class="retro-display text-5xl md:text-7xl lg:text-[4.75rem] mb-6">{v2maatwerk.hero.title}</h1>
+        <p class="text-lg md:text-xl leading-relaxed mb-8 max-w-2xl" style="color: hsl(var(--retro-ink) / 0.8)">{v2maatwerk.hero.subtitle}</p>
+        <button data-contact-open class="retro-pill-btn"><span class="relative z-10 inline-flex items-center gap-2">Plan een strategiegesprek <Icon name="arrow-right" size={16} /></span></button>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAT MAATWERK BETEKENT -->
+  <section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="max-w-3xl mb-14 block">
+        <h2 class="retro-display text-3xl md:text-5xl mb-4">{v2maatwerk.what.title}</h2>
+        <p class="text-lg leading-relaxed" style="color: hsl(var(--retro-ink) / 0.78)">{v2maatwerk.what.intro}</p>
+      </ScrollReveal>
+      <div class="grid md:grid-cols-3 gap-7">
+        {v2maatwerk.what.items.map((item, i) => {
+          const shadow = ["retro-card-shadow-terracotta", "retro-card-shadow-rust", "retro-card-shadow-mustard"][i];
+          return (
+            <ScrollReveal delay={i * 90} class="block">
+              <div class:list={["retro-card", shadow, "p-7 h-full"]}>
+                <span class="w-12 h-12 rounded-2xl flex items-center justify-center mb-5" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream)); border: 1.5px solid hsl(var(--retro-ink)); box-shadow: 3px 3px 0 hsl(var(--retro-ink))"><Icon name={item.icon} size={22} strokeWidth={2.25} /></span>
+                <h3 class="font-display font-bold text-xl mb-2" style="color: hsl(var(--retro-ink))">{item.title}</h3>
+                <p class="text-sm leading-relaxed" style="color: hsl(var(--retro-ink) / 0.75)">{item.body}</p>
+              </div>
+            </ScrollReveal>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCES -->
+  <section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-butter) / 0.4); border-top: 2px solid hsl(var(--retro-ink)); border-bottom: 2px solid hsl(var(--retro-ink))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="max-w-2xl mx-auto text-center mb-14 block">
+        <span class="retro-sticker mb-5">De werkwijze</span>
+        <h2 class="retro-display text-3xl md:text-5xl mb-4">{v2maatwerk.process.title}</h2>
+        <p class="text-lg" style="color: hsl(var(--retro-ink) / 0.72)">{v2maatwerk.process.subtitle}</p>
+      </ScrollReveal>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+        {v2maatwerk.process.steps.map((s, i) => (
+          <ScrollReveal delay={i * 90} class="block">
+            <div class="retro-card p-6 h-full" style={i === 0 ? "background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream))" : ""}>
+              <span class="retro-display text-5xl italic block mb-3" style={`color: ${i === 0 ? "hsl(var(--retro-cream))" : "hsl(var(--retro-terracotta))"}`}>{s.step}</span>
+              <h3 class="font-display font-bold text-lg mb-2" style={`color: ${i === 0 ? "hsl(var(--retro-cream))" : "hsl(var(--retro-ink))"}`}>{s.title}</h3>
+              <p class="text-sm leading-relaxed" style={`color: ${i === 0 ? "hsl(var(--retro-cream) / 0.85)" : "hsl(var(--retro-ink) / 0.75)"}`}>{s.body}</p>
+            </div>
+          </ScrollReveal>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- BEWIJS / CASE -->
+  <section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-cream))">
+    <div class="container mx-auto px-6">
+      <div class="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
+        <ScrollReveal class="block">
+          <div class="retro-card !p-0 overflow-hidden" style="box-shadow: 8px 8px 0 hsl(var(--retro-terracotta))">
+            <img src={caseStudy.image} alt={caseStudy.title} loading="lazy" class="w-full h-auto" />
+          </div>
+        </ScrollReveal>
+        <ScrollReveal delay={100} class="block">
+          <span class="retro-sticker mb-5" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream))">Maatwerk in de praktijk</span>
+          <h2 class="retro-display text-3xl md:text-4xl mb-4">{caseStudy.title}</h2>
+          <p class="text-base leading-relaxed mb-4" style="color: hsl(var(--retro-ink) / 0.8)">{caseStudy.challenge}</p>
+          <p class="text-base leading-relaxed mb-6" style="color: hsl(var(--retro-ink) / 0.8)">{caseStudy.solution}</p>
+          <a href="/v2/portfolio" class="retro-link-handdraw inline-flex items-center gap-1 font-bold" style="color: hsl(var(--retro-rust))">Bekijk meer werk <Icon name="arrow-right" size={14} /></a>
+        </ScrollReveal>
+      </div>
+    </div>
+  </section>
+
+  <!-- AANBOD: OP AANVRAAG (prijsloos) -->
+  <section class="py-20 md:py-28 retro-grain" style="background: hsl(var(--retro-butter) / 0.4); border-top: 2px solid hsl(var(--retro-ink))">
+    <div class="container mx-auto px-6">
+      <ScrollReveal class="max-w-4xl mx-auto block">
+        <div class="retro-card p-8 md:p-12" style="box-shadow: 10px 10px 0 hsl(var(--retro-terracotta))">
+          <span class="retro-sticker mb-5" style="background: hsl(var(--retro-terracotta)); color: hsl(var(--retro-cream))">{v2maatwerk.offer.eyebrow}</span>
+          <h2 class="retro-display text-3xl md:text-5xl mb-4">{v2maatwerk.offer.title}</h2>
+          <p class="text-lg leading-relaxed mb-7 max-w-2xl" style="color: hsl(var(--retro-ink) / 0.8)">{v2maatwerk.offer.body}</p>
+          <ul class="grid sm:grid-cols-2 gap-x-8 gap-y-3 mb-8">
+            {v2maatwerk.offer.points.map((p) => (
+              <li class="flex items-start gap-2.5 text-sm font-medium" style="color: hsl(var(--retro-ink) / 0.85)"><Icon name="check" size={17} strokeWidth={2.5} class="shrink-0 mt-0.5 text-retro-rust" /> {p}</li>
+            ))}
+          </ul>
+          <button data-contact-open class="retro-pill-btn"><span class="relative z-10 inline-flex items-center gap-2">{v2maatwerk.offer.cta} <Icon name="arrow-right" size={16} /></span></button>
+        </div>
+      </ScrollReveal>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section data-section-dark="true" class="py-24 relative overflow-hidden" style="background: hsl(var(--retro-ink)); color: hsl(var(--retro-cream))">
+    <SunBurst class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] opacity-15 retro-spin pointer-events-none" color="hsl(var(--retro-terracotta))" />
+    <div class="container mx-auto px-6 text-center relative z-10">
+      <h2 class="retro-display text-4xl md:text-6xl mb-5">Benieuwd wat er voor jouw merk mogelijk is?</h2>
+      <p class="max-w-lg mx-auto text-lg mb-9" style="color: hsl(var(--retro-cream) / 0.75)">We beginnen met een goed gesprek over je positie, je ambitie en je doelgroep. Vrijblijvend, en altijd eerlijk.</p>
+      <button data-contact-open class="fill-hover inline-flex h-12 px-8 items-center rounded-full font-bold gap-2" style="background: hsl(var(--retro-cream)); color: hsl(var(--retro-ink)); box-shadow: 5px 5px 0 hsl(var(--retro-terracotta)); --fill-color: hsl(var(--retro-terracotta))"><span class="relative z-10 inline-flex items-center gap-2">Plan een strategiegesprek <Icon name="arrow-up-right" size={16} /></span></button>
+      <a href={`tel:${PHONE_NUMBER}`} class="flex items-center justify-center gap-1.5 text-sm mt-7" style="color: hsl(var(--retro-cream) / 0.65)"><Icon name="phone" size={14} /> Of bel direct: {PHONE_DISPLAY}</a>
+    </div>
+  </section>
+</V2Layout>
