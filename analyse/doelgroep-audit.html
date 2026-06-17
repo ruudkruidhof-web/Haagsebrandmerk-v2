@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Doelgroep-audit · Haagse Brandmerk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..900&family=Caveat:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#F4E9D6; --butter:#F5D58E; --terracotta:#D2674A; --rust:#C24A2C;
+    --mustard:#E0A52A; --olive:#6E7A45; --plum:#6E3B4F; --ink:#2E211A;
+    --paper:#FBF5EA;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; background:var(--cream); color:var(--ink);
+    font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+    font-size:16px; line-height:1.65;
+    background-image:radial-gradient(rgba(46,33,26,.05) 1.2px, transparent 1.2px);
+    background-size:22px 22px;
+  }
+  .wrap{max-width:1040px; margin:0 auto; padding:0 22px;}
+  h1,h2,h3,h4{font-family:'Fraunces',Georgia,serif; line-height:1.05; font-weight:800;}
+  .display{font-family:'Fraunces',Georgia,serif;}
+  .hand{font-family:'Caveat',cursive; font-weight:700;}
+  a{color:var(--rust);}
+
+  /* sticker / badge */
+  .sticker{
+    display:inline-block; padding:6px 15px; border:2px solid var(--ink); border-radius:999px;
+    background:var(--mustard); color:var(--ink); font-weight:700; font-size:.72rem;
+    letter-spacing:.12em; text-transform:uppercase; box-shadow:3px 3px 0 var(--ink);
+  }
+  .stamp{
+    display:inline-block; padding:5px 12px; border:2px dashed var(--ink); border-radius:8px;
+    font-weight:800; font-size:.7rem; letter-spacing:.18em; text-transform:uppercase;
+    transform:rotate(-3deg); background:var(--cream);
+  }
+
+  /* hero */
+  header.hero{
+    background:var(--cream); border-bottom:2.5px solid var(--ink);
+    padding:64px 0 56px; position:relative; overflow:hidden;
+  }
+  header.hero .blob{position:absolute; border-radius:46% 54% 60% 40%/55% 45% 55% 45%; opacity:.5; pointer-events:none;}
+  header.hero h1{font-size:clamp(2.6rem,6vw,4.4rem); margin:14px 0 10px;}
+  header.hero h1 em{font-style:italic; color:var(--rust);}
+  header.hero .lede{font-size:1.12rem; max-width:62ch; color:rgba(46,33,26,.82);}
+  .meta-row{display:flex; flex-wrap:wrap; gap:10px 16px; margin-top:22px; font-size:.85rem; color:rgba(46,33,26,.7);}
+  .meta-row span{display:inline-flex; align-items:center; gap:7px;}
+  .meta-row b{font-weight:700; color:var(--ink);}
+
+  section{padding:52px 0;}
+  section.alt{background:rgba(245,213,142,.28); border-top:2px solid var(--ink); border-bottom:2px solid var(--ink);}
+  .eyebrow{font-family:'Inter'; font-weight:700; text-transform:uppercase; letter-spacing:.14em; font-size:.74rem; color:var(--rust); margin:0 0 6px;}
+  h2.sec{font-size:clamp(1.9rem,4vw,2.8rem); margin:0 0 8px;}
+  .sec-sub{max-width:70ch; color:rgba(46,33,26,.78); margin:0 0 26px;}
+
+  /* card */
+  .card{
+    background:var(--paper); border:2px solid var(--ink); border-radius:18px;
+    box-shadow:7px 7px 0 var(--ink); padding:24px 26px; margin-bottom:22px;
+  }
+  .card.sh-mustard{box-shadow:7px 7px 0 var(--mustard);}
+  .card.sh-terra{box-shadow:7px 7px 0 var(--terracotta);}
+  .card.sh-rust{box-shadow:7px 7px 0 var(--rust);}
+  .card.sh-olive{box-shadow:7px 7px 0 var(--olive);}
+
+  /* callout */
+  .callout{
+    border:2.5px solid var(--ink); border-radius:18px; padding:24px 26px; margin:8px 0 26px;
+    background:var(--ink); color:var(--cream); box-shadow:8px 8px 0 var(--rust);
+  }
+  .callout h3{color:var(--cream); margin:0 0 10px; font-size:1.4rem;}
+  .callout p{color:rgba(244,233,214,.9); margin:0 0 10px;}
+  .callout .key{color:var(--butter); font-weight:700;}
+
+  /* persona header */
+  .p-head{display:flex; align-items:flex-start; gap:18px; flex-wrap:wrap;}
+  .p-head .num{
+    font-family:'Fraunces',serif; font-weight:900; font-style:italic; font-size:3rem; line-height:.8;
+    width:64px; height:64px; flex:0 0 64px; display:flex; align-items:center; justify-content:center;
+    border:2px solid var(--ink); border-radius:14px; box-shadow:3px 3px 0 var(--ink);
+  }
+  .p-head .t{flex:1; min-width:220px;}
+  .p-head h3{font-size:1.6rem; margin:2px 0 4px;}
+  .p-head .who{color:rgba(46,33,26,.72); font-size:.95rem; margin:0;}
+  .score{
+    flex:0 0 auto; text-align:center; border:2px solid var(--ink); border-radius:14px;
+    padding:8px 14px; background:var(--cream); box-shadow:3px 3px 0 var(--ink); transform:rotate(3deg);
+  }
+  .score .n{font-family:'Fraunces',serif; font-weight:900; font-size:1.7rem; display:block; line-height:1;}
+  .score .l{font-size:.62rem; text-transform:uppercase; letter-spacing:.1em; color:rgba(46,33,26,.7);}
+
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  @media(max-width:760px){.grid2{grid-template-columns:1fr;}}
+
+  .mini-h{font-family:'Fraunces',serif; font-weight:800; font-size:1.05rem; margin:18px 0 8px; display:flex; align-items:center; gap:8px;}
+  .pill{display:inline-block; font-size:.66rem; font-weight:800; text-transform:uppercase; letter-spacing:.08em; padding:2px 9px; border-radius:999px; border:1.5px solid var(--ink);}
+  .pill.plus{background:rgba(110,122,69,.25); color:var(--olive);}
+  .pill.minus{background:rgba(194,74,44,.18); color:var(--rust);}
+  .pill.warn{background:rgba(224,165,42,.28); color:#9a6a00;}
+
+  ul.clean{list-style:none; padding:0; margin:0;}
+  ul.clean li{position:relative; padding:7px 0 7px 26px; border-bottom:1px solid rgba(46,33,26,.12);}
+  ul.clean li:last-child{border-bottom:0;}
+  ul.clean li::before{position:absolute; left:0; top:7px; font-weight:800;}
+  ul.plus li::before{content:"+"; color:var(--olive);}
+  ul.minus li::before{content:"–"; color:var(--rust);}
+  ul.arrow li::before{content:"→"; color:var(--terracotta);}
+  q, .quote{font-style:italic; color:var(--plum);}
+  .src{font-size:.78rem; color:rgba(46,33,26,.55);}
+
+  details{border:2px solid var(--ink); border-radius:14px; background:var(--paper); margin-bottom:14px; box-shadow:4px 4px 0 var(--ink); overflow:hidden;}
+  details[open]{box-shadow:6px 6px 0 var(--mustard);}
+  summary{cursor:pointer; padding:14px 18px; font-family:'Fraunces',serif; font-weight:800; font-size:1.05rem; list-style:none; display:flex; justify-content:space-between; align-items:center; gap:10px;}
+  summary::-webkit-details-marker{display:none;}
+  summary::after{content:"▸"; transition:transform .2s; color:var(--rust);}
+  details[open] summary::after{transform:rotate(90deg);}
+  .details-body{padding:0 18px 18px;}
+
+  /* matrix */
+  .matrix-scroll{overflow-x:auto; border:2.5px solid var(--ink); border-radius:16px; box-shadow:8px 8px 0 var(--mustard); background:var(--paper);}
+  table.matrix{border-collapse:collapse; width:100%; min-width:760px; font-size:.86rem;}
+  table.matrix th, table.matrix td{padding:12px 13px; border:1px solid rgba(46,33,26,.18); vertical-align:top; text-align:left;}
+  table.matrix thead th{background:var(--ink); color:var(--cream); font-family:'Fraunces',serif; font-size:.95rem; position:sticky; top:0;}
+  table.matrix thead th:first-child{background:var(--ink);}
+  table.matrix td.el{font-weight:600; background:rgba(245,213,142,.35); min-width:170px;}
+  table.matrix .cell{display:block;}
+  table.matrix .tag{display:inline-block; font-weight:800; font-size:.7rem; padding:1px 7px; border-radius:999px; border:1.5px solid var(--ink); margin-bottom:4px;}
+  .tag.p{background:rgba(110,122,69,.3); color:#3f4a1f;}
+  .tag.m{background:rgba(194,74,44,.2); color:var(--rust);}
+  .tag.w{background:rgba(224,165,42,.35); color:#8a5e00;}
+
+  /* track cards */
+  .track{border:2px solid var(--ink); border-radius:18px; padding:22px 24px; margin-bottom:18px; background:var(--paper);}
+  .track .tnum{font-family:'Caveat',cursive; font-size:1.5rem; color:var(--rust);}
+  .track h3{margin:2px 0 4px; font-size:1.35rem;}
+  .track .for{font-size:.85rem; color:rgba(46,33,26,.7); margin:0 0 12px;}
+  .track.t1{box-shadow:7px 7px 0 var(--mustard);}
+  .track.t2{box-shadow:7px 7px 0 var(--terracotta);}
+  .track.t3{box-shadow:7px 7px 0 var(--olive);}
+
+  /* plan steps */
+  .plan{border-left:3px dashed var(--ink); margin-left:8px; padding-left:22px;}
+  .plan .step{margin-bottom:20px; position:relative;}
+  .plan .step::before{content:""; position:absolute; left:-30px; top:4px; width:14px; height:14px; background:var(--rust); border:2px solid var(--ink); border-radius:50%;}
+  .plan .step h4{margin:0 0 4px; font-size:1.1rem;}
+
+  .prio{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media(max-width:760px){.prio{grid-template-columns:1fr;}}
+  .prio .col{border:2px solid var(--ink); border-radius:16px; padding:18px; background:var(--paper);}
+  .prio .col h4{margin:0 0 10px; font-size:1.15rem; display:flex; align-items:center; gap:8px;}
+  .prio.now .col:nth-child(1){box-shadow:6px 6px 0 var(--rust);}
+  .prio .col:nth-child(2){box-shadow:6px 6px 0 var(--mustard);}
+  .prio .col:nth-child(3){box-shadow:6px 6px 0 var(--olive);}
+  .prio ol{margin:0; padding-left:18px;}
+  .prio li{margin-bottom:8px;}
+
+  footer{background:var(--ink); color:var(--cream); padding:34px 0; border-top:2.5px solid var(--ink);}
+  footer .wrap{display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; align-items:center;}
+  footer a{color:var(--butter);}
+
+  .toc{display:flex; flex-wrap:wrap; gap:8px; margin-top:24px;}
+  .toc a{display:inline-block; padding:6px 13px; border:2px solid var(--ink); border-radius:999px; background:var(--paper); color:var(--ink); text-decoration:none; font-size:.82rem; font-weight:600; box-shadow:2px 2px 0 var(--ink);}
+  .toc a:hover{background:var(--mustard);}
+  hr.wavy{border:0; height:14px; margin:34px 0; background:radial-gradient(circle at 10px -4px, transparent 12px, var(--ink) 13px, transparent 14px); background-size:22px 18px; opacity:.25;}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="blob" style="background:var(--butter); width:360px; height:360px; left:-120px; top:-80px;"></div>
+  <div class="blob" style="background:rgba(210,103,74,.45); width:300px; height:300px; right:-90px; bottom:-100px;"></div>
+  <div class="wrap" style="position:relative; z-index:1;">
+    <span class="sticker">Strategische content-audit</span>
+    <h1>Spreken we <em>iedereen</em> aan?</h1>
+    <p class="lede">Een doelgroep-audit van haagsebrandmerk.nl, bekeken door de ogen van drie verschillende leads. Wat trekt aan, wat schrikt af, en hoe bedienen we de snelle starter én de maatwerk-zoeker zonder ons op één type ondernemer vast te pinnen.</p>
+    <div class="meta-row">
+      <span>📅 Opgesteld: <b>17 juni 2026</b></span>
+      <span>🔍 Scope: <b>homepage · prijzen · over · portfolio · contact · 5 landingspagina's</b></span>
+      <span>👥 Methode: <b>3 persona-subagents + synthese</b></span>
+    </div>
+    <div class="toc">
+      <a href="#tldr">Korte conclusie</a>
+      <a href="#personas">De 3 persona's</a>
+      <a href="#matrix">Conflictmatrix</a>
+      <a href="#rodedraden">Rode draden</a>
+      <a href="#visie">Mijn visie</a>
+      <a href="#plan">Integratieplan</a>
+      <a href="#prio">Prioriteiten</a>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TL;DR ============ -->
+<section id="tldr">
+  <div class="wrap">
+    <p class="eyebrow">De kern in het kort</p>
+    <h2 class="sec">Wat hier eigenlijk speelt</h2>
+    <div class="callout">
+      <h3>De site spreekt nu vloeiend één dialect: dat van de snelle, prijsbewuste starter.</h3>
+      <p>Precies die signalen die deze starter geruststellen — <span class="key">"Binnen 2 weken live"</span>, een laag prijsanker (<span class="key">vanaf €995</span>), kant-en-klare pakketten — zijn dezelfde signalen die de <span class="key">maatwerk-zoeker actief wegjagen</span> (die leest "snel en goedkoop" als "oppervlakkig template-werk") en de <span class="key">resultaatgerichte groeier niet overtuigen</span> (die mist bewijs en cijfers).</p>
+      <p>Je onderbuikgevoel klopt dus: de belofte van snelheid trekt juist de doelgroep aan die zich <em>niet</em> meldt, en duwt de doelgroep weg die zich <em>wél</em> meldt. Niemand scoort hoog — zelfs de starter blijft op 6,5 hangen door een gat in het aanbod.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card sh-mustard">
+        <h3 style="margin-top:0;">De drie scores</h3>
+        <ul class="clean">
+          <li><b>Snelle starter — 6,5/10.</b> Toon, snelheid en vaste prijs kloppen, maar er is geen betaalbaar instappakket voor wie nog géén site heeft.</li>
+          <li><b>Maatwerk-zoeker — 4/10.</b> Voelt zich niet op niveau genomen: te snel, te goedkoop, te veel "doosjes", te veel fictieve cases.</li>
+          <li><b>Resultaatgerichte groeier — 5/10.</b> Het Groei-model spreekt aan, maar het bewijs (cijfers, dashboard, cases) is leeg of fictief.</li>
+        </ul>
+      </div>
+      <div class="card sh-terra">
+        <h3 style="margin-top:0;">De drie grootste hefbomen</h3>
+        <ul class="clean arrow">
+          <li><b>Snelheid contextueel maken.</b> Haal "binnen 2 weken live" weg uit de universele hero; laat het alleen leven bij het snelle spoor.</li>
+          <li><b>Een tweede, prijsloos spoor zichtbaar maken</b> voor maatwerk/strategie — zodat een laag prijsanker niet het hele merk neerzet.</li>
+          <li><b>Echt bewijs toevoegen.</b> Vul lege cijfers, scheid fictieve concepten van echte cases, onderbouw het Groei-pakket met één resultaat.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PERSONAS ============ -->
+<section id="personas" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Stap 1 · De doelgroepen aan het woord</p>
+    <h2 class="sec">De site door drie paar ogen</h2>
+    <p class="sec-sub">Drie subagents bekeken de volledige site, elk volledig in-character als één lead-type. Hieronder hun bevindingen: wat ze als eerste denken, wat ze aantrekt, waar ze op afhaken en wat ze nodig hebben om contact op te nemen.</p>
+
+    <!-- PERSONA 1 -->
+    <div class="card sh-mustard">
+      <div class="p-head">
+        <div class="num" style="background:var(--butter);">1</div>
+        <div class="t">
+          <h3>De snelle starter</h3>
+          <p class="who">Net begonnen ZZP'er of kleine zaak (kapper, hovenier, coach). Wil snel, betaalbaar en zonder gedoe een nette site. Scant liever dan dat hij leest. Schrikt van hoge bedragen en lange contracten.</p>
+        </div>
+        <div class="score"><span class="n">6,5</span><span class="l">/10 past</span></div>
+      </div>
+
+      <div class="mini-h">💬 Eerste indruk</div>
+      <p>"Best goed gevoel meteen." De hero-USP's <span class="quote">"100% tevredenheidsgarantie", "Vaste prijzen, altijd vooraf helder", "Binnen 2 weken live"</span> zijn precies de drie dingen die hij wil horen. Maar: <b>nergens in het eerste scherm een prijs of "vanaf €…"</b>, en de subtitel <span class="quote">"voor ondernemers die online willen groeien"</span> voelt iets meer als "voor wie al draait".</p>
+
+      <div class="grid2">
+        <div>
+          <div class="mini-h"><span class="pill plus">Trekt aan</span></div>
+          <ul class="clean plus">
+            <li>Snelle oplevering, vaak herhaald: <span class="quote">"Klaar binnen 2 weken"</span>.</li>
+            <li><span class="quote">"Vaste prijzen, geen verrassingen achteraf"</span> — neemt zijn grootste angst (nacalculatie) weg.</li>
+            <li><span class="quote">"Geen bureau met accountmanagers en wachttijden"</span> — voelt laagdrempelig en goedkoper.</li>
+            <li>Gratis, vrijblijvende kennismaking — lage drempel.</li>
+            <li>Landingspagina noemt letterlijk zijn type: <span class="quote">"Schilders, hoveniers, klusbedrijven"</span>.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mini-h"><span class="pill minus">Schrikt af</span></div>
+          <ul class="clean minus">
+            <li><b>Geen betaalbaar startpakket.</b> De €995 is voor een <span class="quote">"visueel redesign van bestaande pagina's"</span> — heeft hij nog geen site, dan landt hij op <span class="quote">"Volledige Redesign €2.295"</span>.</li>
+            <li><b>"Meest gekozen" staat op het dúúrste pakket</b> (€2.295) — sociale druk richting een bedrag waar hij van schrikt.</li>
+            <li><span class="quote">"Minimaal 12 maanden … €4.503 per jaar"</span> — precies het vastzitten dat hij niet wil.</li>
+            <li>Veel groei-jargon (A/B-testing, dashboard, "Demo aanvragen") geeft keuzestress.</li>
+            <li>Inconsistente oplevertijd (2 vs. 3 weken) ondermijnt de duidelijkheid die zijn aankoopreden ís.</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>Top-frictiepunten & aanbevelingen van deze persona</summary>
+        <div class="details-body">
+          <div class="mini-h">Top frictie (geprioriteerd)</div>
+          <ul class="clean">
+            <li><b>1. Geen instappakket voor wie bij nul begint</b> — landt op €2.295 terwijl budget ~€1.500 is. <span class="src">Impact: hoog</span></li>
+            <li><b>2. Oplevertijd 2 vs. 3 weken</b> — <span class="quote">"binnen 2 weken live"</span> (home-FAQ) versus <span class="quote">"Klaar binnen 3 weken"</span> (pakket). <span class="src">Impact: hoog</span></li>
+            <li><b>3. "Meest gekozen" → €2.295</b> laat de €995 voelen als "de mindere keuze". <span class="src">Impact: hoog</span></li>
+            <li><b>4. 12-maandenbinding + €4.503</b> kleurt het hele beeld als "duur". <span class="src">Impact: midden</span></li>
+            <li><b>5. Te veel groei-features & jargon</b> → keuzestress. <span class="src">Impact: midden</span></li>
+          </ul>
+          <div class="mini-h">Aanbevelingen vanuit deze persona</div>
+          <ul class="clean arrow">
+            <li>Voeg een vierde, expliciet <b>instappakket voor starters zonder site</b> toe (one-pager / nieuwe simpele site, rond of onder €1.500, binnen 2 weken live).</li>
+            <li>Maak de oplevertijd overal gelijk.</li>
+            <li>Toon een <b>"vanaf €995"-anker hoog op de homepage</b> en een mini-wegwijzer "Heb je al een site? Ja → Opfrisbeurt. Nee → Nieuwe site."</li>
+            <li>Laat het contactformulier direct versturen (nu opent het een <span class="quote">mailto:</span>) en maak WhatsApp zichtbaarder.</li>
+            <li>Zet de echte klantcases visueel vóór de concepten.</li>
+          </ul>
+          <p><b>Eindoordeel:</b> "Ja, ik zou waarschijnlijk wél even bellen of appen … maar ik twijfel of het binnen mijn budget past omdat ik als starter zonder site op €2.295 lijk te landen."</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- PERSONA 2 -->
+    <div class="card sh-terra">
+      <div class="p-head">
+        <div class="num" style="background:var(--terracotta); color:var(--cream);">2</div>
+        <div class="t">
+          <h3>De maatwerk-zoeker</h3>
+          <p class="who">Gevestigde ondernemer / beslisser bij ambitieus, groeiend MKB met onderscheidend verhaal. Zoekt strategie, positionering en een uniek traject. Prijs = kwaliteitssignaal; banger voor te goedkoop dan voor te duur.</p>
+        </div>
+        <div class="score" style="transform:rotate(-3deg);"><span class="n">4</span><span class="l">/10 past</span></div>
+      </div>
+
+      <div class="mini-h">💬 Eerste indruk</div>
+      <p>Verzorgd en charmant, maar binnen tien seconden een afremmend signaal: de hero-USP <span class="quote">"Binnen 2 weken live"</span> leest als "snel-klaar-product". De toon (<span class="quote">"Ik neem je bij de hand"</span>, <span class="quote">"koffie regel ik ☕"</span>) voelt gericht op de kleine ondernemer die ontzorgd wil worden — "sympathiek bediend, maar niet op mijn niveau serieus genomen."</p>
+
+      <div class="grid2">
+        <div>
+          <div class="mini-h"><span class="pill plus">Trekt aan</span></div>
+          <ul class="clean plus">
+            <li>De woorden <span class="quote">"Strategie"</span> en <span class="quote">"Maatwerk"</span> staan er (hero-marquee) — al worden ze nauwelijks ingelost.</li>
+            <li>Case-teksten tonen écht denkwerk: <span class="quote">"Voor ik ook maar één scherm ontwierp, bepaalde ik eerst het verhaal…"</span></li>
+            <li>De Angela-case: <span class="quote">"Geen template, maar een ontwerp dat specifiek voor haar is gemaakt"</span>.</li>
+            <li>Het blok <span class="quote">"Maatwerk &amp; Groei — op aanvraag"</span> — het enige stuk dat op hem mikt, maar veel te ondergeschikt.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mini-h"><span class="pill minus">Schrikt af</span></div>
+          <ul class="clean minus">
+            <li><b>"Binnen 2 weken live" overal</b> = rode vlag: suggereert sjabloon, geen diepgaand merk-/strategiewerk.</li>
+            <li><b>Prijsanker €995 / max €2.295</b> signaleert "hobbyniveau/template" — zet het hele merk in een segment waar hij níét wil zitten.</li>
+            <li><span class="quote">"Tot 5 pagina's volledig herbouwd"</span> voelt als een productdoosje, niet "alles kan voor jouw situatie".</li>
+            <li><b>Helft van het portfolio is fictief</b> (<span class="quote">"conceptcase"</span>, Concept-badges) — hij wil bewijs van échte, complexe opdrachten.</li>
+            <li>Echte cases zijn allemaal ZZP/klein — hij herkent zijn ambitie nergens.</li>
+            <li>Toon is bijna betuttelend: <span class="quote">"Je hoeft niks van techniek te weten"</span>, <span class="quote">"Geen stress"</span>.</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>Top-frictiepunten & aanbevelingen van deze persona</summary>
+        <div class="details-body">
+          <div class="mini-h">Top frictie (geprioriteerd)</div>
+          <ul class="clean">
+            <li><b>1. "Binnen 2 weken live"</b> als kernbelofte leest als sjabloonwerk. <span class="src">Impact: hoog</span></li>
+            <li><b>2. Prijsanker €995 / €2.295</b> te laag → niet zijn niveau. <span class="src">Impact: hoog</span></li>
+            <li><b>3. "Tot 5 pagina's"-limiet</b> voelt beperkend. <span class="src">Impact: hoog</span></li>
+            <li><b>4. Helft portfolio fictief</b> — geen bewijs op zijn niveau. <span class="src">Impact: midden/hoog</span></li>
+            <li><b>5. Tegenstrijdige oplevertijden</b> ondermijnen vertrouwen in planning. <span class="src">Impact: midden</span></li>
+          </ul>
+          <div class="mini-h">Aanbevelingen vanuit deze persona</div>
+          <ul class="clean arrow">
+            <li>Maak een volwaardig vierde spoor zichtbaar: <b>"Maatwerk / Strategie &amp; Merk"</b> — prijsloos, met een eigen verhaallijn over positionering. Schaadt de kleine doelgroep niet; die kiest gewoon een pakket.</li>
+            <li><b>Demp "binnen 2 weken live" in de strategie-context.</b> Laat het staan voor instappakketten, maar zorg dat een maatwerk-zoeker nergens als eerste "2 weken" leest.</li>
+            <li>Voeg minstens één echte, strategisch-diepe MKB-case toe; label fictieve cases consequent en bescheiden.</li>
+            <li>Voeg een <b>positionerings-/strategiefase</b> toe aan de werkwijze, vooraan.</li>
+          </ul>
+          <p><b>Eindoordeel:</b> "Waarschijnlijk niet — of pas na lang twijfelen. Het talent is duidelijk aanwezig, maar alle dominante signalen (prijs, snelheid, pakketten, doelgroep) sturen me weg van het strategische maatwerktraject dat ik zoek."</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- PERSONA 3 -->
+    <div class="card sh-olive">
+      <div class="p-head">
+        <div class="num" style="background:var(--olive); color:var(--cream);">3</div>
+        <div class="t">
+          <h3>De resultaatgerichte groeier</h3>
+          <p class="who">Ondernemer met lopend bedrijf die de site puur als investering ziet. Denkt in ROI, leads en conversie. Prijs schrikt niet af mits de waarde hard wordt onderbouwd. Haakt af bij vage beloften en cijfers die ontbreken.</p>
+        </div>
+        <div class="score"><span class="n">5</span><span class="l">/10 past</span></div>
+      </div>
+
+      <div class="mini-h">💬 Eerste indruk</div>
+      <p><span class="quote">"…gebouwd om bezoekers klant te laten worden"</span> triggert hem — dat is zijn taal. Maar de kop gaat over <em>trots</em> (emotie), niet over groei of geld. En: <b>nergens in de eerste tien seconden een cijfer</b> dat zegt hóéveel meer klanten dit oplevert. "Sympathiek vakman, maar nog niet overtuigd dat dit zichzelf terugverdient."</p>
+
+      <div class="grid2">
+        <div>
+          <div class="mini-h"><span class="pill plus">Trekt aan</span></div>
+          <ul class="clean plus">
+            <li>Conversie-framing: <span class="quote">"Een goede site verdient zichzelf terug … in klanten die bellen, mailen en boeken."</span></li>
+            <li>Het doorlopende Groei-model als <span class="quote">"partnerschap"</span>.</li>
+            <li>Het dashboard-concept (meetbaarheid) — <em>als het echt is</em>.</li>
+            <li>De MKB-landing raakt hem het hardst: <span class="quote">"Geen onderbuik, maar cijfers."</span></li>
+            <li>Eén hard cijfer in een case: <span class="quote">"15% commissie bespaard per directe boeking"</span>.</li>
+          </ul>
+        </div>
+        <div>
+          <div class="mini-h"><span class="pill minus">Schrikt af</span></div>
+          <ul class="clean minus">
+            <li><b>Geen enkel klant-resultaat in cijfers.</b> Stat-label <span class="quote">"Meer bezoekers na lancering"</span> staat zónder getal.</li>
+            <li>De cijfers die er wél zijn (<span class="quote">"4 jaar", "20+ websites"</span>) gaan over Ruuds bedrijf, niet over wat de klant verdient.</li>
+            <li><b>Dashboard draait op verzonnen cijfers</b> en de scan-tool meldt <span class="quote">"binnenkort weer beschikbaar"</span>.</li>
+            <li><b>12 maanden binding zonder ROI-bewijs</b> (<span class="quote">"aantoonbaar beter presteert"</span> — maar nergens aangetoond).</li>
+            <li>"Resultaten" in cases zijn features (<span class="quote">"Drempelvrij aanmelden in vier korte stappen"</span>), geen uitkomsten.</li>
+            <li>Inconsistente getallen (20+ vs. 25+ vs. 100+).</li>
+          </ul>
+        </div>
+      </div>
+
+      <details>
+        <summary>Top-frictiepunten & aanbevelingen van deze persona</summary>
+        <div class="details-body">
+          <div class="mini-h">Top frictie (geprioriteerd)</div>
+          <ul class="clean">
+            <li><b>1. Geen klant-resultaat in cijfers</b> — de kernbelofte (groei) wordt nooit gestaafd. <span class="src">Impact: hoog</span></li>
+            <li><b>2. Dashboard = mock-up, scan-tool stuk</b> — het bewijsinstrument oogt fake. <span class="src">Impact: hoog</span></li>
+            <li><b>3. 12 maanden binding zonder onderbouwing</b> (€4.503/jaar). <span class="src">Impact: hoog</span></li>
+            <li><b>4. 40% portfolio fictief; "resultaten" zijn features.</b> <span class="src">Impact: hoog</span></li>
+            <li><b>5. Inconsistente getallen & doorlooptijden.</b> <span class="src">Impact: midden</span></li>
+          </ul>
+          <div class="mini-h">Aanbevelingen vanuit deze persona</div>
+          <ul class="clean arrow">
+            <li>Vul de homepage-stats met <b>échte getallen</b>, liefst één klantresultaat ("gem. +X% aanvragen na livegang").</li>
+            <li>Splits in cases expliciet <b>"Wat we bouwden"</b> en <b>"Wat het opleverde"</b>.</li>
+            <li>Onderbouw de €395/mnd met een <b>mini-ROI-rekensom</b> + één echt Groei-resultaat.</li>
+            <li>Vervang fictieve dashboard-cijfers door een echte/gelabelde demo; repareer of verwijder de scan-tool.</li>
+            <li>Geef de 12-maandenbinding een grond: prestatiegarantie of evaluatiemoment na 3 maanden.</li>
+          </ul>
+          <p><b>Eindoordeel:</b> "Waarschijnlijk nog geen contact — de site verkoopt me trots en sfeer, terwijl ik rendement met bewijs zoek, en juist het meetbare deel is leeg of fictief."</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MATRIX ============ -->
+<section id="matrix">
+  <div class="wrap">
+    <p class="eyebrow">Stap 2 · Het hart van de analyse</p>
+    <h2 class="sec">De conflictmatrix</h2>
+    <p class="sec-sub">Dit is waar je vraag echt landt. Eén en hetzelfde element op de site valt totaal anders bij de drie doelgroepen. Wat de starter geruststelt, jaagt de maatwerk-zoeker weg. Lees per rij hoe één keuze drie kanten op werkt.</p>
+    <p style="margin:-12px 0 18px; font-size:.85rem;">
+      <span class="tag p">＋ trekt aan</span>&nbsp;
+      <span class="tag w">~ twijfel / ruis</span>&nbsp;
+      <span class="tag m">－ schrikt af</span>
+    </p>
+
+    <div class="matrix-scroll">
+      <table class="matrix">
+        <thead>
+          <tr>
+            <th>Element op de site</th>
+            <th>① Snelle starter</th>
+            <th>② Maatwerk-zoeker</th>
+            <th>③ Resultaat-groeier</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="el">"Binnen 2 weken live" (universeel, in de hero)</td>
+            <td><span class="cell"><span class="tag p">＋</span> Belangrijkste trigger. "Snel = goed."</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Rode vlag: "snel = template, geen diepgang."</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Geruststellend, maar zegt niets over rendement.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Prijsanker "vanaf €995"</td>
+            <td><span class="cell"><span class="tag p">＋</span> Haalbaar, "dit is voor mij."</span></td>
+            <td><span class="cell"><span class="tag m">－</span> "Te goedkoop = hobbyniveau, niet mijn niveau."</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Prima — als de waarde maar wordt bewezen.</span></td>
+          </tr>
+          <tr>
+            <td class="el">"Meest gekozen" op het €2.295-pakket</td>
+            <td><span class="cell"><span class="tag m">－</span> Sociale druk richting een te hoog bedrag.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Nog steeds te laag als "premium" anker.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Zegt niets over wat het oplevert.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Vaste pakketten + "tot 5 pagina's"</td>
+            <td><span class="cell"><span class="tag w">~</span> Duidelijk, maar geen pad voor "nog geen site".</span></td>
+            <td><span class="cell"><span class="tag m">－</span> "Doosjes" en limieten = beperkend, geen maatwerk.</span></td>
+            <td><span class="cell"><span class="tag p">＋</span> Houdt van duidelijkheid over wat je krijgt.</span></td>
+          </tr>
+          <tr>
+            <td class="el">40% fictieve / concept-cases</td>
+            <td><span class="cell"><span class="tag w">~</span> Knaagt licht aan vertrouwen.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Geen bewijs van échte, complexe opdrachten.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Concept = per definitie nul resultaat.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Groei-pakket €395/mnd · 12 maanden</td>
+            <td><span class="cell"><span class="tag m">－</span> Vastzitten + €4.503 = afschrikkend.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Onderhoudsproduct, geen strategisch traject.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Aantrekkelijk model, maar binding zonder bewijs.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Dashboard-sectie + "Demo aanvragen"</td>
+            <td><span class="cell"><span class="tag m">－</span> Jargon & ruis; trekt hem een groei-traject in.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Leuk voor een ZZP'er, irrelevant signaal.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Verzonnen cijfers maken juist sceptischer.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Lege stat-labels ("Meer bezoekers na lancering")</td>
+            <td><span class="cell"><span class="tag w">~</span> Scant er overheen.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Mist autoriteit/diepgang.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Holle claim zonder getal = killer.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Warme toon ("koffie regel ik ☕", "geen stress")</td>
+            <td><span class="cell"><span class="tag p">＋</span> Past perfect, laagdrempelig.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Bijna betuttelend; mist zakelijke autoriteit.</span></td>
+            <td><span class="cell"><span class="tag w">~</span> Sympathiek, maar nooit de stap naar cijfers.</span></td>
+          </tr>
+          <tr>
+            <td class="el">Oplevertijd 2 vs. 3 weken (inconsistent)</td>
+            <td><span class="cell"><span class="tag m">－</span> Ondermijnt de duidelijkheid die hij zoekt.</span></td>
+            <td><span class="cell"><span class="tag m">－</span> "Klopt de planning van mijn project dan wel?"</span></td>
+            <td><span class="cell"><span class="tag m">－</span> Voedt scepsis: kloppen de cijfers wel?</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="src" style="margin-top:12px;">Lees verticaal en je ziet het patroon: kolom ① is overwegend groen, kolom ② overwegend rood. De site is geoptimaliseerd voor wie zich níét meldt.</p>
+  </div>
+</section>
+
+<!-- ============ RODE DRADEN ============ -->
+<section id="rodedraden" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Stap 3 · Wat alle drie zien</p>
+    <h2 class="sec">Vijf rode draden</h2>
+    <p class="sec-sub">Bevindingen die bij twee of drie persona's terugkwamen. Dit zijn de structurele kwesties, niet de toevalstreffers.</p>
+
+    <div class="card sh-rust">
+      <h3 style="margin-top:0;">1 · Snelheid is een tweesnijdend zwaard <span class="src">(alle 3)</span></h3>
+      <p><span class="quote">"Binnen 2 weken live"</span> staat universeel in de hero, in de pakketten én in de marquee van elke landingspagina. Het is dé trigger van spoor 1, maar dé afknapper van spoor 2 en betekenisloos voor spoor 3. Bovendien is het intern tegenstrijdig: hero & home-FAQ zeggen 2 weken voor de volledige redesign, de pakketdetails en prijzen-FAQ zeggen 3 weken. <b>Snelheid hoort niet universeel vooraan — het hoort bij één spoor.</b></p>
+    </div>
+
+    <div class="card sh-terra">
+      <h3 style="margin-top:0;">2 · Het prijsanker zet het hele merk neer <span class="src">(starter + maatwerk)</span></h3>
+      <p>Hetzelfde getal (€995) is voor de één geruststellend en voor de ander diskwalificerend. Zolang "vanaf €995" het eerste prijssignaal is, plaats je jezelf in het instapsegment — ook voor de leads die juist méér willen investeren. Een <b>prijsloos maatwerk-spoor</b> haalt die spanning weg zonder de starter te raken.</p>
+    </div>
+
+    <div class="card sh-olive">
+      <h3 style="margin-top:0;">3 · Het portfolio bewijst te weinig <span class="src">(maatwerk + groeier)</span></h3>
+      <p>Vier van de tien projecten zijn fictief/concept, de "resultaten" zijn beschrijvingen van wat er gebouwd is (features), niet wat het opleverde. Voor de maatwerk-zoeker ontbreekt een complexe MKB-case; voor de groeier ontbreken cijfers. <b>Scheid "echte klantcases" van "concepten/eigen werk" en voeg minstens één uitkomst in cijfers toe.</b></p>
+  </div>
+
+    <div class="card sh-mustard">
+      <h3 style="margin-top:0;">4 · Het bewijs is leeg of fictief <span class="src">(vooral groeier)</span></h3>
+      <p>Lege stat-labels, een dashboard met verzonnen getallen, een scan-tool die "binnenkort" zegt, en inconsistente aantallen (20+ / 25+ / 100+). Dit is de zwakste schakel voor je meest waardevolle (Groei-)lead. Tegelijk je grootste kans: <b>echt bewijs is de sterkste hefboom over álle doelgroepen heen.</b></p>
+    </div>
+
+    <div class="card sh-rust">
+      <h3 style="margin-top:0;">5 · De toon kiest onbewust partij <span class="src">(maatwerk + groeier)</span></h3>
+      <p>De warme, gezellige toon (<span class="quote">"koffie regel ik"</span>, <span class="quote">"Hier wordt het leuk"</span>) is een echt onderscheid en bouwt vertrouwen bij de starter. Maar er is geen tweede register: de overgang van warmte naar strategie (maatwerk) of naar cijfers (groei) wordt nooit gemaakt. <b>Warmte en autoriteit sluiten elkaar niet uit — voeg een register toe, vervang het bestaande niet.</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ VISIE ============ -->
+<section id="visie">
+  <div class="wrap">
+    <p class="eyebrow">Stap 4 · Mijn synthese</p>
+    <h2 class="sec">Van één boodschap naar drie sporen</h2>
+    <p class="sec-sub">De fout zou zijn om de site simpelweg "duurder" of "strategischer" te maken — dan verlies je de starter die nu wél converteert. De oplossing is segmenteren zónder te versnipperen: één warm merk, drie herkenbare sporen, en een homepage die als kruispunt werkt zodat elke bezoeker in zijn eigen dialect landt.</p>
+
+    <div class="callout" style="box-shadow:8px 8px 0 var(--mustard);">
+      <h3>Het principe: laat de bezoeker zichzelf sorteren.</h3>
+      <p>Houd de warme merkhero intact, maar zet er direct onder een <span class="key">"waar sta jij?"-keuze</span> met drie routes. De dominante signalen (snelheid, laag prijsanker) verhuizen uit de universele kop naar het spoor waar ze thuishoren. Zo schrikt niets de verkeerde doelgroep meer af, en herkent iedereen zichzelf binnen 10 seconden.</p>
+    </div>
+
+    <div class="track t1">
+      <span class="tnum">Spoor 1</span>
+      <h3>Snel &amp; Helder online</h3>
+      <p class="for">Voor: de snelle starter &amp; kleine ZZP'er &nbsp;·&nbsp; Persona ①</p>
+      <ul class="clean">
+        <li><b>Hier mág snelheid hard vooraan:</b> "binnen 2 weken live", vaste prijs, geen gedoe.</li>
+        <li><b>Dicht het gat:</b> voeg een echt instapproduct toe voor wie nog géén site heeft (nieuwe one-pager / simpele site, rond/onder €1.500).</li>
+        <li>Vaste pakketten, prijs vooraf, gratis kennismaking. Toon: warm en geruststellend (huidige toon = perfect).</li>
+      </ul>
+    </div>
+
+    <div class="track t2">
+      <span class="tnum">Spoor 2</span>
+      <h3>Maatwerk &amp; Merk</h3>
+      <p class="for">Voor: de maatwerk-zoeker / ambitieus MKB &nbsp;·&nbsp; Persona ②</p>
+      <ul class="clean">
+        <li><b>Géén snelheidsbelofte en géén laag prijsanker vooraan.</b> In plaats daarvan: positionering, merkdenken, "op aanvraag".</li>
+        <li>Til het verstopte <span class="quote">"Maatwerk &amp; Groei — op aanvraag"</span>-blok naar een eigen, volwaardige plek met een eigen verhaallijn.</li>
+        <li>Een proces dat met <b>strategie/discovery</b> begint (niet "koffie → ontwerpen → bouwen → live"). Toon: warm én zakelijk-gelijkwaardig.</li>
+        <li>Minstens één echte, strategisch-diepe case.</li>
+      </ul>
+    </div>
+
+    <div class="track t3">
+      <span class="tnum">Spoor 3</span>
+      <h3>Groei &amp; Resultaat</h3>
+      <p class="for">Voor: de resultaatgerichte groeier &nbsp;·&nbsp; Persona ③</p>
+      <ul class="clean">
+        <li>Het Groei-partnership, maar <b>onderbouwd met echte cijfers</b> en een ROI-rekensom (€395/mnd terugverdiend bij X extra klanten).</li>
+        <li>Vervang de 12-maanden-binding-als-drempel door een <b>evaluatiemoment</b> of prestatiebelofte.</li>
+        <li>Een werkend (of eerlijk gelabeld) dashboard; repareer of verwijder de scan-tool. Toon: bewijs boven sfeer.</li>
+      </ul>
+    </div>
+
+    <p style="margin-top:8px;">Deze drie sporen sluiten 1-op-1 aan op je bestaande pakketten én op je landingspagina's (die al ruwweg zo gesegmenteerd zijn: ZZP → spoor 1, MKB → spoor 2/3). Je bouwt dus geen nieuw merk — je maakt zichtbaar wat er deels al is, en haalt de signalen weg die het ene spoor in het andere laten lekken.</p>
+  </div>
+</section>
+
+<!-- ============ PLAN ============ -->
+<section id="plan" class="alt">
+  <div class="wrap">
+    <p class="eyebrow">Stap 5 · Concreet</p>
+    <h2 class="sec">Integratieplan per pagina</h2>
+    <p class="sec-sub">Hoe je de drie-sporen-visie over de hele linie doorvoert, pagina voor pagina.</p>
+
+    <div class="plan">
+      <div class="step">
+        <h4>🏠 Homepage</h4>
+        <ul class="clean arrow">
+          <li>Houd de hero "trots", maar haal <span class="quote">"Binnen 2 weken live"</span> uit de universele USP-balk (of maak 'm neutraal: "Persoonlijk · Vaste prijs vooraf · Eén aanspreekpunt").</li>
+          <li>Voeg hoog op de pagina een <b>"waar sta jij?"-keuzeblok</b> met de drie sporen toe.</li>
+          <li>Vul de stats met echte getallen, inclusief minstens één klant-uitkomst.</li>
+          <li>Zet echte klantcases vóór de concepten; verfijn de "Concept"-badge.</li>
+          <li>Heroverweeg "Meest gekozen" op €2.295 — of geef de starter een duidelijk goedkoper startpunt ernaast.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h4>💶 Prijzen</h4>
+        <ul class="clean arrow">
+          <li><b>Fix de 2-vs-3-weken-inconsistentie</b> (overal hetzelfde getal).</li>
+          <li>Voeg een <b>instapproduct voor een nieuwe simpele site</b> toe (gat van de starter).</li>
+          <li>Til het maatwerk-blok op tot een volwaardige, prijsloze optie.</li>
+          <li>Voeg bij €395/mnd een <b>ROI-mini-blok + één echt Groei-resultaat</b> toe, plus een evaluatiemoment voor de 12 maanden.</li>
+          <li>Overweeg een korte "welk pakket past bij mij?"-wegwijzer boven de tabel (tegen keuzestress).</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h4>👋 Over</h4>
+        <ul class="clean arrow">
+          <li>Behoud het warme verhaal, maar voeg een passage toe over de <b>strategische/positionerings-aanpak</b> — zodat de maatwerk-zoeker de diepgang voelt.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h4>🖼️ Portfolio</h4>
+        <ul class="clean arrow">
+          <li>Splits in <b>"Echte klantprojecten"</b> en <b>"Concepten &amp; eigen werk"</b>.</li>
+          <li>Maak resultaten uitkomst-gericht waar het echt is; voeg minstens één MKB/strategische case toe.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h4>🎯 Landingspagina's</h4>
+        <ul class="clean arrow">
+          <li>Ze zijn al ruwweg gesegmenteerd — versterk dat: <b>ZZP-landing = snelheid/prijs (ok), MKB-landing = strategie + bewijs</b> (demp daar "binnen 2 weken").</li>
+          <li>Laat elke landing-belofte matchen met het spoor van die persona.</li>
+        </ul>
+      </div>
+      <div class="step">
+        <h4>🔧 Consistentie & micro-fixes</h4>
+        <ul class="clean arrow">
+          <li>Unificeer alle getallen (20+ / 25+ / 100+) en doorlooptijden.</li>
+          <li>Repareer of verwijder de scan-tool; label het dashboard eerlijk.</li>
+          <li>Laat het contactformulier direct versturen i.p.v. een mailprogramma te openen; maak WhatsApp zichtbaarder.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRIORITEITEN ============ -->
+<section id="prio">
+  <div class="wrap">
+    <p class="eyebrow">Stap 6 · Waar te beginnen</p>
+    <h2 class="sec">Prioriteiten</h2>
+    <p class="sec-sub">Van laaghangend fruit naar structurele keuzes. De quick wins kunnen vandaag; de strategische sporen vragen wat denkwerk en (deels) echte data.</p>
+
+    <div class="prio now">
+      <div class="col">
+        <h4>⚡ Quick wins (nu)</h4>
+        <ol>
+          <li>Oplevertijd overal gelijktrekken (2 óf 3 weken).</li>
+          <li>Alle getallen consistent maken (20+/25+/100+).</li>
+          <li>Echte klantcases vóór de concepten zetten.</li>
+          <li>Contactformulier direct laten versturen + WhatsApp prominenter.</li>
+          <li>Scan-tool repareren of (tijdelijk) verwijderen.</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h4>🛠️ Deze maand</h4>
+        <ol>
+          <li>"Waar sta jij?"-keuzeblok op de homepage.</li>
+          <li>Maatwerk-spoor naar een eigen, volwaardige plek tillen.</li>
+          <li>Instapproduct voor een nieuwe simpele site toevoegen.</li>
+          <li>Stats vullen met echte cijfers (incl. 1 klant-uitkomst).</li>
+          <li>Portfolio splitsen: echt vs. concept.</li>
+        </ol>
+      </div>
+      <div class="col">
+        <h4>🧭 Structureel</h4>
+        <ol>
+          <li>Snelheidsbelofte uit de universele hero halen.</li>
+          <li>ROI-onderbouwing + 1 echt Groei-resultaat verzamelen.</li>
+          <li>Strategie-/discovery-fase in de werkwijze opnemen.</li>
+          <li>Tweede, zakelijker toon-register voor spoor 2 & 3.</li>
+          <li>Minstens één echte MKB/maatwerk-case bouwen of vastleggen.</li>
+        </ol>
+      </div>
+    </div>
+
+    <hr class="wavy" />
+
+    <div class="card sh-mustard">
+      <h3 style="margin-top:0;">Tot slot — terug naar je oorspronkelijke vraag</h3>
+      <p>Je vermoeden dat <span class="quote">"binnen een week / 2 weken live"</span> de verkeerde lead aantrekt, wordt door alle drie de invalshoeken bevestigd. Snelheid-als-kernbelofte trekt de prijsbewuste starter (die zich nu nauwelijks meldt) en jaagt de maatwerk-zoeker weg (die zich wél meldt). De oplossing is niet kiezen tussen die twee — het is ze allebei een eigen, herkenbaar spoor geven, en de signalen die nu door elkaar lopen netjes uit elkaar trekken. Eén warm merk, drie deuren.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong class="display" style="font-size:1.2rem;">Doelgroep-audit · Haagse Brandmerk</strong><br/>
+      <span style="opacity:.7; font-size:.85rem;">3 persona-perspectieven + synthese · 17 juni 2026</span>
+    </div>
+    <div style="font-size:.85rem; opacity:.8;">
+      <a href="https://haagsebrandmerk.nl">haagsebrandmerk.nl</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
